@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>kubernetes</title>
+      <link href="/2024/01/18/kubernetes/"/>
+      <url>/2024/01/18/kubernetes/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>Kubernetes</p><p><strong>特性：</strong></p><p>容器编排，通过配置文件<br>高可用，自动重启、重建等<br>可扩展，提高性能利用率<br>灾难恢复、弹性回复等</p><p>组件：</p><ul><li><p>Node节点：虚拟机、物理机</p></li><li><p>Pod：最小调度单元，一般情况1个pod一个应用程序，或者多个高耦合应用1个pod</p></li><li><p>Svc：入口代理，解决pod故障重启导致的IP变化</p></li><li><p>Ingress：配置转发规则等</p></li><li><p>ConfigMap：封装配置信息，应用程序和数据库的解耦</p></li><li><p>Secret：类似configMap，base64编码敏感信息</p></li><li><p>Volumes：持久化组件</p></li><li><p>Deployment：定义、管理应用程序的副本数量、更新策略，多个pod热备，提供服务健壮性需求</p></li><li><p>StatefulSet：定义、管理副本数量策略等，动态扩缩容，有状态类的应用需要保存在这里比如数据库</p></li></ul><p>架构：</p><ul><li>master-worker<ul><li>workNode<ul><li>kublet：管理维护每个节点的pod；定期从api-serv拉去新的规范，监控工作节点的运行状态汇报给api-serv</li><li>kube-proxy：网络代理、负载均衡</li><li>container-runtime</li></ul></li><li>masterNode<ul><li>kube-apiserv：api接口服务，集群的网关；对所有资源的crud进行权限控制鉴定</li><li>Scheduler：调度器</li><li>controller manager：故障监控</li><li>etcd：键值存储信息，存储所有资源对象的状态信息，数据存储中心</li><li>cloudControllerManager：云平台相关的控制器</li></ul></li></ul></li></ul><p>搭建环境：</p><ul><li>minikube、kubectl</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> CS </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> k8s </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>TheSecretLivesOfKyotoFolk</title>
       <link href="/2024/01/17/TheSecretLivesOfKyotoFolk/"/>
       <url>/2024/01/17/TheSecretLivesOfKyotoFolk/</url>

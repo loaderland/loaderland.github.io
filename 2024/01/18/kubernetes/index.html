@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="TheSecretLivesOfKyotoFolk, keywords">
+    <meta name="keywords" content="kubernetes, keywords">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>TheSecretLivesOfKyotoFolk | LoaderLand</title>
+    <title>kubernetes | LoaderLand</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/awesome/css/all.css">
@@ -228,12 +228,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/medias/featureimages/9.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/medias/featureimages/14.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">TheSecretLivesOfKyotoFolk</h1>
+                    <h1 class="description center-align post-title">kubernetes</h1>
                 </div>
             </div>
         </div>
@@ -349,12 +349,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E4%BA%AC%E9%83%BD/">
-                                <span class="chip bg-color">京都</span>
-                            </a>
-                        
-                            <a href="/tags/%E7%BA%AA%E5%BD%95%E7%89%87/">
-                                <span class="chip bg-color">纪录片</span>
+                            <a href="/tags/k8s/">
+                                <span class="chip bg-color">k8s</span>
                             </a>
                         
                     </div>
@@ -365,8 +361,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E5%BD%B1%E8%A7%86/" class="post-category">
-                                影视
+                            <a href="/categories/CS/" class="post-category">
+                                CS
                             </a>
                         
                     </div>
@@ -378,21 +374,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-01-17
+                    2024-01-18
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-01-18
+                    2024-01-22
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    393
+                    346
                 </div>
                 
 
@@ -409,14 +405,54 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="The-secret-Lives-of-Kyoto-Folk"><a href="#The-secret-Lives-of-Kyoto-Folk" class="headerlink" title="The secret Lives of  Kyoto Folk"></a>The secret Lives of  Kyoto Folk</h1><blockquote>
-<p>先前去过京都，对京都人礼貌、友善印象深刻，引起对知晓其来源的强烈渴望。</p>
-</blockquote>
-<p>形式和仪式。前些日子参加了一个婚礼，新娘很漂亮，婚纱也很闪，新郎挺帅且很有才情，差点把婚礼现场变成了个人演唱会，当然还有风格很古怪的《武陵外传》。或许大多数人都比较拘谨，不太会表露情感，我当初结婚的时候也是同样的，婚礼好像是一个流水线，表演节目、主持人致辞、戴戒指等等，形式感大过仪式感太多，就好像昨天写的课文今天要交的作业，脑子里时时刻刻都是下一句是什么，没多少情感的色彩，乏味。<br>回家的路上，我跟文聊天。</p>
-<blockquote>
-<p>“今天我们桌的女孩子只有你没有化妆。”<br>“好还是不好？”<br>“好。”<br>“怎么说？”<br>“用力过度，过犹不及，让我感觉有点突兀。同样化妆在京都遇到的女孩子给人的感受自然的多”<br>“因为人家的精致是从头到脚的精致，从内而外的精致”</p>
-</blockquote>
-<p>让我想起一段采访，大约是记者问名媛为什么没有纹身之类的，她回答你会在一个璞玉上涂鸦吗。人不会因为你背了个LV，脸上化的妆而改变她的品质，如果因为配饰和形象的层次参差不齐反而会起到反作用，是所谓品味。</p>
+                <p>Kubernetes</p>
+<p><strong>特性：</strong></p>
+<p>容器编排，通过配置文件<br>高可用，自动重启、重建等<br>可扩展，提高性能利用率<br>灾难恢复、弹性回复等</p>
+<p>组件：</p>
+<ul>
+<li><p>Node节点：虚拟机、物理机</p>
+</li>
+<li><p>Pod：最小调度单元，一般情况1个pod一个应用程序，或者多个高耦合应用1个pod</p>
+</li>
+<li><p>Svc：入口代理，解决pod故障重启导致的IP变化</p>
+</li>
+<li><p>Ingress：配置转发规则等</p>
+</li>
+<li><p>ConfigMap：封装配置信息，应用程序和数据库的解耦</p>
+</li>
+<li><p>Secret：类似configMap，base64编码敏感信息</p>
+</li>
+<li><p>Volumes：持久化组件</p>
+</li>
+<li><p>Deployment：定义、管理应用程序的副本数量、更新策略，多个pod热备，提供服务健壮性需求</p>
+</li>
+<li><p>StatefulSet：定义、管理副本数量策略等，动态扩缩容，有状态类的应用需要保存在这里比如数据库</p>
+</li>
+</ul>
+<p>架构：</p>
+<ul>
+<li>master-worker<ul>
+<li>workNode<ul>
+<li>kublet：管理维护每个节点的pod；定期从api-serv拉去新的规范，监控工作节点的运行状态汇报给api-serv</li>
+<li>kube-proxy：网络代理、负载均衡</li>
+<li>container-runtime</li>
+</ul>
+</li>
+<li>masterNode<ul>
+<li>kube-apiserv：api接口服务，集群的网关；对所有资源的crud进行权限控制鉴定</li>
+<li>Scheduler：调度器</li>
+<li>controller manager：故障监控</li>
+<li>etcd：键值存储信息，存储所有资源对象的状态信息，数据存储中心</li>
+<li>cloudControllerManager：云平台相关的控制器</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>搭建环境：</p>
+<ul>
+<li>minikube、kubectl</li>
+</ul>
 
                 
             </div>
@@ -443,7 +479,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://loaderland.github.io/2024/01/17/TheSecretLivesOfKyotoFolk/">https://loaderland.github.io/2024/01/17/TheSecretLivesOfKyotoFolk/</a>
+                    <a href="https://loaderland.github.io/2024/01/18/kubernetes/">https://loaderland.github.io/2024/01/18/kubernetes/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -481,12 +517,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E4%BA%AC%E9%83%BD/">
-                                    <span class="chip bg-color">京都</span>
-                                </a>
-                            
-                                <a href="/tags/%E7%BA%AA%E5%BD%95%E7%89%87/">
-                                    <span class="chip bg-color">纪录片</span>
+                                <a href="/tags/k8s/">
+                                    <span class="chip bg-color">k8s</span>
                                 </a>
                             
                         </div>
@@ -678,9 +710,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2024/01/18/kubernetes/">
                     <div class="card-image">
@@ -698,9 +731,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-01-18
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-01-18
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -713,6 +746,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -731,13 +765,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/01/15/JLPT/">
+                <a href="/2024/01/17/TheSecretLivesOfKyotoFolk/">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/medias/featureimages/14.jpg" class="responsive-img" alt="JLPT">
+                        <img src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/medias/featureimages/9.jpg" class="responsive-img" alt="TheSecretLivesOfKyotoFolk">
                         
-                        <span class="card-title">JLPT</span>
+                        <span class="card-title">TheSecretLivesOfKyotoFolk</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -748,14 +782,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-01-15
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-01-17
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    学习
+                            <a href="/categories/%E5%BD%B1%E8%A7%86/" class="post-category">
+                                    影视
                                 </a>
                             
                             
@@ -765,8 +799,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%97%A5%E8%AF%AD/">
-                        <span class="chip bg-color">日语</span>
+                    <a href="/tags/%E4%BA%AC%E9%83%BD/">
+                        <span class="chip bg-color">京都</span>
+                    </a>
+                    
+                    <a href="/tags/%E7%BA%AA%E5%BD%95%E7%89%87/">
+                        <span class="chip bg-color">纪录片</span>
                     </a>
                     
                 </div>
