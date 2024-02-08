@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="JLPT, keywords">
+    <meta name="keywords" content="MySql, keywords">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>JLPT | LoaderLand</title>
+    <title>MySql | LoaderLand</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/awesome/css/all.css">
@@ -228,12 +228,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/medias/featureimages/14.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/medias/featureimages/10.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">JLPT</h1>
+                    <h1 class="description center-align post-title">MySql</h1>
                 </div>
             </div>
         </div>
@@ -349,8 +349,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E6%97%A5%E8%AF%AD/">
-                                <span class="chip bg-color">日语</span>
+                            <a href="/tags/%E7%AC%94%E8%AE%B0/">
+                                <span class="chip bg-color">笔记</span>
+                            </a>
+                        
+                            <a href="/tags/MySql/">
+                                <span class="chip bg-color">MySql</span>
                             </a>
                         
                     </div>
@@ -361,8 +365,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E8%AF%AD%E8%A8%80/" class="post-category">
-                                语言
+                            <a href="/categories/CS/" class="post-category">
+                                CS
                             </a>
                         
                     </div>
@@ -374,7 +378,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-01-15
+                    2024-02-08
                 </div>
                 
 
@@ -388,7 +392,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    596
+                    1.5k
                 </div>
                 
 
@@ -405,103 +409,271 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="日语JLPT-N2"><a href="#日语JLPT-N2" class="headerlink" title="日语JLPT-N2"></a>日语JLPT-N2</h1><h2 id="入门课"><a href="#入门课" class="headerlink" title="入门课"></a>入门课</h2><h3 id="五十音"><a href="#五十音" class="headerlink" title="五十音"></a>五十音</h3><p><img src="https://loaderland-picgo.oss-cn-shanghai.aliyuncs.com/202312300107248.jpg" alt="五十音"></p>
-<p><img src="http://oss.luhuhu.cn/202401251508878.jpg" alt="image"></p>
-<h3 id="资料"><a href="#资料" class="headerlink" title="资料"></a>资料</h3><p>青空文库<br>weblio<br>ojad<br>筑波语料库</p>
-<h2 id="新标日000"><a href="#新标日000" class="headerlink" title="新标日000"></a>新标日000</h2><ol>
-<li>单词、课文都要会背</li>
-<li>课后题&amp;同步练习全要写</li>
-<li>课文带读/单词带背/课</li>
-<li>自学建议：单词 - 语法 - 背单词 - 背课文 - 课后练习/同步练习册</li>
-<li>笔记</li>
-</ol>
-<p>日语等级考试： 每年7月和12月第一周周日举行考试，报名时间在大概提前3个月 </p>
-<p><strong>浙江考点</strong></p>
-<table>
+                <h1 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h1><h2 id="SQL分类"><a href="#SQL分类" class="headerlink" title="SQL分类"></a>SQL分类</h2><h3 id="DDL数据定义语言"><a href="#DDL数据定义语言" class="headerlink" title="DDL数据定义语言"></a>DDL数据定义语言</h3><p>定义数据库对象，核心指令<strong>CREATE、ALTER、DROP</strong></p>
+<h3 id="DML数据库操纵语言"><a href="#DML数据库操纵语言" class="headerlink" title="DML数据库操纵语言"></a>DML数据库操纵语言</h3><p>访问数据CRUD（CREATE，READ，UPDATE，DELETE），即增删改查</p>
+<h3 id="TCL事务控制语言"><a href="#TCL事务控制语言" class="headerlink" title="TCL事务控制语言"></a>TCL事务控制语言</h3><p>管理数据库中的事务，核心指令COMMIT、ROLLBAK</p>
+<h3 id="DCL数据控制语言"><a href="#DCL数据控制语言" class="headerlink" title="DCL数据控制语言"></a>DCL数据控制语言</h3><p>对数据访问权控制，核心指令GRANT,REVOKE</p>
+<p>可以控制的权限有：CONNECT,SELECT,INSERT,UPDATE,DELETE,EXECUTE,USAGE,REFERENCES</p>
+<h2 id="连接和组合"><a href="#连接和组合" class="headerlink" title="连接和组合"></a>连接和组合</h2><h3 id="JOIN"><a href="#JOIN" class="headerlink" title="JOIN"></a>JOIN</h3><p>连接可以代替子查询，效率一般比子查询高。</p>
+<p><img src="https://oss.luhuhu.cn/202402080934962.png" alt="join"></p>
+<h3 id="组合"><a href="#组合" class="headerlink" title="组合"></a>组合</h3><p>UNION会去除相同行，UNION ALL 会保留相同行。</p>
+<p>JOIN vs UNION：</p>
+<ul>
+<li>JOIN 中连接的列可能不同，UNION中列、列顺序必须相同</li>
+<li>UNION 讲查询结果行放在一起（垂直放置）但JOIN将查询结果列放在一起（水平放置），即它构成一个笛卡尔积</li>
+</ul>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><h3 id="文本处理"><a href="#文本处理" class="headerlink" title="文本处理"></a>文本处理</h3><table>
 <thead>
 <tr>
-<th>序号</th>
-<th>名称</th>
-<th>地址</th>
-<th>电话</th>
-<th>网址</th>
+<th align="left">函数</th>
+<th align="left">说明</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>1021402</td>
-<td>浙江工商大学（下沙校区）</td>
-<td>杭州市下沙高教园区学正街18号，浙江工商大学下沙校区310012</td>
-<td>0571-88066397</td>
-<td><a target="_blank" rel="noopener" href="http://flc.zjgsu.edu.cn/news/?87_5895.html">http://flc.zjgsu.edu.cn/news/?87_5895.html</a></td>
+<td align="left"><code>LEFT()</code>、<code>RIGHT()</code></td>
+<td align="left">左边或者右边的字符</td>
 </tr>
 <tr>
-<td>1021403</td>
-<td>浙江教育考试服务中心 (浙江工业大学之江学院 )</td>
-<td>绍兴市柯桥区越州大道958号浙江工业大学之江学院致知楼 3C310018</td>
-<td>0571-96399</td>
-<td><a target="_blank" rel="noopener" href="https://www.zjzs.net/moban/index/8a11f15486be1bb60186bee8979a0001.html">https://www.zjzs.net/moban/index/8a11f15486be1bb60186bee8979a0001.html</a></td>
+<td align="left"><code>LOWER()</code>、<code>UPPER()</code></td>
+<td align="left">转换为小写或者大写</td>
 </tr>
 <tr>
-<td>1022701</td>
-<td>宁波大学</td>
-<td>宁波市风华路818号宁波大学教学楼 <a target="_blank" rel="noopener" href="http://ffl.nbu.edu.cn/315211">http://ffl.nbu.edu.cn/315211</a></td>
-<td>0574-87600022, 0574-87601650</td>
-<td><a target="_blank" rel="noopener" href="http://fls.nbu.edu.cn/cgks.htm">http://fls.nbu.edu.cn/cgks.htm</a></td>
+<td align="left"><code>LTRIM()</code>、<code>RTIM()</code></td>
+<td align="left">去除左边或者右边的空格</td>
 </tr>
 <tr>
-<td>1021401</td>
-<td>浙江大学（紫金港校区）</td>
-<td>杭州市西湖区三墩镇浙江大学紫金港校区东一教学楼310058</td>
-<td>0571-88273293</td>
-<td><a target="_blank" rel="noopener" href="http://www.sis.zju.edu.cn/sischinese/2023/0302/c12616a2722717/page.htm">http://www.sis.zju.edu.cn/sischinese/2023/0302/c12616a2722717/page.htm</a></td>
+<td align="left"><code>LENGTH()</code></td>
+<td align="left">长度</td>
 </tr>
 <tr>
-<td>1024301</td>
-<td>浙江越秀外国语学院</td>
-<td>绍兴市会稽路428号F幢教学楼312000</td>
-<td>0575-89184015</td>
-<td><a target="_blank" rel="noopener" href="https://cj.zyufl.edu.cn/2022/0225/c1025a46739/page.htm">https://cj.zyufl.edu.cn/2022/0225/c1025a46739/page.htm</a></td>
+<td align="left"><code>SOUNDEX()</code></td>
+<td align="left">转换为语音值</td>
 </tr>
 </tbody></table>
-<h2 id="新标日001"><a href="#新标日001" class="headerlink" title="新标日001"></a>新标日001</h2><ol>
-<li>～は～です</li>
-<li>～は～では　ありません<br>～は～じゃ　ありません</li>
-<li>～は～ですか<br>はい，そうです<br>いいえ，ちがいます<br>わかりません，どうもすみません</li>
-<li>~の～です</li>
-<li>わたし／あなた／あのひと</li>
-<li>はじめまして，どうぞよろしくあねがいします<br>こちらこそ，よろしく</li>
-</ol>
-<h2 id="新标日002"><a href="#新标日002" class="headerlink" title="新标日002"></a>新标日002</h2><ol>
-<li><p>これ／それ／あれ／どれ；この／その／あの／どの<br>这/那（你）/那（他）/哪（三个以上）,の后需要跟名词<br>eg．これは　だれの　ほん　ですか<br>eg．どの　つくえ　は　小野さん　ですか</p>
+<h3 id="日期和时间处理"><a href="#日期和时间处理" class="headerlink" title="日期和时间处理"></a>日期和时间处理</h3><table>
+<thead>
+<tr>
+<th align="left">函 数</th>
+<th align="left">说 明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>AddDate()</code></td>
+<td align="left">增加一个日期（天、周等）</td>
+</tr>
+<tr>
+<td align="left"><code>AddTime()</code></td>
+<td align="left">增加一个时间（时、分等）</td>
+</tr>
+<tr>
+<td align="left"><code>CurDate()</code></td>
+<td align="left">返回当前日期</td>
+</tr>
+<tr>
+<td align="left"><code>CurTime()</code></td>
+<td align="left">返回当前时间</td>
+</tr>
+<tr>
+<td align="left"><code>Date()</code></td>
+<td align="left">返回日期时间的日期部分</td>
+</tr>
+<tr>
+<td align="left"><code>DateDiff()</code></td>
+<td align="left">计算两个日期之差</td>
+</tr>
+<tr>
+<td align="left"><code>Date_Add()</code></td>
+<td align="left">高度灵活的日期运算函数</td>
+</tr>
+<tr>
+<td align="left"><code>Date_Format()</code></td>
+<td align="left">返回一个格式化的日期或时间串</td>
+</tr>
+<tr>
+<td align="left"><code>Day()</code></td>
+<td align="left">返回一个日期的天数部分</td>
+</tr>
+<tr>
+<td align="left"><code>DayOfWeek()</code></td>
+<td align="left">对于一个日期，返回对应的星期几</td>
+</tr>
+<tr>
+<td align="left"><code>Hour()</code></td>
+<td align="left">返回一个时间的小时部分</td>
+</tr>
+<tr>
+<td align="left"><code>Minute()</code></td>
+<td align="left">返回一个时间的分钟部分</td>
+</tr>
+<tr>
+<td align="left"><code>Month()</code></td>
+<td align="left">返回一个日期的月份部分</td>
+</tr>
+<tr>
+<td align="left"><code>Now()</code></td>
+<td align="left">返回当前日期和时间</td>
+</tr>
+<tr>
+<td align="left"><code>Second()</code></td>
+<td align="left">返回一个时间的秒部分</td>
+</tr>
+<tr>
+<td align="left"><code>Time()</code></td>
+<td align="left">返回一个日期时间的时间部分</td>
+</tr>
+<tr>
+<td align="left"><code>Year()</code></td>
+<td align="left">返回一个日期的年份部分</td>
+</tr>
+</tbody></table>
+<h3 id="数值处理"><a href="#数值处理" class="headerlink" title="数值处理"></a>数值处理</h3><table>
+<thead>
+<tr>
+<th align="left">函数</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">SIN()</td>
+<td align="left">正弦</td>
+</tr>
+<tr>
+<td align="left">COS()</td>
+<td align="left">余弦</td>
+</tr>
+<tr>
+<td align="left">TAN()</td>
+<td align="left">正切</td>
+</tr>
+<tr>
+<td align="left">ABS()</td>
+<td align="left">绝对值</td>
+</tr>
+<tr>
+<td align="left">SQRT()</td>
+<td align="left">平方根</td>
+</tr>
+<tr>
+<td align="left">MOD()</td>
+<td align="left">余数</td>
+</tr>
+<tr>
+<td align="left">EXP()</td>
+<td align="left">指数</td>
+</tr>
+<tr>
+<td align="left">PI()</td>
+<td align="left">圆周率</td>
+</tr>
+<tr>
+<td align="left">RAND()</td>
+<td align="left">随机数</td>
+</tr>
+</tbody></table>
+<h3 id="汇总"><a href="#汇总" class="headerlink" title="汇总"></a>汇总</h3><table>
+<thead>
+<tr>
+<th align="left">函 数</th>
+<th align="left">说 明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>AVG()</code></td>
+<td align="left">返回某列的平均值</td>
+</tr>
+<tr>
+<td align="left"><code>COUNT()</code></td>
+<td align="left">返回某列的行数</td>
+</tr>
+<tr>
+<td align="left"><code>MAX()</code></td>
+<td align="left">返回某列的最大值</td>
+</tr>
+<tr>
+<td align="left"><code>MIN()</code></td>
+<td align="left">返回某列的最小值</td>
+</tr>
+<tr>
+<td align="left"><code>SUM()</code></td>
+<td align="left">返回某列值之和</td>
+</tr>
+</tbody></table>
+<h2 id="排序与分组"><a href="#排序与分组" class="headerlink" title="排序与分组"></a>排序与分组</h2><h3 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h3><p>ORDER BY ASC/DESC;</p>
+<blockquote>
+<p>// 指定多个列的排序方向</p>
+<p><strong>SELECT</strong> * <strong>FROM</strong> products<br><strong>ORDER</strong> <strong>BY</strong> prod_price <strong>DESC</strong>, prod_name <strong>ASC</strong>;</p>
+</blockquote>
+<h3 id="分组"><a href="#分组" class="headerlink" title="分组"></a>分组</h3><ul>
+<li>GROUP BY</li>
+<li>HAVING<ul>
+<li>HAVING 用于对汇总的GROUP BY 结果进行过滤</li>
+<li>HAVING 要求存在一个GROUP BY子句</li>
+<li>与WHERE差异：HAVING 用于汇总的组记录，WHERE 用于单个记录</li>
+</ul>
 </li>
-<li><p>なん　／　だれ（どなた）	<br>什么/谁（敬）</p>
-<p>＊なに　＆　なん<br>eg．それは　なん　ですか<br>eg．それは　だれ　ですか<br>eg．スミスさん　は　どなた　ですか</p>
+</ul>
+<h2 id="视图、索引"><a href="#视图、索引" class="headerlink" title="视图、索引"></a>视图、索引</h2><h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><ul>
+<li>基于SQL语句结果可视化的表</li>
+<li>虚拟表，不能进行索引操作</li>
+<li>主要用于简化SQL操作</li>
+<li>通过给视图访问权限保证数据安全</li>
+</ul>
+<h3 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h3><ul>
+<li>通过索引更高效地查询数据</li>
+<li>用户无法看到索引，只能用来加速查询</li>
+<li>更新一个包含索引的表需要比更新一个没有索引的表花费更多的时间，这是由于索引本身也需要更新。因此，理想的做法是仅仅在常常被搜索的列（以及表）上面创建索引。</li>
+<li>唯一索引表明此索引的每一个索引值只对应唯一的数据记录。</li>
+</ul>
+<blockquote>
+<p>// 创建索引</p>
+<p><strong>CREATE</strong> <strong>INDEX</strong> user_index<br><strong>ON</strong> <strong>user</strong> (<strong>id</strong>);</p>
+<p>//创建唯一索引</p>
+<p><strong>CREATE</strong> <strong>UNIQUE</strong> <strong>INDEX</strong> user_index<br><strong>ON</strong> <strong>user</strong> (<strong>id</strong>);</p>
+<p>//删除索引</p>
+<p><strong>ALTER</strong> <strong>TABLE</strong> <strong>user</strong><br><strong>DROP</strong> <strong>INDEX</strong> user_index;</p>
+</blockquote>
+<h2 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a>存储过程</h2><ul>
+<li>存储过程可以看成是对一系列SQL操作的批处理</li>
+<li>优点<ul>
+<li>代码封装</li>
+<li>代码复用</li>
+<li>因为是预先编译，所以性能很高</li>
+</ul>
 </li>
-<li><p>ひと／かた<br>人　<br>eg．あのひと　は　だれ　ですか<br>eg．あのかた　は　どなた　ですか</p>
+<li>创建存储过程<ul>
+<li>命令行中创建存储过程需要自定义分隔符，因为命令行是以 <code>;</code> 为结束符，而存储过程中也包含了分号，因此会错误把这部分分号当成是结束符，造成语法错误。</li>
+<li>包含 in、out 和 inout 三种参数。</li>
+<li>给变量赋值都需要用 select into 语句。</li>
+<li>每次只能给一个变量赋值，不支持集合的操作。</li>
+</ul>
 </li>
-<li><p>なんさい／おいくつですか　<br>年龄（礼貌用语）<br>eg．～は　なんさい　ですか<br>eg．～は　おいくつ　ですか</p>
-</li>
-<li><p>どうぞ<br>eg．どうぞ　よろしくあねがいします</p>
-</li>
-<li><p>どうも　ありません　ございます</p>
-</li>
-</ol>
-<h2 id="新标日003"><a href="#新标日003" class="headerlink" title="新标日003"></a>新标日003</h2><ol>
-<li><p>ここ／そこ／あそこ／どこ</p>
-<p>こちら／そちら／あちら／どちら<br>指示场所，位置关系与これ／それ／あれ相同<br>eg．ここは　デパート　です<br>eg．こちらは　デパート　です</p>
-</li>
-<li><p>～も～です<br>也</p>
-</li>
-<li><p>～は　いくらですか<br>询价<br>eg．これは　いくらですか</p>
-</li>
-<li><p>あのう</p>
-</li>
-</ol>
-<h2 id="新标日004"><a href="#新标日004" class="headerlink" title="新标日004"></a>新标日004</h2><ol>
-<li>あります／います<br>eg．へや　に　ねこ　が　います<br>eg．ねこ　は　へや　に　います<br>eg．ここ　に　ほん　が　あります<br>eg．ほん　は　ここ　に　あります<br>eg．へや　には　なにも　ありません<br>eg．へや　には　だれも　いません</li>
-<li>と<br>并列，<del>和</del></li>
-<li>うえ／した／まえ／うしろ／なか／そと<br>上下前后邻中外，表达具体位置前加の<br>eg．しくら　の　うえ　に　なこ　います<br>eg．なこ　は　はこの　なか　に　います</li>
-</ol>
+</ul>
+<blockquote>
+<p><strong>DROP</strong> <strong>PROCEDURE</strong> <strong>IF</strong> <strong>EXISTS</strong> <code>proc_adder</code>;<br>DELIMITER ;;<br><strong>CREATE</strong> DEFINER=<code>root</code>@<code>localhost</code> <strong>PROCEDURE</strong> <code>proc_adder</code>(<strong>IN</strong> a int, <strong>IN</strong> b int, <strong>OUT</strong> <strong>sum</strong> int)<br><strong>BEGIN</strong><br><strong>DECLARE</strong> c int;<br>if a is null then <strong>set</strong> a = 0;<br><strong>end</strong> <strong>if</strong>;</p>
+<p>if b is null then <strong>set</strong> b = 0;<br><strong>end</strong> <strong>if</strong>;</p>
+<p><strong>set</strong> <strong>sum</strong> = a + b;<br><strong>END</strong><br>;;<br>DELIMITER ;</p>
+</blockquote>
+<blockquote>
+<p><strong>set</strong> @b=5;<br><strong>call</strong> proc_adder(2,@b,@s);<br><strong>select</strong> @s <strong>as</strong> <strong>sum</strong>;</p>
+</blockquote>
+<h2 id="游标"><a href="#游标" class="headerlink" title="游标"></a>游标</h2><p>游标是一个存储在DBMS服务器上的数据库查询，不是SELECT语句，而是SELECT检索的结果集。</p>
+<p>主要用于交互式应用，用户需要对数据集重的任意行进行浏览和修改。</p>
+<blockquote>
+<p>DELIMITER $<br><strong>CREATE</strong> <strong>PROCEDURE</strong> getTotal()<br><strong>BEGIN</strong><br><strong>DECLARE</strong> total INT;<br><em>– 创建接收游标数据的变量</em><br><strong>DECLARE</strong> <strong>sid</strong> INT;<br><strong>DECLARE</strong> sname VARCHAR(10);<br><em>– 创建总数变量</em><br><strong>DECLARE</strong> sage INT;<br><em>– 创建结束标志变量</em><br><strong>DECLARE</strong> done INT <strong>DEFAULT</strong> false;<br><em>– 创建游标</em><br><strong>DECLARE</strong> cur <strong>CURSOR</strong> <strong>FOR</strong> <strong>SELECT</strong> <strong>id</strong>,<strong>name</strong>,age <strong>from</strong> cursor_table <strong>where</strong> age&gt;30;<br><em>– 指定游标循环结束时的返回值</em><br><strong>DECLARE</strong> CONTINUE <strong>HANDLER</strong> <strong>FOR</strong> <strong>NOT</strong> <strong>FOUND</strong> <strong>SET</strong> done = true;<br><strong>SET</strong> total = 0;<br>OPEN cur;<br>FETCH cur INTO sid, sname, sage;<br>WHILE(NOT done)<br><strong>DO</strong><br> <strong>SET</strong> total = total + 1;<br> FETCH cur INTO sid, sname, sage;<br><strong>END</strong> <strong>WHILE</strong>;</p>
+<p>CLOSE cur;<br><strong>SELECT</strong> total;<br><strong>END</strong> $<br>DELIMITER ;</p>
+<p><em>– 调用存储过程</em><br><strong>call</strong> getTotal();</p>
+</blockquote>
+<h2 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h2><p>触发器是一种与表操作有关的数据库对象，当表出现指定时间时，将调用该对象。</p>
+<h3 id="new-old"><a href="#new-old" class="headerlink" title="new/old"></a>new/old</h3><ul>
+<li>MySQL 中定义了 <code>NEW</code> 和 <code>OLD</code> 关键字，用来表示触发器的所在表中，触发了触发器的那一行数据。</li>
+<li>在 <code>INSERT</code> 型触发器中，<code>NEW</code> 用来表示将要（<code>BEFORE</code>）或已经（<code>AFTER</code>）插入的新数据；</li>
+<li>在 <code>UPDATE</code> 型触发器中，<code>OLD</code> 用来表示将要或已经被修改的原数据，<code>NEW</code> 用来表示将要或已经修改为的新数据；</li>
+<li>在 <code>DELETE</code> 型触发器中，<code>OLD</code> 用来表示将要或已经被删除的原数据；</li>
+<li>使用方法：<code>NEW.columnName</code> （columnName 为相应数据表某一列名）</li>
+</ul>
+<blockquote>
+<p>DELIMITER $<br><strong>CREATE</strong> <strong>TRIGGER</strong> <code>trigger_insert_user</code><br><strong>AFTER</strong> <strong>INSERT</strong> <strong>ON</strong> <code>user</code><br><strong>FOR</strong> <strong>EACH</strong> <strong>ROW</strong><br><strong>BEGIN</strong><br><strong>INSERT</strong> <strong>INTO</strong> <code>user_history</code>(user_id, operate_type, operate_time)<br><strong>VALUES</strong> (NEW.id, ‘add a user’, <strong>now</strong>());<br><strong>END</strong> $<br>DELIMITER ;</p>
+</blockquote>
 
                 
             </div>
@@ -528,7 +700,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://loaderland.github.io/2024/01/15/JLPT/">https://loaderland.github.io/2024/01/15/JLPT/</a>
+                    <a href="https://loaderland.github.io/2024/02/08/MySql/">https://loaderland.github.io/2024/02/08/MySql/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -566,8 +738,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E6%97%A5%E8%AF%AD/">
-                                    <span class="chip bg-color">日语</span>
+                                <a href="/tags/%E7%AC%94%E8%AE%B0/">
+                                    <span class="chip bg-color">笔记</span>
+                                </a>
+                            
+                                <a href="/tags/MySql/">
+                                    <span class="chip bg-color">MySql</span>
                                 </a>
                             
                         </div>
@@ -759,17 +935,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2024/01/17/TheSecretLivesOfKyotoFolk/">
+                <a href="/2024/02/08/MySql/">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/medias/featureimages/9.jpg" class="responsive-img" alt="TheSecretLivesOfKyotoFolk">
+                        <img src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/medias/featureimages/10.jpg" class="responsive-img" alt="MySql">
                         
-                        <span class="card-title">TheSecretLivesOfKyotoFolk</span>
+                        <span class="card-title">MySql</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -779,30 +956,31 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-01-17
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-02-08
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%BD%B1%E8%A7%86/" class="post-category">
-                                    影视
+                            <a href="/categories/CS/" class="post-category">
+                                    CS
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E4%BA%AC%E9%83%BD/">
-                        <span class="chip bg-color">京都</span>
+                    <a href="/tags/%E7%AC%94%E8%AE%B0/">
+                        <span class="chip bg-color">笔记</span>
                     </a>
                     
-                    <a href="/tags/%E7%BA%AA%E5%BD%95%E7%89%87/">
-                        <span class="chip bg-color">纪录片</span>
+                    <a href="/tags/MySql/">
+                        <span class="chip bg-color">MySql</span>
                     </a>
                     
                 </div>
@@ -816,13 +994,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/01/03/Lijingming/">
+                <a href="/2024/02/08/MyBatis/">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/medias/featureimages/6.jpg" class="responsive-img" alt="Lijingming">
+                        <img src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/medias/featureimages/13.jpg" class="responsive-img" alt="MyBatis">
                         
-                        <span class="card-title">Lijingming</span>
+                        <span class="card-title">MyBatis</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -833,14 +1011,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-01-03
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-02-08
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/video/" class="post-category">
-                                    video
+                            <a href="/categories/CS/" class="post-category">
+                                    CS
                                 </a>
                             
                             
@@ -850,12 +1028,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%9D%8E%E9%87%91%E6%98%8E/">
-                        <span class="chip bg-color">李金明</span>
+                    <a href="/tags/%E7%AC%94%E8%AE%B0/">
+                        <span class="chip bg-color">笔记</span>
                     </a>
                     
-                    <a href="/tags/%E9%97%AB%E6%B3%BD%E6%AC%A2/">
-                        <span class="chip bg-color">闫泽欢</span>
+                    <a href="/tags/MyBatis/">
+                        <span class="chip bg-color">MyBatis</span>
                     </a>
                     
                 </div>

@@ -381,14 +381,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-02-06
+                    2024-02-07
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    477
+                    529
                 </div>
                 
 
@@ -405,7 +405,9 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Nacos"><a href="#Nacos" class="headerlink" title="Nacos"></a>Nacos</h1><h2 id="aliyunECS部署单机nacos"><a href="#aliyunECS部署单机nacos" class="headerlink" title="aliyunECS部署单机nacos"></a>aliyunECS部署单机nacos</h2><pre class=" language-bash"><code class="language-bash">yum <span class="token function">install</span> -y java-1.8.0-openjdk-devel.x86_64
+                <h1 id="Nacos"><a href="#Nacos" class="headerlink" title="Nacos"></a>Nacos</h1><p>nacos本质上也是一个springboot 项目</p>
+<h2 id="aliyunECS部署单机nacos"><a href="#aliyunECS部署单机nacos" class="headerlink" title="aliyunECS部署单机nacos"></a>aliyunECS部署单机nacos</h2><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># java环境依赖</span>
+yum <span class="token function">install</span> -y java-1.8.0-openjdk-devel.x86_64
 </code></pre>
 <p><a target="_blank" rel="noopener" href="https://github.com/alibaba/nacos/releases">下载nacostar.gz</a></p>
 <pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 解压</span>
@@ -551,6 +553,13 @@
     <span class="token punctuation">}</span>
 
 <span class="token punctuation">}</span>
+</code></pre>
+<h2 id="nacos鉴权开启"><a href="#nacos鉴权开启" class="headerlink" title="nacos鉴权开启"></a>nacos鉴权开启</h2><pre class=" language-bash"><code class="language-bash"><span class="token function">cd</span> /opt/nacos/conf
+<span class="token function">vi</span> application.properties
+<span class="token operator">></span> nacos.core.auth.enabled<span class="token operator">=</span>true
+nacos.core.auth.server.identity.key<span class="token operator">=</span>***
+nacos.core.auth.server.identity.value<span class="token operator">=</span>***
+nacos.core.auth.plugin.nacos.token.secret.key<span class="token operator">=</span>***
 </code></pre>
 
                 
@@ -809,18 +818,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2024/02/06/nacos/">
+                <a href="/2024/02/08/MyBatis/">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/medias/featureimages/4.jpg" class="responsive-img" alt="nacos">
+                        <img src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/medias/featureimages/13.jpg" class="responsive-img" alt="MyBatis">
                         
-                        <span class="card-title">nacos</span>
+                        <span class="card-title">MyBatis</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -830,9 +838,9 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-02-06
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-02-08
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -845,12 +853,15 @@
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/nacos/">
-                        <span class="chip bg-color">nacos</span>
+                    <a href="/tags/%E7%AC%94%E8%AE%B0/">
+                        <span class="chip bg-color">笔记</span>
+                    </a>
+                    
+                    <a href="/tags/MyBatis/">
+                        <span class="chip bg-color">MyBatis</span>
                     </a>
                     
                 </div>
