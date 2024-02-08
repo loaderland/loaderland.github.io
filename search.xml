@@ -92,14 +92,16 @@
       
       <categories>
           
-          <category> 讲座 </category>
+          <category> 影视 </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> 记录 </tag>
+            <tag> 讲座 </tag>
+            
+            <tag> 笔录 </tag>
             
         </tags>
       
@@ -117,7 +119,7 @@
       
       <categories>
           
-          <category> 杂念 </category>
+          <category> 杂文 </category>
           
       </categories>
       
@@ -203,6 +205,8 @@
             
             <tag> 纪录片 </tag>
             
+            <tag> 京都人的秘密欢愉 </tag>
+            
         </tags>
       
     </entry>
@@ -244,7 +248,7 @@
       
       <categories>
           
-          <category> video </category>
+          <category> 影视 </category>
           
       </categories>
       
@@ -271,7 +275,7 @@
       
       <categories>
           
-          <category> 杂念 </category>
+          <category> 杂文 </category>
           
       </categories>
       
@@ -296,7 +300,7 @@
       
       <categories>
           
-          <category> hexoInitGuide </category>
+          <category> CS </category>
           
       </categories>
       
