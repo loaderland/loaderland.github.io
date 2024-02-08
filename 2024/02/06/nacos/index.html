@@ -381,14 +381,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-02-07
+                    2024-02-08
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    529
+                    893
                 </div>
                 
 
@@ -443,22 +443,26 @@ yum <span class="token function">install</span> -y java-1.8.0-openjdk-devel.x86_
         <span class="token keyword">try</span> <span class="token punctuation">{</span>
 <span class="token comment" spellcheck="true">//            String serverAddr = "172.23.74.116:8848";</span>
             String serverAddr <span class="token operator">=</span> <span class="token string">"114.55.131.223:8848"</span><span class="token punctuation">;</span>
-            String dataId <span class="token operator">=</span> <span class="token string">"test1"</span><span class="token punctuation">;</span>
+            String dataId <span class="token operator">=</span> <span class="token string">"druidDemoDev"</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//            String dataId = "test1";</span>
             String group <span class="token operator">=</span> <span class="token string">"DEFAULT_GROUP"</span><span class="token punctuation">;</span>
             String content <span class="token operator">=</span> <span class="token string">"testContent"</span><span class="token punctuation">;</span>
             Properties properties <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Properties</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
             properties<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"serverAddr"</span><span class="token punctuation">,</span> serverAddr<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            properties<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>PropertyKeyConst<span class="token punctuation">.</span>NAMESPACE<span class="token punctuation">,</span> <span class="token string">"public"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            ConfigService configService <span class="token operator">=</span> NacosFactory<span class="token punctuation">.</span><span class="token function">createConfigService</span><span class="token punctuation">(</span>serverAddr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//            properties.put(PropertyKeyConst.NAMESPACE, "public");</span>
+            properties<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>PropertyKeyConst<span class="token punctuation">.</span>NAMESPACE<span class="token punctuation">,</span> <span class="token string">"2ce82298-746d-4566-aef5-88508bb20294"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            properties<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>PropertyKeyConst<span class="token punctuation">.</span>USERNAME<span class="token punctuation">,</span> <span class="token string">"nacos"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            properties<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>PropertyKeyConst<span class="token punctuation">.</span>PASSWORD<span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            ConfigService configService <span class="token operator">=</span> NacosFactory<span class="token punctuation">.</span><span class="token function">createConfigService</span><span class="token punctuation">(</span>properties<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-            <span class="token function">create</span><span class="token punctuation">(</span>configService<span class="token punctuation">,</span> <span class="token string">"createTesting"</span><span class="token punctuation">,</span> group<span class="token punctuation">,</span> <span class="token string">"createTesting"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//            create(configService, "createTesting", group, "createTesting");</span>
 
             String newContent <span class="token operator">=</span> <span class="token string">"testUpdateTesting"</span> <span class="token operator">+</span> LocalDateTime<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token function">update</span><span class="token punctuation">(</span>configService<span class="token punctuation">,</span> dataId<span class="token punctuation">,</span> group<span class="token punctuation">,</span> newContent<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//            update(configService, dataId, group, newContent);</span>
 
             <span class="token function">pull</span><span class="token punctuation">(</span>configService<span class="token punctuation">,</span> dataId<span class="token punctuation">,</span> group<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token function">listener</span><span class="token punctuation">(</span>configService<span class="token punctuation">,</span> dataId<span class="token punctuation">,</span> group<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
+<span class="token comment" spellcheck="true">//            listener(configService, dataId, group);</span>
+<span class="token comment" spellcheck="true">//            ServiceInit.serviceCall();</span>
 <span class="token comment" spellcheck="true">//             阻塞主线程，保持监听状态</span>
             <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
                 <span class="token keyword">try</span> <span class="token punctuation">{</span>
@@ -561,6 +565,66 @@ nacos.core.auth.server.identity.key<span class="token operator">=</span>***
 nacos.core.auth.server.identity.value<span class="token operator">=</span>***
 nacos.core.auth.plugin.nacos.token.secret.key<span class="token operator">=</span>***
 </code></pre>
+<h2 id="Springboot整合nacos"><a href="#Springboot整合nacos" class="headerlink" title="Springboot整合nacos"></a>Springboot整合nacos</h2><p>pom.xml依赖增加，<strong>注意springboot、springcloud和nacos三者之间的版本兼容问题</strong>，如果springboot和springcloud不兼容会出现bean创建失败无法启动<br><a target="_blank" rel="noopener" href="https://spring.io/projects/spring-cloud">spring-cloud</a>我这边使用的springboot版本为2.7.2对应cloud为2021.0.x，在2020.0.x版本开始默认不开启bootstrap会导致bootstrap.yml加载不进来，所以这边又在pom中增加了spring-cloud-starter-bootstrap的依赖</p>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>com.alibaba.nacos<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>nacos-client<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>2.2.2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>com.alibaba.cloud<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-cloud-starter-alibaba-nacos-config<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>2021.0.5.0<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>com.alibaba.cloud<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-cloud-starter-alibaba-nacos-discovery<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>2021.0.5.0<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.cloud<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-cloud-starter-bootstrap<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>3.0.3<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+</code></pre>
+<p>增加注解</p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@SpringBootApplication</span>
+<span class="token annotation punctuation">@EnableDiscoveryClient</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DruidDemoApplication</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        SpringApplication<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span>DruidDemoApplication<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> args<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+</code></pre>
+<p>bootstrap.yml</p>
+<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">spring</span><span class="token punctuation">:</span>
+  <span class="token key atrule">application</span><span class="token punctuation">:</span>
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> druidDemoDev    <span class="token comment" spellcheck="true">#为服务名</span>
+  <span class="token key atrule">cloud</span><span class="token punctuation">:</span>
+    <span class="token key atrule">nacos</span><span class="token punctuation">:</span>
+      <span class="token key atrule">username</span><span class="token punctuation">:</span> nacos
+      <span class="token key atrule">password</span><span class="token punctuation">:</span> 
+      <span class="token key atrule">discovery</span><span class="token punctuation">:</span>
+      <span class="token comment" spellcheck="true"># namespace 只识别命名空间id</span>
+        <span class="token key atrule">namespace</span><span class="token punctuation">:</span> 2ce82298<span class="token punctuation">-</span>746d<span class="token punctuation">-</span>4566<span class="token punctuation">-</span>aef5<span class="token punctuation">-</span>88508bb20294
+        <span class="token key atrule">group</span><span class="token punctuation">:</span> DEFAULT_GROUP
+        <span class="token key atrule">server-addr</span><span class="token punctuation">:</span> 114.55.131.223<span class="token punctuation">:</span><span class="token number">8848</span>
+      <span class="token key atrule">config</span><span class="token punctuation">:</span>
+        <span class="token key atrule">file-extension</span><span class="token punctuation">:</span> yaml <span class="token comment" spellcheck="true">#后缀名，只支持 properties 和 yaml 类型</span>
+        <span class="token key atrule">prefix</span><span class="token punctuation">:</span> druidDemoDev <span class="token comment" spellcheck="true">#文件名，如果没有配置则默认为 ${spring.appliction.name}</span>
+        <span class="token key atrule">namespace</span><span class="token punctuation">:</span> 2ce82298<span class="token punctuation">-</span>746d<span class="token punctuation">-</span>4566<span class="token punctuation">-</span>aef5<span class="token punctuation">-</span>88508bb20294
+        <span class="token key atrule">auto-refresh</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+        <span class="token key atrule">enable-remote-sync-config</span><span class="token punctuation">:</span> <span class="token boolean important">true </span><span class="token comment" spellcheck="true">#启用远程同步配置,</span>
+        <span class="token key atrule">timeout</span><span class="token punctuation">:</span> <span class="token number">3000</span>
+        <span class="token key atrule">group</span><span class="token punctuation">:</span> DEFAULT_GROUP  <span class="token comment" spellcheck="true">#配置组</span>
+        <span class="token key atrule">refresh-enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+        <span class="token key atrule">server-addr</span><span class="token punctuation">:</span> 114.55.131.223<span class="token punctuation">:</span><span class="token number">8848</span>
+<span class="token key atrule">server</span><span class="token punctuation">:</span>
+  <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">8090</span>
+</code></pre>
+<p><img src="https://oss.luhuhu.cn/202402081515329.png" alt="image-20240208151516360"></p>
 
                 
             </div>
