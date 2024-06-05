@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Docker, keywords">
+    <meta name="keywords" content="MySql-cnf, keywords">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Docker | LoaderLand</title>
+    <title>MySql-cnf | LoaderLand</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/awesome/css/all.css">
@@ -241,12 +241,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://oss.luhuhu.cn/202406051057598.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Docker</h1>
+                    <h1 class="description center-align post-title">MySql-cnf</h1>
                 </div>
             </div>
         </div>
@@ -362,8 +362,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/docker/">
-                                <span class="chip bg-color">docker</span>
+                            <a href="/tags/MySql/">
+                                <span class="chip bg-color">MySql</span>
                             </a>
                         
                     </div>
@@ -387,21 +387,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-05-20
+                    2024-06-04
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-05-20
+                    2024-06-05
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    566
+                    513
                 </div>
                 
 
@@ -418,19 +418,44 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><h3 id="镜像（Image）"><a href="#镜像（Image）" class="headerlink" title="镜像（Image）"></a>镜像（Image）</h3><blockquote>
-<p><strong>Docker 镜像</strong> 是一个特殊的文件系统，除了提供容器运行时所需的程序、库、资源、配置等文件外，还包含了一些为运行时准备的一些配置参数（如匿名卷、环境变量、用户等）。镜像 <strong>不包含</strong> 任何动态数据，其内容在构建之后也不会被改变。</p>
-</blockquote>
-<h3 id="容器-Container"><a href="#容器-Container" class="headerlink" title="容器(Container)"></a>容器(Container)</h3><blockquote>
-<p>镜像（<code>Image</code>）和容器（<code>Container</code>）的关系，就像是面向对象程序设计中的 <code>类</code> 和 <code>实例</code> 一样，镜像是静态的定义，容器是镜像运行时的实体。容器可以被创建、启动、停止、删除、暂停等。</p>
-<p>容器的实质是进程，但与直接在宿主执行的进程不同，容器进程运行于属于自己的独立的 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Linux_namespaces">命名空间</a>。因此容器可以拥有自己的 <code>root</code> 文件系统、自己的网络配置、自己的进程空间，甚至自己的用户 ID 空间。容器内的进程是运行在一个隔离的环境里，使用起来，就好像是在一个独立于宿主的系统下操作一样。这种特性使得容器封装的应用比直接在宿主运行更加安全。也因为这种隔离的特性，很多人初学 Docker 时常常会混淆容器和虚拟机。</p>
-<p>按照 Docker 最佳实践的要求，容器不应该向其存储层内写入任何数据，容器存储层要保持无状态化。所有的文件写入操作，都应该使用 <a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/data_management/volume">数据卷（Volume）</a>、或者 <a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/data_management/bind-mounts">绑定宿主目录</a>，在这些位置的读写会跳过容器存储层，直接对宿主（或网络存储）发生读写，其性能和稳定性更高。</p>
-<p>数据卷的生存周期独立于容器，容器消亡，数据卷不会消亡。因此，使用数据卷后，容器删除或者重新运行之后，数据却不会丢失。</p>
-</blockquote>
-<h3 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h3><blockquote>
-<p>镜像构建完成后，可以很容易的在当前宿主机上运行，但是，如果需要在其它服务器上使用这个镜像，我们就需要一个集中的存储、分发镜像的服务，<a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/repository/registry">Docker Registry</a> 就是这样的服务。</p>
-</blockquote>
+                <h1 id="MySQL配置解析"><a href="#MySQL配置解析" class="headerlink" title="MySQL配置解析"></a>MySQL配置解析</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u010797364/article/details/123356025">cnf配置优化</a></p>
+<h2 id="TIPS"><a href="#TIPS" class="headerlink" title="TIPS"></a>TIPS</h2><p><code>socket</code>是一种抽象层，应用程序通过它收发数据，用于<code>本地连接</code>（同一台机器的客户端和服务器），这种通信方式比<code>TCP/IP</code>更快，因为避免了网络协议栈的开销</p>
+<h2 id="client"><a href="#client" class="headerlink" title="[client]"></a>[client]</h2><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 客户端连接信息端口号、socket路径，字符集</span>
+port <span class="token operator">=</span> 3306
+socket <span class="token operator">=</span> /path/***.sock
+default-character-set<span class="token operator">=</span>utf8mb4
+</code></pre>
+<h2 id="mysqld"><a href="#mysqld" class="headerlink" title="[mysqld]"></a>[mysqld]</h2><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># mysql基本配置信息，监听的IP、端口号、socket路径、数据目录、临时目录</span>
+bind-address <span class="token operator">=</span> 0.0.0.0 <span class="token comment" spellcheck="true"># 默认0.0.0.0 监听所有来源IP的访问</span>
+port <span class="token operator">=</span> 3306 <span class="token comment" spellcheck="true"># 默认3306端口，需要和client端口保持一致</span>
+pid-file <span class="token operator">=</span> /path/***.pid <span class="token comment" spellcheck="true"># 唯一数字标识符，标识MySQL服务器进程避免冲突</span>
+socket <span class="token operator">=</span> /path/***.sock <span class="token comment" spellcheck="true"># 本地socket访问，需要和client保持一致</span>
+basedir <span class="token operator">=</span> /path/mysql
+datadir <span class="token operator">=</span> /path/mysql/data
+tmpdir <span class="token operator">=</span> /path/mysql/tmp
 
+<span class="token comment" spellcheck="true"># 监听队列连接数上限，如果有搞的连接率需求且出现connection refused</span>
+back-log <span class="token operator">=</span> 50 
+
+<span class="token comment" spellcheck="true"># 关闭TCP/IP监听，当服务器只允许本地访问数据库时，增强安全</span>
+<span class="token comment" spellcheck="true"># skip-networking</span>
+
+<span class="token comment" spellcheck="true"># 服务所允许的会话数上限</span>
+max_connections <span class="token operator">=</span> 100
+<span class="token variable"><span class="token variable">`</span>max_connections 控制的是 MySQL 服务器允许的并发连接总数，而 back_log 控制的是在短时间内可以积压的未完成连接请求的数量。
+<span class="token variable">`</span></span>max_connections 影响的是服务器处理连接的能力，而 back_log 影响的是服务器在网络繁忙时处理新连接请求的能力。
+<span class="token variable"><span class="token variable">`</span>max_connections 的值通常设置得较高，以适应预期的并发用户数，而 back_log 的值通常设置得较低，因为它只在网络端口非常繁忙时起作用。<span class="token variable">`</span></span>
+
+<span class="token comment" spellcheck="true"># 每个客户端连接最大错误允许数量</span>
+max_connect_errors <span class="token operator">=</span> 10
+
+<span class="token comment" spellcheck="true"># 所有线程所打开表的数量，决定了服务器可以同时打开的表的最大数量.</span>
+<span class="token comment" spellcheck="true"># 增加此值就增加了mysqld所需要的文件描述符的数量</span>
+<span class="token comment" spellcheck="true"># 这样你需要确认在[mysqld_safe]中 “open-files-limit” 变量设置打开文件数量允许至少4096</span>
+table_cache <span class="token operator">=</span> 2048
+</code></pre>
+<hr>
+<h2 id="mysqldump"><a href="#mysqldump" class="headerlink" title="[mysqldump]"></a>[mysqldump]</h2><h2 id="mysql"><a href="#mysql" class="headerlink" title="[mysql]"></a>[mysql]</h2><h2 id="myisamchk"><a href="#myisamchk" class="headerlink" title="[myisamchk]"></a>[myisamchk]</h2><h2 id="mysqlhotcopy"><a href="#mysqlhotcopy" class="headerlink" title="[mysqlhotcopy]"></a>[mysqlhotcopy]</h2>
                 
             </div>
             <hr/>
@@ -456,7 +481,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://loaderland.github.io/2024/05/20/Docker/">https://loaderland.github.io/2024/05/20/Docker/</a>
+                    <a href="https://loaderland.github.io/2024/06/04/MySql-cnf/">https://loaderland.github.io/2024/06/04/MySql-cnf/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -494,8 +519,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/docker/">
-                                    <span class="chip bg-color">docker</span>
+                                <a href="/tags/MySql/">
+                                    <span class="chip bg-color">MySql</span>
                                 </a>
                             
                         </div>
@@ -691,12 +716,12 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2024/06/04/MySql-cnf/">
+                <a href="/2024/06/05/Mysql-replication/">
                     <div class="card-image">
                         
-                        <img src="https://oss.luhuhu.cn/202406051057598.png" class="responsive-img" alt="MySql-cnf">
+                        <img src="https://oss.luhuhu.cn/202406051057598.png" class="responsive-img" alt="Mysql-replication">
                         
-                        <span class="card-title">MySql-cnf</span>
+                        <span class="card-title">Mysql-replication</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -707,7 +732,7 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-06-04
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-06-05
                         </span>
                         <span class="publish-author">
                             
@@ -739,13 +764,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/05/20/Redis/">
+                <a href="/2024/05/20/Docker/">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/medias/featureimages/11.jpg" class="responsive-img" alt="Redis">
+                        <img src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/medias/featureimages/0.jpg" class="responsive-img" alt="Docker">
                         
-                        <span class="card-title">Redis</span>
+                        <span class="card-title">Docker</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -773,8 +798,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/redis/">
-                        <span class="chip bg-color">redis</span>
+                    <a href="/tags/docker/">
+                        <span class="chip bg-color">docker</span>
                     </a>
                     
                 </div>

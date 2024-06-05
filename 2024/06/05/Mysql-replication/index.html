@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="MySql, keywords">
+    <meta name="keywords" content="Mysql-replication, keywords">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>MySql | LoaderLand</title>
+    <title>Mysql-replication | LoaderLand</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/awesome/css/all.css">
@@ -29,9 +29,9 @@
 
     <script src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 7.0.0"><link rel="alternate" href="/atom.xml" title="LoaderLand" type="application/atom+xml">
-
+<meta name="generator" content="Hexo 7.0.0">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="LoaderLand" type="application/atom+xml">
 <link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
@@ -225,15 +225,28 @@
 </header>
 
     
+<script src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/medias/featureimages/10.jpg')">
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://oss.luhuhu.cn/202406051057598.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">MySql</h1>
+                    <h1 class="description center-align post-title">Mysql-replication</h1>
                 </div>
             </div>
         </div>
@@ -349,10 +362,6 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E7%AC%94%E8%AE%B0/">
-                                <span class="chip bg-color">笔记</span>
-                            </a>
-                        
                             <a href="/tags/MySql/">
                                 <span class="chip bg-color">MySql</span>
                             </a>
@@ -378,21 +387,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-02-08
+                    2024-06-05
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-05-24
+                    2024-06-05
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    10.7k
+                    9.2k
                 </div>
                 
 
@@ -409,273 +418,8 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h1><h2 id="mysql基础"><a href="#mysql基础" class="headerlink" title="mysql基础"></a>mysql基础</h2><h3 id="SQL分类"><a href="#SQL分类" class="headerlink" title="SQL分类"></a>SQL分类</h3><h4 id="DDL数据定义语言"><a href="#DDL数据定义语言" class="headerlink" title="DDL数据定义语言"></a>DDL数据定义语言</h4><p>定义数据库对象，核心指令<strong>CREATE、ALTER、DROP</strong></p>
-<h4 id="DML数据库操纵语言"><a href="#DML数据库操纵语言" class="headerlink" title="DML数据库操纵语言"></a>DML数据库操纵语言</h4><p>访问数据CRUD（CREATE，READ，UPDATE，DELETE），即增删改查</p>
-<h4 id="TCL事务控制语言"><a href="#TCL事务控制语言" class="headerlink" title="TCL事务控制语言"></a>TCL事务控制语言</h4><p>管理数据库中的事务，核心指令COMMIT、ROLLBAK</p>
-<h4 id="DCL数据控制语言"><a href="#DCL数据控制语言" class="headerlink" title="DCL数据控制语言"></a>DCL数据控制语言</h4><p>对数据访问权控制，核心指令GRANT,REVOKE</p>
-<p>可以控制的权限有：CONNECT,SELECT,INSERT,UPDATE,DELETE,EXECUTE,USAGE,REFERENCES</p>
-<h3 id="连接和组合"><a href="#连接和组合" class="headerlink" title="连接和组合"></a>连接和组合</h3><h4 id="JOIN"><a href="#JOIN" class="headerlink" title="JOIN"></a>JOIN</h4><p>连接可以代替子查询，效率一般比子查询高。</p>
-<p><img src="https://oss.luhuhu.cn/202402080934962.png" alt="join"></p>
-<h4 id="组合"><a href="#组合" class="headerlink" title="组合"></a>组合</h4><p>UNION会去除相同行，UNION ALL 会保留相同行。</p>
-<p>JOIN vs UNION：</p>
-<ul>
-<li>JOIN 中连接的列可能不同，UNION中列、列顺序必须相同</li>
-<li>UNION 讲查询结果行放在一起（垂直放置）但JOIN将查询结果列放在一起（水平放置），即它构成一个笛卡尔积</li>
-</ul>
-<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><h4 id="文本处理"><a href="#文本处理" class="headerlink" title="文本处理"></a>文本处理</h4><table>
-<thead>
-<tr>
-<th align="left">函数</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><code>LEFT()</code>、<code>RIGHT()</code></td>
-<td align="left">左边或者右边的字符</td>
-</tr>
-<tr>
-<td align="left"><code>LOWER()</code>、<code>UPPER()</code></td>
-<td align="left">转换为小写或者大写</td>
-</tr>
-<tr>
-<td align="left"><code>LTRIM()</code>、<code>RTIM()</code></td>
-<td align="left">去除左边或者右边的空格</td>
-</tr>
-<tr>
-<td align="left"><code>LENGTH()</code></td>
-<td align="left">长度</td>
-</tr>
-<tr>
-<td align="left"><code>SOUNDEX()</code></td>
-<td align="left">转换为语音值</td>
-</tr>
-</tbody></table>
-<h4 id="日期和时间处理"><a href="#日期和时间处理" class="headerlink" title="日期和时间处理"></a>日期和时间处理</h4><table>
-<thead>
-<tr>
-<th align="left">函 数</th>
-<th align="left">说 明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><code>AddDate()</code></td>
-<td align="left">增加一个日期（天、周等）</td>
-</tr>
-<tr>
-<td align="left"><code>AddTime()</code></td>
-<td align="left">增加一个时间（时、分等）</td>
-</tr>
-<tr>
-<td align="left"><code>CurDate()</code></td>
-<td align="left">返回当前日期</td>
-</tr>
-<tr>
-<td align="left"><code>CurTime()</code></td>
-<td align="left">返回当前时间</td>
-</tr>
-<tr>
-<td align="left"><code>Date()</code></td>
-<td align="left">返回日期时间的日期部分</td>
-</tr>
-<tr>
-<td align="left"><code>DateDiff()</code></td>
-<td align="left">计算两个日期之差</td>
-</tr>
-<tr>
-<td align="left"><code>Date_Add()</code></td>
-<td align="left">高度灵活的日期运算函数</td>
-</tr>
-<tr>
-<td align="left"><code>Date_Format()</code></td>
-<td align="left">返回一个格式化的日期或时间串</td>
-</tr>
-<tr>
-<td align="left"><code>Day()</code></td>
-<td align="left">返回一个日期的天数部分</td>
-</tr>
-<tr>
-<td align="left"><code>DayOfWeek()</code></td>
-<td align="left">对于一个日期，返回对应的星期几</td>
-</tr>
-<tr>
-<td align="left"><code>Hour()</code></td>
-<td align="left">返回一个时间的小时部分</td>
-</tr>
-<tr>
-<td align="left"><code>Minute()</code></td>
-<td align="left">返回一个时间的分钟部分</td>
-</tr>
-<tr>
-<td align="left"><code>Month()</code></td>
-<td align="left">返回一个日期的月份部分</td>
-</tr>
-<tr>
-<td align="left"><code>Now()</code></td>
-<td align="left">返回当前日期和时间</td>
-</tr>
-<tr>
-<td align="left"><code>Second()</code></td>
-<td align="left">返回一个时间的秒部分</td>
-</tr>
-<tr>
-<td align="left"><code>Time()</code></td>
-<td align="left">返回一个日期时间的时间部分</td>
-</tr>
-<tr>
-<td align="left"><code>Year()</code></td>
-<td align="left">返回一个日期的年份部分</td>
-</tr>
-</tbody></table>
-<h4 id="数值处理"><a href="#数值处理" class="headerlink" title="数值处理"></a>数值处理</h4><table>
-<thead>
-<tr>
-<th align="left">函数</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">SIN()</td>
-<td align="left">正弦</td>
-</tr>
-<tr>
-<td align="left">COS()</td>
-<td align="left">余弦</td>
-</tr>
-<tr>
-<td align="left">TAN()</td>
-<td align="left">正切</td>
-</tr>
-<tr>
-<td align="left">ABS()</td>
-<td align="left">绝对值</td>
-</tr>
-<tr>
-<td align="left">SQRT()</td>
-<td align="left">平方根</td>
-</tr>
-<tr>
-<td align="left">MOD()</td>
-<td align="left">余数</td>
-</tr>
-<tr>
-<td align="left">EXP()</td>
-<td align="left">指数</td>
-</tr>
-<tr>
-<td align="left">PI()</td>
-<td align="left">圆周率</td>
-</tr>
-<tr>
-<td align="left">RAND()</td>
-<td align="left">随机数</td>
-</tr>
-</tbody></table>
-<h4 id="汇总"><a href="#汇总" class="headerlink" title="汇总"></a>汇总</h4><table>
-<thead>
-<tr>
-<th align="left">函 数</th>
-<th align="left">说 明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><code>AVG()</code></td>
-<td align="left">返回某列的平均值</td>
-</tr>
-<tr>
-<td align="left"><code>COUNT()</code></td>
-<td align="left">返回某列的行数</td>
-</tr>
-<tr>
-<td align="left"><code>MAX()</code></td>
-<td align="left">返回某列的最大值</td>
-</tr>
-<tr>
-<td align="left"><code>MIN()</code></td>
-<td align="left">返回某列的最小值</td>
-</tr>
-<tr>
-<td align="left"><code>SUM()</code></td>
-<td align="left">返回某列值之和</td>
-</tr>
-</tbody></table>
-<h3 id="排序与分组"><a href="#排序与分组" class="headerlink" title="排序与分组"></a>排序与分组</h3><h4 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h4><p>ORDER BY ASC/DESC;</p>
-<blockquote>
-<p>// 指定多个列的排序方向</p>
-<p><strong>SELECT</strong> * <strong>FROM</strong> products<br><strong>ORDER</strong> <strong>BY</strong> prod_price <strong>DESC</strong>, prod_name <strong>ASC</strong>;</p>
-</blockquote>
-<h4 id="分组"><a href="#分组" class="headerlink" title="分组"></a>分组</h4><ul>
-<li>GROUP BY</li>
-<li>HAVING<ul>
-<li>HAVING 用于对汇总的GROUP BY 结果进行过滤</li>
-<li>HAVING 要求存在一个GROUP BY子句</li>
-<li>与WHERE差异：HAVING 用于汇总的组记录，WHERE 用于单个记录</li>
-</ul>
-</li>
-</ul>
-<h3 id="视图、索引"><a href="#视图、索引" class="headerlink" title="视图、索引"></a>视图、索引</h3><h4 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h4><ul>
-<li>基于SQL语句结果可视化的表</li>
-<li>虚拟表，不能进行索引操作</li>
-<li>主要用于简化SQL操作</li>
-<li>通过给视图访问权限保证数据安全</li>
-</ul>
-<h4 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h4><ul>
-<li>通过索引更高效地查询数据</li>
-<li>用户无法看到索引，只能用来加速查询</li>
-<li>更新一个包含索引的表需要比更新一个没有索引的表花费更多的时间，这是由于索引本身也需要更新。因此，理想的做法是仅仅在常常被搜索的列（以及表）上面创建索引。</li>
-<li>唯一索引表明此索引的每一个索引值只对应唯一的数据记录。</li>
-</ul>
-<blockquote>
-<p>// 创建索引</p>
-<p><strong>CREATE</strong> <strong>INDEX</strong> user_index<br><strong>ON</strong> <strong>user</strong> (<strong>id</strong>);</p>
-<p>//创建唯一索引</p>
-<p><strong>CREATE</strong> <strong>UNIQUE</strong> <strong>INDEX</strong> user_index<br><strong>ON</strong> <strong>user</strong> (<strong>id</strong>);</p>
-<p>//删除索引</p>
-<p><strong>ALTER</strong> <strong>TABLE</strong> <strong>user</strong><br><strong>DROP</strong> <strong>INDEX</strong> user_index;</p>
-</blockquote>
-<h3 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a>存储过程</h3><ul>
-<li>存储过程可以看成是对一系列SQL操作的批处理</li>
-<li>优点<ul>
-<li>代码封装</li>
-<li>代码复用</li>
-<li>因为是预先编译，所以性能很高</li>
-</ul>
-</li>
-<li>创建存储过程<ul>
-<li>命令行中创建存储过程需要自定义分隔符，因为命令行是以 <code>;</code> 为结束符，而存储过程中也包含了分号，因此会错误把这部分分号当成是结束符，造成语法错误。</li>
-<li>包含 in、out 和 inout 三种参数。</li>
-<li>给变量赋值都需要用 select into 语句。</li>
-<li>每次只能给一个变量赋值，不支持集合的操作。</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<p><strong>DROP</strong> <strong>PROCEDURE</strong> <strong>IF</strong> <strong>EXISTS</strong> <code>proc_adder</code>;<br>DELIMITER ;;<br><strong>CREATE</strong> DEFINER=<code>root</code>@<code>localhost</code> <strong>PROCEDURE</strong> <code>proc_adder</code>(<strong>IN</strong> a int, <strong>IN</strong> b int, <strong>OUT</strong> <strong>sum</strong> int)<br><strong>BEGIN</strong><br><strong>DECLARE</strong> c int;<br>if a is null then <strong>set</strong> a = 0;<br><strong>end</strong> <strong>if</strong>;</p>
-<p>if b is null then <strong>set</strong> b = 0;<br><strong>end</strong> <strong>if</strong>;</p>
-<p><strong>set</strong> <strong>sum</strong> = a + b;<br><strong>END</strong><br>;;<br>DELIMITER ;</p>
-</blockquote>
-<blockquote>
-<p><strong>set</strong> @b=5;<br><strong>call</strong> proc_adder(2,@b,@s);<br><strong>select</strong> @s <strong>as</strong> <strong>sum</strong>;</p>
-</blockquote>
-<h3 id="游标"><a href="#游标" class="headerlink" title="游标"></a>游标</h3><p>游标是一个存储在DBMS服务器上的数据库查询，不是SELECT语句，而是SELECT检索的结果集。</p>
-<p>主要用于交互式应用，用户需要对数据集重的任意行进行浏览和修改。</p>
-<blockquote>
-<p>DELIMITER $<br><strong>CREATE</strong> <strong>PROCEDURE</strong> getTotal()<br><strong>BEGIN</strong><br><strong>DECLARE</strong> total INT;<br><em>– 创建接收游标数据的变量</em><br><strong>DECLARE</strong> <strong>sid</strong> INT;<br><strong>DECLARE</strong> sname VARCHAR(10);<br><em>– 创建总数变量</em><br><strong>DECLARE</strong> sage INT;<br><em>– 创建结束标志变量</em><br><strong>DECLARE</strong> done INT <strong>DEFAULT</strong> false;<br><em>– 创建游标</em><br><strong>DECLARE</strong> cur <strong>CURSOR</strong> <strong>FOR</strong> <strong>SELECT</strong> <strong>id</strong>,<strong>name</strong>,age <strong>from</strong> cursor_table <strong>where</strong> age&gt;30;<br><em>– 指定游标循环结束时的返回值</em><br><strong>DECLARE</strong> CONTINUE <strong>HANDLER</strong> <strong>FOR</strong> <strong>NOT</strong> <strong>FOUND</strong> <strong>SET</strong> done = true;<br><strong>SET</strong> total = 0;<br>OPEN cur;<br>FETCH cur INTO sid, sname, sage;<br>WHILE(NOT done)<br><strong>DO</strong><br> <strong>SET</strong> total = total + 1;<br> FETCH cur INTO sid, sname, sage;<br><strong>END</strong> <strong>WHILE</strong>;</p>
-<p>CLOSE cur;<br><strong>SELECT</strong> total;<br><strong>END</strong> $<br>DELIMITER ;</p>
-<p><em>– 调用存储过程</em><br><strong>call</strong> getTotal();</p>
-</blockquote>
-<h3 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h3><p>触发器是一种与表操作有关的数据库对象，当表出现指定时间时，将调用该对象。</p>
-<h4 id="new-old"><a href="#new-old" class="headerlink" title="new/old"></a>new/old</h4><ul>
-<li>MySQL 中定义了 <code>NEW</code> 和 <code>OLD</code> 关键字，用来表示触发器的所在表中，触发了触发器的那一行数据。</li>
-<li>在 <code>INSERT</code> 型触发器中，<code>NEW</code> 用来表示将要（<code>BEFORE</code>）或已经（<code>AFTER</code>）插入的新数据；</li>
-<li>在 <code>UPDATE</code> 型触发器中，<code>OLD</code> 用来表示将要或已经被修改的原数据，<code>NEW</code> 用来表示将要或已经修改为的新数据；</li>
-<li>在 <code>DELETE</code> 型触发器中，<code>OLD</code> 用来表示将要或已经被删除的原数据；</li>
-<li>使用方法：<code>NEW.columnName</code> （columnName 为相应数据表某一列名）</li>
-</ul>
-<blockquote>
-<p>DELIMITER $<br><strong>CREATE</strong> <strong>TRIGGER</strong> <code>trigger_insert_user</code><br><strong>AFTER</strong> <strong>INSERT</strong> <strong>ON</strong> <code>user</code><br><strong>FOR</strong> <strong>EACH</strong> <strong>ROW</strong><br><strong>BEGIN</strong><br><strong>INSERT</strong> <strong>INTO</strong> <code>user_history</code>(user_id, operate_type, operate_time)<br><strong>VALUES</strong> (NEW.id, ‘add a user’, <strong>now</strong>());<br><strong>END</strong> $<br>DELIMITER ;</p>
-</blockquote>
-<h2 id="数据库集群"><a href="#数据库集群" class="headerlink" title="数据库集群"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ricklz/p/17335755.html">数据库集群</a></h2><h3 id="MySQL-Replication"><a href="#MySQL-Replication" class="headerlink" title="MySQL Replication"></a>MySQL Replication</h3><p><code>MySQL Replication</code> 是官方提供的主从同步方案，用于将一个 MySQL 的实例同步到另一个实例中。Replication 为保证数据安全做了重要的保证，是目前运用最广的 MySQL 容灾方案。Replication 用两个或以上的实例搭建了 MySQL 主从复制集群，提供单点写入，多点读取的服务，实现了读的 扩展。</p>
-<p><img src="https://oss.luhuhu.cn/202405231651957.png" alt="一主多从读写分离"></p>
+                <h1 id="数据库集群"><a href="#数据库集群" class="headerlink" title="数据库集群"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ricklz/p/17335755.html">数据库集群</a></h1><h2 id="MySQL-Replication"><a href="#MySQL-Replication" class="headerlink" title="MySQL Replication"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ricklz/p/17335755.html">MySQL Replication</a></h2><p><code>MySQL Replication</code> 是官方提供的主从同步方案，用于将一个 MySQL 的实例同步到另一个实例中。Replication 为保证数据安全做了重要的保证，是目前运用最广的 MySQL 容灾方案。Replication 用两个或以上的实例搭建了 MySQL 主从复制集群，提供单点写入，多点读取的服务，实现了读的 扩展。</p>
+<p><img src="https://oss.luhuhu.cn/202406051032506.png" alt="一主多从读写分离"></p>
 <blockquote>
 <p>一个主库(M)，三个从库(S)，通过 replication，Master 生成 event 的 binlog，然后发给 slave，Slave 将 event 写入 relaylog，然后将其提交到自身数据库中，实现主从数据同步。</p>
 <p>对于数据库之上的业务层来说，基于 MySQL 的主从复制集群，单点写入 Master ,在 event 同步到 Slave 后，读逻辑可以从任何一个 Slave 读取数据，以读写分离的方式，大大降低 Master 的运行负载，同时提升了 Slave 的资源利用。</p>
@@ -758,8 +502,8 @@
 <p>为了解决这个问题，<code>MySQL 5.7</code> 引入了增强半同步复制。主库写入数据到 binlog 后，就开始等待从库的应答 ACK，直到至少一个从库写入 <code>Relay Log</code> 后，并将数据落盘，然后返回给主库 ACK，通知主库可以进行 commit 操作，然后主库再将事务提交到事务引擎，应用此时才能看到数据的变化。</p>
 <p>不过看下来增强半同步复制，在同步给从库之后，因为自己的数据还没有提交，然后宕机了，主库中也是会存在数据的丢失，不过应该想到的是，这时候主库宕机了，是会重新在从库中选主的，这样新选出的主库数据是没有发生丢失的。</p>
 </blockquote>
-<h3 id="MySQL-Group-Replication"><a href="#MySQL-Group-Replication" class="headerlink" title="MySQL Group Replication"></a>MySQL Group Replication</h3><p>由Oracle MySQL 推出的一个高可用高扩展解决方案，MGT由若干个节点组成复制组，一个事务的提交必须经过组内半数以上协议并通过才能得以提交</p>
-<p><img src="https://oss.luhuhu.cn/202405240938634.jpeg" alt="MGR"></p>
+<h2 id="MySQL-Group-Replication"><a href="#MySQL-Group-Replication" class="headerlink" title="MySQL Group Replication"></a>MySQL Group Replication</h2><p>由Oracle MySQL 推出的一个高可用高扩展解决方案，MGT由若干个节点组成复制组，一个事务的提交必须经过组内半数以上协议并通过才能得以提交</p>
+<p><img src="https://oss.luhuhu.cn/202406051032446.jpeg" alt="MGR"></p>
 <blockquote>
 <p>当客户端发起一个更新事务时，该事务先在本地执行，执行完成之后就要发起对事务的提交操作。在还没有真正提交之前，需要将产生的复制写集广播出去，复制到其它成员。因为事务是通过原子广播发送的，所以组中的成员要么都接收事务，要么都不接收事务。如果组中的所有成员收到了该广播消息(事务)，那么他们会按照之前发送事务的相同顺序收到该广播消息。因此，所有组成员都以相同的顺序接收事务的写集，并为事务建立全局顺序。因此，所有组成员都以相同的顺序接收事务的写集，并为事务建立全局顺序。</p>
 <p>在不同组成员并发执行的事务可能存在冲突。冲突是通过检查和比较两个不同并发事务的 <code>write set</code> 来验证的，这个过程称为认证。在认证期间，冲突检测在行级别执行的：如果在不同组成员上执行的两个并发事务更新了同一行数据，则存在冲突。根据冲突认证检测机制判断，按照顺序，第一次提交的会正常执行，第二次提交的事务会在事务发起的原始组成员上执行回滚,，组中的其他成员对该事务执行删除。如果两个事务经常发生冲突，那么最好将这两个事务放在同一个组成员中执行，这样它们在本地锁管理器的协调下将都有机会提交成功，而不至于因为处在两个不同的组成员中由于冲突认证而导致其中一个事务被频繁回滚。</p>
@@ -785,8 +529,8 @@
 </li>
 </ol>
 </blockquote>
-<h3 id="InnoDB-Cluster"><a href="#InnoDB-Cluster" class="headerlink" title="InnoDB Cluster"></a>InnoDB Cluster</h3><p><code>InnoDB Cluster</code> 是官方提供的高可用方案,是 MySQL 的一种高可用性(HA)解决方案，它通过使用 <code>MySQL Group Replication</code> 来实现数据的自动复制和高可用性。</p>
-<p><img src="https://oss.luhuhu.cn/202405241416389.png" alt="HA"></p>
+<h2 id="InnoDB-Cluster"><a href="#InnoDB-Cluster" class="headerlink" title="InnoDB Cluster"></a>InnoDB Cluster</h2><p><code>InnoDB Cluster</code> 是官方提供的高可用方案,是 MySQL 的一种高可用性(HA)解决方案，它通过使用 <code>MySQL Group Replication</code> 来实现数据的自动复制和高可用性。</p>
+<p><img src="https://oss.luhuhu.cn/202406051032421.png" alt="HA"></p>
 <blockquote>
 <p><code>InnoDB Cluster</code> 通常包含下面三个关键组件：</p>
 <ol>
@@ -817,9 +561,9 @@
 </li>
 </ol>
 </blockquote>
-<h3 id="InnoDB-ClusterSet"><a href="#InnoDB-ClusterSet" class="headerlink" title="InnoDB ClusterSet"></a>InnoDB ClusterSet</h3><p><code>MySQL InnoDB ClusterSet</code> 通过将主 <code>InnoDB Cluster</code> 与其在备用位置（例如不同数据中心）的一个或多个副本链接起来，为 <code>InnoDB Cluster</code> 部署提供容灾能力。</p>
+<h2 id="InnoDB-ClusterSet"><a href="#InnoDB-ClusterSet" class="headerlink" title="InnoDB ClusterSet"></a>InnoDB ClusterSet</h2><p><code>MySQL InnoDB ClusterSet</code> 通过将主 <code>InnoDB Cluster</code> 与其在备用位置（例如不同数据中心）的一个或多个副本链接起来，为 <code>InnoDB Cluster</code> 部署提供容灾能力。</p>
 <p><code>InnoDB ClusterSet</code> 使用专用的 ClusterSet 复制通道自动管理从主集群到副本集群的复制。如果主集群由于数据中心损坏或网络连接丢失而变得无法使用，用户可以激活副本集群以恢复服务的可用性。</p>
-<p><img src="https://oss.luhuhu.cn/202405241419054.png" alt="Cluster"></p>
+<p><img src="https://oss.luhuhu.cn/202406051032496.png" alt="Cluster"></p>
 <blockquote>
 <p>InnoDB ClusterSet 的特点：</p>
 <ol>
@@ -840,10 +584,10 @@
 </li>
 </ol>
 </blockquote>
-<h3 id="InnoDB-ReplicaSet"><a href="#InnoDB-ReplicaSet" class="headerlink" title="InnoDB ReplicaSet"></a>InnoDB ReplicaSet</h3><p><code>InnoDB ReplicaSet</code> 是 MySQL 团队在 2020 年推出的一款产品，用来帮助用户快速部署和管理主从复制，在数据库层仍然使用的是主从复制技术。</p>
+<h2 id="InnoDB-ReplicaSet"><a href="#InnoDB-ReplicaSet" class="headerlink" title="InnoDB ReplicaSet"></a>InnoDB ReplicaSet</h2><p><code>InnoDB ReplicaSet</code> 是 MySQL 团队在 2020 年推出的一款产品，用来帮助用户快速部署和管理主从复制，在数据库层仍然使用的是主从复制技术。</p>
 <p><code>InnoDB ReplicaSet</code>由单个主节点和多个辅助节点（传统上称为 MySQL 复制源和副本）组成。</p>
 <p>与<code>InnoDB cluster</code> 类似, <code>MySQL Router</code> 支持针对 <code>InnoDB ReplicaSet</code> 的引导, 这意味着可以自动配置 <code>MySQL Router</code> 以使用 <code>InnoDB ReplicaSet</code>, 而无需手动配置文件. 这使得 <code>InnoDB ReplicaSet</code> 成为一种快速简便的方法, 可以启动和运行 MySQL 复制和 <code>MySQL Router</code>, 非常适合扩展读取, 并在不需要 InnoDB 集群提供高可用性的用例中提供手动故障转移功能。</p>
-<p><img src="https://oss.luhuhu.cn/202405241420657.png" alt="InnoDB ReplicaSet"></p>
+<p><img src="https://oss.luhuhu.cn/202406051032526.png" alt="InnoDB ReplicaSet"></p>
 <blockquote>
 <p><code>InnoDB ReplicaSet</code> 的限制：</p>
 <ol>
@@ -862,10 +606,10 @@
 </ol>
 <p>使用 <code>InnoDB ReplicaSets</code> 的主要原因是你有更好的写性能。使用 <code>InnoDB ReplicaSets</code> 的另一个原因是它们允许在不稳定或慢速网络上部署，而 <code>InnoDB Cluster</code> 则不允许。</p>
 </blockquote>
-<h3 id="MMM"><a href="#MMM" class="headerlink" title="MMM"></a>MMM</h3><p>Master-Master replication manager for MySQL是一套支持双主故障切换和双主日常管理的脚本程序。MMM 使用 Perl 语言开发，主要用来监控和管理 <code>MySQL Master-Master</code>（双主）复制，可以说是 MySQL 主主复制管理器。</p>
+<h2 id="MMM"><a href="#MMM" class="headerlink" title="MMM"></a>MMM</h2><p>Master-Master replication manager for MySQL是一套支持双主故障切换和双主日常管理的脚本程序。MMM 使用 Perl 语言开发，主要用来监控和管理 <code>MySQL Master-Master</code>（双主）复制，可以说是 MySQL 主主复制管理器。</p>
 <p>双主模式，业务上同一时刻只能一个主库进行数据的写入。另一个主备库，会在主服务器失效时，进行主备切换和故障转移。</p>
 <p>MMM 中是通过一个 VIP(虚拟 IP) 的机制来保证集群的高可用的。整个集群中，在主节点会提供一个 VIP 地址来提供数据读写服务，当出现故障的时候，VIP 就会从原来的主节点便宜到其他节点，由其他节点提供服务。</p>
-<p><img src="https://oss.luhuhu.cn/202405241421448.png" alt="MMM"></p>
+<p><img src="https://oss.luhuhu.cn/202406051032536.png" alt="MMM"></p>
 <blockquote>
 <p>MMM无法完全的保证数据一致性，所以适用于对数据的一致性要求不是很高的场景。（因为主备上的数据不一定是最新的，可能还没从库的新。解决方法：开启半同步）。</p>
 <p>MMM 的优缺点</p>
@@ -874,9 +618,9 @@
 <p>适用场景：</p>
 <p>MMM的适用场景为数据库访问量大，业务增长快，并且能实现读写分离的场景。</p>
 </blockquote>
-<h3 id="MHA"><a href="#MHA" class="headerlink" title="MHA"></a>MHA</h3><p>Master High Availability Manager and Tools for MySQL，简称 MHA 。是一套优秀的作为 MySQL 高可用性环境下故障切换和主从提升的高可用软件。</p>
+<h2 id="MHA"><a href="#MHA" class="headerlink" title="MHA"></a>MHA</h2><p>Master High Availability Manager and Tools for MySQL，简称 MHA 。是一套优秀的作为 MySQL 高可用性环境下故障切换和主从提升的高可用软件。</p>
 <p>这个工具专门用于监控主库的状态，当发现 master 节点故障的时候，会自动提升其中拥有新数据的 slave 节点成为新的 master 节点，在此期间,MHA 会通过其他从节点获取额外的信息来避免数据一致性问题。MHA 还提供了 mater 节点的在线切换功能，即按需切换 master-slave 节点。MHA 能够在30秒内实现故障切换，并能在故障切换过程中，最大程度的保证数据一致性。</p>
-<p><img src="https://oss.luhuhu.cn/202405241421054.png" alt="MHA"></p>
+<p><img src="https://oss.luhuhu.cn/202406051032009.png" alt="MHA"></p>
 <blockquote>
 <p>MHA 由两部分组成；</p>
 <p>MHA Manager（管理节点）和MHA Node（数据节点）。</p>
@@ -919,9 +663,9 @@
 </li>
 </ol>
 </blockquote>
-<h3 id="Galera-Cluster"><a href="#Galera-Cluster" class="headerlink" title="Galera Cluster"></a>Galera Cluster</h3><p><code>Galera Cluster</code> 是由 Codership 开发的MySQL多主集群，包含在 MariaDB 中，同时支持 <code>Percona xtradb、MySQL</code>，是一个易于使用的高可用解决方案，在数据完整性、可扩展性及高性能方面都有可接受的表现。</p>
+<h2 id="Galera-Cluster"><a href="#Galera-Cluster" class="headerlink" title="Galera Cluster"></a>Galera Cluster</h2><p><code>Galera Cluster</code> 是由 Codership 开发的MySQL多主集群，包含在 MariaDB 中，同时支持 <code>Percona xtradb、MySQL</code>，是一个易于使用的高可用解决方案，在数据完整性、可扩展性及高性能方面都有可接受的表现。</p>
 <p>其本身具有 multi-master 特性，支持多点写入，<code>Galera Cluster</code> 中每个实例都是对等的，互为主从。当客户端读写数据的时候，可以选择任一 MySQL 实例，对于读操作，每个实例读取到的数据都是相同的。对于写操作，当数据写入某一节点后，集群会将其同步到其它节点。这种架构不共享任何数据，是一种高冗余架构。</p>
-<p><img src="https://oss.luhuhu.cn/202405241422103.png" alt="Galera Cluster"></p>
+<p><img src="https://oss.luhuhu.cn/202406051032899.png" alt="Galera Cluster"></p>
 <blockquote>
 <p><strong>主要功能</strong></p>
 <ol>
@@ -959,7 +703,7 @@
 <p><code>Galera Cluster</code> 中的同步需要同步数据到所有节点，保证所有节点都成功。基于专有通信组系统 GCommon ,所有节点都必须有 ACK。</p>
 <p>Galera 复制是一种基于验证的复制，基于验证的复制使用通信和排序技术实现同步复制，通过广播并发事务之间建立的全局总序来协调事务提交。简单的讲就是事务必须以相同的顺序应用于所有实例。</p>
 <p>事务现在本地执行，然后发送的其他节点做冲突验证，没有冲突的时候所有节点提交事务，否则在所有节点回滚。</p>
-<p><img src="https://oss.luhuhu.cn/202405241422395.png" alt="mysql"></p>
+<p><img src="https://oss.luhuhu.cn/202406051032946.png" alt="mysql"></p>
 <p>当客户端发出 commit 命令时，在实际提交之前，对数据所做的更改都会收集到一个写集合中，写集合中包含事务信息和所更改行的主键，数据库将写集发送到其它节点。</p>
 <p>节点用写集中的主键与当前节点中未完成事务的所有写集的主键比较，确定节点是否可以提交事务，同时满足下面三个条件会被任务存在冲突，验证失败：</p>
 <ol>
@@ -972,10 +716,10 @@
 </ol>
 <p>验证失败，节点将删除写集，集群将回滚原始事务，对于所有的节点都是如此，每个节点单独进行验证。因为所有节点都以相同的顺序接收事务，它们对事务的结果都会做出相同的决定，要么全成功，要么都失败。成功后自然就提交了，所有的节点又会重新达到数据一致的状态。节点之间不交换“是否冲突”的信息，各个节点独立异步处理事务。</p>
 </blockquote>
-<h3 id="MySQL-Cluster"><a href="#MySQL-Cluster" class="headerlink" title="MySQL Cluster"></a>MySQL Cluster</h3><p><code>MySQL Cluster</code> 是一个高度可扩展的，兼容 ACID 事务的实时数据库，基于分布式架构不存在单点故障，<code>MySQL Cluster</code> 支持自动水平扩容，并能做自动的读写负载均衡。</p>
+<h2 id="MySQL-Cluster"><a href="#MySQL-Cluster" class="headerlink" title="MySQL Cluster"></a>MySQL Cluster</h2><p><code>MySQL Cluster</code> 是一个高度可扩展的，兼容 ACID 事务的实时数据库，基于分布式架构不存在单点故障，<code>MySQL Cluster</code> 支持自动水平扩容，并能做自动的读写负载均衡。</p>
 <p><code>MySQL Cluster</code> 使用了一个叫 NDB 的内存存储引擎来整合多个 MySQL 实例，提供一个统一的服务集群。</p>
 <p>NDB 是一种内存性的存储引擎,使用 Sarding-Nothing 的无共享的架构。Sarding-Nothing 指的是每个节点有独立的处理器，磁盘和内存，节点之间没有共享资源完全独立互不干扰，节点之间通过告诉网络组在一起，每个节点相当于是一个小型的数据库，存储部分数据。这种架构的好处是可以利用节点的分布性并行处理数据，调高整体的性能，还有就是有很高的水平扩展性能，只需要增加节点就能增加数据的处理能力。</p>
-<p><img src="https://oss.luhuhu.cn/202405241423832.png" alt="MySQL Cluster"></p>
+<p><img src="https://oss.luhuhu.cn/202406051032994.png" alt="MySQL Cluster"></p>
 <blockquote>
 <p><code>MySql Cluster</code> 中包含三种节点，分别是管理节点(NDB Management Server)、数据节点(Data Nodes)和 SQL查询节点(SQL Nodes) 。</p>
 <p><code>SQL Nodes</code> 是应用程序的接口，像普通的 mysqld 服务一样，接受用户的 SQL 输入，执行并返回结果。<code>Data Nodes</code> 是数据存储节点，<code>NDB Management Server</code> 用来管理集群中的每个 node。</p>
@@ -989,7 +733,7 @@
 <li>分区（Partition）：<code>MySql Cluster</code> 是一个分布式的存储系统，数据按照 分区 划分成多份存储在各数据节点中，分区个数由系统自动计算，<code>分区数 = 数据节点数 / LDM 线程数</code>；</li>
 <li>副本（Replica）：分区数据的备份，有几个分区就有几个副本，为了避免单点，保证 <code>MySql Cluster</code> 集群的高可用，原始数据对应的分区和副本通常会保存在不同的主机上，在一个节点组内进行交叉备份。</li>
 </ul>
-<p><img src="https://oss.luhuhu.cn/202405241423516.png" alt="mysql"></p>
+<p><img src="https://oss.luhuhu.cn/202406051032069.png" alt="mysql"></p>
 <p>栗如，上面的例子，有四个数据节点（使用ndbd），副本数为2的集群，节点组被分为2组（4/2），数据被分为4个分区，数据分配情况如下:</p>
 <p>分区0（Partition 0）保存在节点组 0（Node Group 0）中，分区数据(主副本 — Primary Replica)保存在节点1(node 1) 中，备份数据(备份副本，Backup Replica)保存在节点2(node 2) 中；</p>
 <p>分区1（Partition 1）保存在节点组 1（Node Group 1）中，分区数据(主副本 — Primary Replica)保存在节点3(node 3) 中，备份数据(备份副本，Backup Replica)保存在节点4(node 4) 中；</p>
@@ -1023,8 +767,8 @@
 </li>
 </ol>
 </blockquote>
-<h3 id="MySQL-Fabric"><a href="#MySQL-Fabric" class="headerlink" title="MySQL Fabric"></a>MySQL Fabric</h3><p><code>MySQL Fabric</code> 会组织多个 MySQL 数据库，将大的数据分散到多个数据库中，即数据分片<code>(Data Shard)</code>,同时同一个分片数据库中又是一个主从结构，Fabric 会挑选合适的库作为主库，当主库挂掉的时候，又会重新在从库中选出一个主库。</p>
-<p><img src="https://oss.luhuhu.cn/202405241423436.png" alt="MySQL Fabric"></p>
+<h2 id="MySQL-Fabric"><a href="#MySQL-Fabric" class="headerlink" title="MySQL Fabric"></a>MySQL Fabric</h2><p><code>MySQL Fabric</code> 会组织多个 MySQL 数据库，将大的数据分散到多个数据库中，即数据分片<code>(Data Shard)</code>,同时同一个分片数据库中又是一个主从结构，Fabric 会挑选合适的库作为主库，当主库挂掉的时候，又会重新在从库中选出一个主库。</p>
+<p><img src="https://oss.luhuhu.cn/202406051032151.png" alt="MySQL Fabric"></p>
 <blockquote>
 <p><code>MySQL Fabric</code> 的特点：</p>
 <ol>
@@ -1039,7 +783,7 @@
 <p>缺点</p>
 <p>事务及查询只支持在同一个分片内，事务中更新的数据不能跨分片，查询语句返回的数据也不能跨分片。</p>
 </blockquote>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
 <li><p><code>MySQL Replication</code> 是官方提供的主从同步方案，用于将一个 MySQL 的实例同步到另一个实例中，在主从复制中，从库利用主库上的 binlog 进行重播，实现主从同步，默认是异步同步，针对其在不同场景下的一些缺陷，衍生出了半同步复制，强同步复制等数据高可用的方案；</p>
 </li>
 <li><p><code>MySQL Group Replication</code> 组复制又称为 MGR,引入复制组主要是为了解决传统异步复制和半同步复制可能产生数据不一致的问题, MGR 由若干个节点共同组成一个复制组，一个事务的提交，必须经过组内大多数节点 (N / 2 + 1) 决议并通过，才能得以提交;</p>
@@ -1061,7 +805,7 @@
 <li><p><code>MySQL Fabric</code> 会组织多个 MySQL 数据库，将大的数据分散到多个数据库中，即数据分片(Data Shard),同时同一个分片数据库中又是一个主从结构，Fabric 会挑选合适的库作为主库，当主库挂掉的时候，又会重新在从库中选出一个主库。</p>
 </li>
 </ol>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a target="_blank" rel="noopener" href="https://book.douban.com/subject/23008813/">【高性能MySQL(第3版)】</a><br><a target="_blank" rel="noopener" href="https://time.geekbang.org/column/100020801">【MySQL 实战 45 讲】</a><br><a target="_blank" rel="noopener" href="https://book.douban.com/subject/24708143/">【MySQL技术内幕】</a><br><a target="_blank" rel="noopener" href="https://github.com/boilingfrog/Go-POINT/tree/master/mysql">【MySQL学习笔记】</a><br><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/replication.html">【MySQL文档】</a><br><a target="_blank" rel="noopener" href="http://www.linkedkeeper.com/1503.html">【浅谈 MySQL binlog 主从同步】</a></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://book.douban.com/subject/23008813/">【高性能MySQL(第3版)】</a><br><a target="_blank" rel="noopener" href="https://time.geekbang.org/column/100020801">【MySQL 实战 45 讲】</a><br><a target="_blank" rel="noopener" href="https://book.douban.com/subject/24708143/">【MySQL技术内幕】</a><br><a target="_blank" rel="noopener" href="https://github.com/boilingfrog/Go-POINT/tree/master/mysql">【MySQL学习笔记】</a><br><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/replication.html">【MySQL文档】</a><br><a target="_blank" rel="noopener" href="http://www.linkedkeeper.com/1503.html">【浅谈 MySQL binlog 主从同步】</a></p>
 
                 
             </div>
@@ -1088,7 +832,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://loaderland.github.io/2024/02/08/MySql/">https://loaderland.github.io/2024/02/08/MySql/</a>
+                    <a href="https://loaderland.github.io/2024/06/05/Mysql-replication/">https://loaderland.github.io/2024/06/05/Mysql-replication/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -1125,10 +869,6 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            
-                                <a href="/tags/%E7%AC%94%E8%AE%B0/">
-                                    <span class="chip bg-color">笔记</span>
-                                </a>
                             
                                 <a href="/tags/MySql/">
                                     <span class="chip bg-color">MySql</span>
@@ -1323,17 +1063,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2024/04/02/DataStructure/">
+                <a href="/2024/06/05/Mysql-replication/">
                     <div class="card-image">
                         
+                        <img src="https://oss.luhuhu.cn/202406051057598.png" class="responsive-img" alt="Mysql-replication">
                         
-                        <img src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/medias/featureimages/15.jpg" class="responsive-img" alt="DataStructure">
-                        
-                        <span class="card-title">DataStructure</span>
+                        <span class="card-title">Mysql-replication</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1343,9 +1083,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-04-02
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-06-05
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1358,11 +1098,12 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
-                        <span class="chip bg-color">数据结构</span>
+                    <a href="/tags/MySql/">
+                        <span class="chip bg-color">MySql</span>
                     </a>
                     
                 </div>
@@ -1376,13 +1117,12 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/02/08/MyBatis/">
+                <a href="/2024/06/04/MySql-cnf/">
                     <div class="card-image">
                         
+                        <img src="https://oss.luhuhu.cn/202406051057598.png" class="responsive-img" alt="MySql-cnf">
                         
-                        <img src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/medias/featureimages/13.jpg" class="responsive-img" alt="MyBatis">
-                        
-                        <span class="card-title">MyBatis</span>
+                        <span class="card-title">MySql-cnf</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1393,7 +1133,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-02-08
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-06-04
                             </span>
                         <span class="publish-author">
                             
@@ -1410,12 +1150,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%AC%94%E8%AE%B0/">
-                        <span class="chip bg-color">笔记</span>
-                    </a>
-                    
-                    <a href="/tags/MyBatis/">
-                        <span class="chip bg-color">MyBatis</span>
+                    <a href="/tags/MySql/">
+                        <span class="chip bg-color">MySql</span>
                     </a>
                     
                 </div>
