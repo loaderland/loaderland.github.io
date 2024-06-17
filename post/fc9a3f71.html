@@ -1,0 +1,1429 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="麒麟操作系统内核，同其他操作系统内核的相似性分析, keywords">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>麒麟操作系统内核，同其他操作系统内核的相似性分析 | LoaderLand</title>
+    <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/css/my.css">
+
+    <script src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 7.0.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="LoaderLand" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">LoaderLand</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">LoaderLand</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+<script src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://oss.luhuhu.cn/202406061616409.jpeg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">麒麟操作系统内核，同其他操作系统内核的相似性分析</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E9%BA%92%E9%BA%9F%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
+                                <span class="chip bg-color">麒麟操作系统</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E6%91%98%E8%AE%B0/" class="post-category">
+                                摘记
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2024-06-06
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2024-06-17
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    15.5k
+                </div>
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="麒麟操作系统内核，同其他操作系统内核的相似性分析"><a href="#麒麟操作系统内核，同其他操作系统内核的相似性分析" class="headerlink" title="麒麟操作系统内核，同其他操作系统内核的相似性分析"></a>麒麟操作系统内核，同其他操作系统内核的相似性分析</h1><blockquote>
+<p>Copyright (c)&nbsp;2006 &nbsp;Dancefire (dancefire#gmail).</p>
+<p>Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free documentation License, Version 1.2 or any later version published by the Free Software Foundation; with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.&nbsp;A copy of the license is included in the section entitled “GNU Free Documentation License”.</p>
+</blockquote>
+<p>作者：Dancefire (dancefire # gmail dot com) 2006/04/27</p>
+<h2 id="一、引言"><a href="#一、引言" class="headerlink" title="一、引言"></a>一、引言</h2><p>麒麟操作系统是由国防科技大学、中软公司、联想公司、浪潮公司和民族恒星公司五家单位合作研制的服务器操作系统。按照麒麟官方的说法：</p>
+<p>“Kylin 服务器操作系统是国家 863 计划的重大研究成果，拥有完全自主版权的内核，与 Linux 在应用上二进制兼容，并支持 64 位，是中国独立研发成功的、具有完全自主知识产权的服务器操作系统。”[1]</p>
+<p>“银河麒麟操作系统是针对未来的主流网络服务和高性能计算服务的需求，参照国际主流标准，参考 Darwin、FreeBSD、Linux 和其它商用操作系统，借鉴 UNIX 操作系统和微内核操作系统的设计思想，设计并实现具有自主版权的、可支持多种 CPU 芯片和多种计算机体系结构的、具有高性能、高可用性与高安全性的、并与 Linux 应用和设备驱动二进制兼容的中文服务器操作系统，”</p>
+<p><em>摘自麒麟操作系统 2.0.21 内自带的帮助文档</em></p>
+<p>近日，有不少人对麒麟操作系统宣称的 “完全自主版权” 和“中国独立研发成功”这两个核心问题产生了质疑。随着麒麟 2.0.14 和 2.0.21 系统可以通过麒麟的官方网站下载后(<a target="_blank" rel="noopener" href="http://www.kylin.org.cn/download.htm">http://www.kylin.org.cn/download.htm</a>&nbsp;)，这种质疑的声音越来越大。麒麟除内核以外的应用大部分都来自自由组织 GNU 的代码，这些代码并不属于 “中国独立研发”，而且他们的版权也不属于麒麟操作系统的开发者。更有甚者，有人开始通过反汇编麒麟操作系统内核发现和美国的 FreeBSD 开放源代码操作系统非常相似。随后又有人成功的用 FreeBSD 的内核启动了麒麟操作系统。按照麒麟官方的介绍，麒麟具有 Linux 的二进制兼容的能力，可是丝毫没有提及与 FreeBSD 的兼容性，使得麒麟内核与 FreeBSD 的关系变得比较引人注目。在官方介绍中的简简单单的“参考” 是无法解释这种相似程度的。</p>
+<p>“课题组通过评测和分析，认为当时正在研发中的 FreeBSD 5.0 具有比 Unix SVR4.2 更好的发展势头，特别是 SMPng 项目的开展，为 FreeBSD 5.0 支持 SMP 对称多处理器系统奠定了良好的基础，因此银河麒麟操作系统的系统服务层从 SVR4.2 升级到当时正在研发中的 FreeBSD 5.0。”</p>
+<p>声明发出后一定程度上得到了大家谅解，可是虽然提及和 FreeBSD 的关系，却又十分隐晦，既没有明确的对官方网站新闻中的报道失实承认错误，没有明确阐述麒麟的操作系统是否具有 “完全知识产权” 以及是否是“中国独立研发”，甚至也没有对官方页面上的事实报道进行修正。而且，既然说明使用了 FreeBSD 5.0 的代码，却又说仅限于系统服务层，而丝毫未提及所占比例。这依旧让人们对这个获得 863 计划软件重大专项的资助的操作系统到底有多少创新产生一个大大的疑问。</p>
+<p>为了调查清楚麒麟操作系统内核自主创新的百分比，以及与其它操作系统之间的关系，我将麒麟操作系统内核与 FreeBSD、NetBSD、OpenBSD、Linux 和 Solaris 的内核进行了可执行代码的相似度分析。</p>
+<p>在整个过程中，我将尽量保持客观的原则进行分析。由于麒麟操作系统属于封闭源代码系统，因此在无法获得内核源代码的情况下，我将只进行二进制可执行代码文件的相似度分析。由于可执行代码受编译环境、内存分布情况以及模块的变动的影响很大，因此，会产生即使采用同一套代码，却产生很低的相似度情况。但是，对操作系统内核这种大型软件系统来说，却不会因为不同的代码而产生很高的相似度的情况。因此，我们将这次对二进制可执行代码分析所得的相似度作为相似度的下限。<strong>换句话说，真实的相似度应该会高于此次分析结果，但是由于分析方法的局限性，无法取得上限。</strong></p>
+<h2 id="二、可执行文件的相似度比较"><a href="#二、可执行文件的相似度比较" class="headerlink" title="二、可执行文件的相似度比较"></a>二、可执行文件的相似度比较</h2><p>二进制可执行文件的相似度分析一直是一个难题。大家都知道，即使是同一份源代码，使用同一个编译器，可用不同的编译参数进行编译后，代码也会产生极大的差异。</p>
+<p>当发生有人因为盗用别人的源代码而产生的侵权后，如果不能够将二者的源代码拿出进行比较的话，判断是否抄袭非常困难。因此，一直以来或多或少，总会有人无所顾忌的将开放源代码的软件拿来加入到自己的软件中，或者干脆就是在那些源代码的基础上稍加修改和更换了版权信息就宣称是自己研发的。因为他们知道，只要不把自己的源代码公诸于众，那么抄袭就很难判定。</p>
+<p>下面我就详细说一下我采用的分析方法。</p>
+<p>2.1 ELF 可执行文件相似度分析方法</p>
+<p>这次分析起始，我就碰到了一些难题。如果对二进制可执行文件进行基于字节的相似性分析，即使匹配上某些字节，也很难说明两段代码的相似性，另外匹配也很容易受到各种噪音的干扰而产生很低的相似度，可是噪音却无法被去除。</p>
+<p>因此，使最小比较单元具有明确的语义和合理的过滤噪音是我首先要解决的问题。</p>
+<p>2.1.1 反汇编</p>
+<p>二进制文件的比较难以确定最小单元语义的根本问题在于二进制文件是以字节为单位，然而每个字节却没有特定的含义。你很难说 <strong>89</strong>&nbsp;e5 和 83 EC&nbsp;<strong>89</strong> 中的 89 相同说明什么，在这个例子中，前者的 89 e5 是 i386 的一条指令，而后者的 89 则是一个立即数，所以他们相同实际上什么都不说明。</p>
+<p>针对这次分析，由于都是可执行代码，而且都采用了 ELF 的文件格式。由于这个特点，我首先将所有操作系统的内核通过 objdump 反汇编成汇编代码。这样做有一个直接的好处，就是每一行都是一条汇编语句，而每一条汇编语句又是一个程序不可分的最小逻辑单元。这样，接下来的分析就可以基于行来进行相似性的分析，因为每出现一行相同就说明有一个最小的逻辑单元相同，如果出现连续的行相似，那么就说明有连续的代码段相似。相同的行越多两个内核就越相似。</p>
+<p>并且经过反汇编后，就避免了因文件内包含的其他无关信息，如字符串、资源文件、数据文件等，对分析结果产生的影响。</p>
+<p>这个方法依旧无法避免因编译参数差异所造成的相似度下降的影响。虽然如此，但是我很幸运，从这次分析的结果看，依旧得到了不低的相似度。</p>
+<p>2.1.2 过滤噪音</p>
+<p>噪音的出现有很多原因，可能是内存分布不同、代码的增删导致的偏移地址的变化，对相同含义的常量而数值却不同等等。这些值的差异，可能会造成不同的执行结果，但是却对两段代码的相似性比较影响不大。请看下列两个代码段：</p>
+<p>c043e9e8&nbsp;<freebsd4_sigcode>: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; |&nbsp;c04431d8&nbsp;<freebsd4_sigcode>:</freebsd4_sigcode></freebsd4_sigcode></p>
+<p>freebsd4_sigcode(): &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; freebsd4_sigcode():</p>
+<p>c043e9e8: call &nbsp; *<strong>0x10</strong>(%esp) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |&nbsp;c04431d8: call &nbsp; *<strong>0x10</strong>(%esp)</p>
+<p>c043e9ec: lea &nbsp;&nbsp;&nbsp;<strong>0x14</strong>(%esp),%eax &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |&nbsp;c04431dc: lea &nbsp;&nbsp;&nbsp;<strong>0x14</strong>(%esp),%eax</p>
+<p>c043e9f0: push &nbsp; %eax &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; |&nbsp;c04431e0: push &nbsp; %eax</p>
+<p>c043e9f1: testl&nbsp;$0x20000,<strong>0x54</strong>(%eax) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |&nbsp;c04431e1: testl&nbsp;$0x20000,<strong>0x54</strong>(%eax)</p>
+<p>c043e9f8: jne &nbsp;&nbsp;&nbsp;<strong>c043e9fd</strong>&nbsp;&lt;freebsd4_sigcode+**0x15**&gt; |&nbsp;c04431e8: jne &nbsp;&nbsp;&nbsp;<strong>c04431ed</strong>&nbsp;&lt;freebsd4_sigcode+**0x15**&gt;</p>
+<p>c043e9fa: movl &nbsp;&nbsp;<strong>0x14</strong>(%eax),%gs &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; |&nbsp;c04431ea: movw &nbsp;&nbsp;<strong>0x14</strong>(%eax),%gs</p>
+<p>c043e9fd: mov &nbsp;&nbsp;&nbsp;$0x158,%eax &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |&nbsp;c04431ed: mov &nbsp;&nbsp;&nbsp;$0x158,%eax</p>
+<p>c043ea02: push &nbsp; %eax &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; |&nbsp;c04431f2: push &nbsp; %eax</p>
+<p>c043ea03: int &nbsp;&nbsp;&nbsp;$0x80&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |&nbsp;c04431f3: int &nbsp;&nbsp;&nbsp;$0x80</p>
+<p>c043ea05: jmp &nbsp;&nbsp;&nbsp;<strong>c043ea05</strong>&nbsp;&lt;freebsd4_sigcode+**0x1d**&gt; |&nbsp;c04431f5: jmp &nbsp;&nbsp;&nbsp;<strong>c04431f5</strong>&nbsp;&lt;freebsd4_sigcode+**0x1d**&gt;</p>
+<p>c043ea07: nop &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; |&nbsp;c04431f7: nop</p>
+<p>左边的代码是来自 FreeBSD 5.3 内核的，而右边的代码来自麒麟 2.0.21/18 的内核。通过人的分析，我们可以得出这两段代码实际上是相同的。可是对于计算机程序比较的时候，就不尽然。</p>
+<p>请注意上述的有颜色的数字。用蓝色表示的代码地址 [4]、绿色表示的偏移地址、红色表示的立即数、深蓝色表示的函数偏移地址和粉色表示的函数地址，这些数字的不同，就造成了代码比较时候的失败。上述 13 行代码，如果就这样比较的话，只有函数名一行可以匹配。因此虽然是相同的代码，却只有 7.7% 的相似度。下面我们就来去除这些干扰。</p>
+<p>首先，我们将代码行地址、函数跳转地址和函数偏移地址去除。代码行所在的地址，实际上是说明了代码所在内存的位置，内存的位置会随着代码的删改而很容易产生变动，这些对我们比较代码逻辑没有意义。其中有些绝对地址，我们将其替换为 “{Address}”，这样既不受地址变化的影响，又不至影响了代码的含义。</p>
+<p>然后我们将绿色的偏移地址替换成特定字符串 “{Offset}”。产生偏移地址的原因一般有两种，一种是结构体，另一种是数组。即使不对结构体删改，而仅仅是对结构体的声明顺序的变动都可以造成偏移地址的不同，我们在这里只关心程序在这里用到了一个偏移地址，而不关心用的到底是偏移了多少。数组的用法虽然不常出现，但是即使出现其中的位置也是很容易发生变动的。因此在这里，我们也将偏移地址的数值替换成统一的字符串。</p>
+<p>最后，我们来处理红色的立即数。当然立即数并不是只有上述的几种情况下出现，虽然在上述的例子中，两边的立即数都完全一样，单是在某些情况下还是会出现不同。</p>
+<p>立即数在程序中一般是常量，而常量有可能是与系统相关的数值，或者仅仅是一个符号，而不在乎具体数值。无论是什么含义，常量虽然在执行过程中不会改变，在设计过程中却很容易发生变动。不过对我们分析代码逻辑没有太大的影响，因此，在分析的时候我们对数值进行模糊化，将其替换为 “{Number}” 这个特定字符串。</p>
+<p>至此，上述代码将会变为：</p>
+<p><freebsd4_sigcode>: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; | <freebsd4_sigcode>:</freebsd4_sigcode></freebsd4_sigcode></p>
+<p>freebsd4_sigcode():&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | freebsd4_sigcode():</p>
+<p>&nbsp;call&nbsp;&nbsp; *{Offset}(%esp)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; call&nbsp;&nbsp; *{Offset}(%esp)</p>
+<p>&nbsp;lea&nbsp;&nbsp;&nbsp;&nbsp;{Offset}(%esp),%eax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp; lea&nbsp;&nbsp;&nbsp;&nbsp;{Offset}(%esp),%eax</p>
+<p>&nbsp;push&nbsp;&nbsp; %eax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp; push&nbsp;&nbsp; %eax</p>
+<p>&nbsp;testl&nbsp;{Number},{Offset}(%eax)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp; testl&nbsp;{Number},{Offset}(%eax)</p>
+<p>&nbsp;jne&nbsp;&nbsp;&nbsp; &lt;freebsd4_sigcode+{Offset}&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp; jne&nbsp;&nbsp;&nbsp; &lt;freebsd4_sigcode+{Offset}&gt;</p>
+<p>&nbsp;movl&nbsp;&nbsp;&nbsp;{Offset}(%eax),%gs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp; movw&nbsp;&nbsp;&nbsp;{Offset}(%eax),%gs</p>
+<p>&nbsp;mov&nbsp;&nbsp;&nbsp;&nbsp;{Number},%eax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp; mov&nbsp;&nbsp;&nbsp;&nbsp;{Number},%eax</p>
+<p>&nbsp;push&nbsp;&nbsp; %eax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;push&nbsp;&nbsp; %eax</p>
+<p>&nbsp;int&nbsp;&nbsp;&nbsp;&nbsp;{Number}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp; int&nbsp;&nbsp;&nbsp;&nbsp;{Number}</p>
+<p>&nbsp;jmp&nbsp;&nbsp;&nbsp; &lt;freebsd4_sigcode+{Offset}&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp; jmp&nbsp;&nbsp;&nbsp; &lt;freebsd4_sigcode+{Offset}&gt;</p>
+<p>&nbsp;nop&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp; nop</p>
+<p>现在这两段代码的相似度将变成真实的 100%。</p>
+<p>2.1.3 代码段顺序调整</p>
+<p>经过上面的噪音过滤后，代码已经能够在基本不影响代码逻辑的前提下去除了噪音的影响。可是，还有一种情况会对匹配结果带来较大的影响。就是代码块位置的前后变动，我们来看下面这两段代码的比对。</p>
+<p>begin(): &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mov&nbsp;&nbsp;&nbsp;&nbsp;{Address},%eax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; lea&nbsp;&nbsp;&nbsp;&nbsp;{Offset}(%eax),%esp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; xor&nbsp;&nbsp;&nbsp; %ebp,%ebp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mov&nbsp;&nbsp;&nbsp;&nbsp;{Address},%esi&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mov&nbsp;&nbsp;&nbsp; %esi,{Offset}(%eax)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pushl&nbsp;{Address}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; call&nbsp;&nbsp; <init386>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;</init386></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; add&nbsp;&nbsp;&nbsp;&nbsp;{Number},%esp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; call&nbsp;&nbsp; <mi_startup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;</mi_startup></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; add&nbsp;&nbsp;&nbsp;&nbsp;{Number},%esp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;</p>
+<p>sigcode():&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sigcode():</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; call&nbsp;&nbsp; *{Offset}(%esp)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; call&nbsp;&nbsp; *{Offset}(%esp)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; lea&nbsp;&nbsp;&nbsp;&nbsp;{Offset}(%esp),%eax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; lea&nbsp;&nbsp;&nbsp;&nbsp;{Offset}(%esp),%eax</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; push&nbsp;&nbsp; %eax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; push&nbsp;&nbsp; %eax</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; testl&nbsp;{Number},{Offset}(%eax)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; testl&nbsp;{Number},{Offset}(%eax)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; jne&nbsp;&nbsp; &lt;sigcode+{Offset}&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; jne&nbsp;&nbsp; &lt;sigcode+{Offset}&gt;</p>
+<p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;movl&nbsp;&nbsp; {Offset}(%eax),%gs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; movw&nbsp;&nbsp;&nbsp;{Offset}(%eax),%gs</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mov&nbsp;&nbsp;&nbsp;&nbsp;{Number},%eax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mov&nbsp;&nbsp;&nbsp;&nbsp;{Number},%eax</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; push&nbsp;&nbsp; %eax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; push&nbsp;&nbsp; %eax</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int&nbsp;&nbsp;&nbsp;&nbsp;{Number}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;&nbsp;&nbsp;&nbsp;{Number}</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; jmp&nbsp;&nbsp; &lt;sigcode+{Offset}&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; jmp&nbsp;&nbsp; &lt;sigcode+{Offset}&gt;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; nop&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; nop</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &gt; begin():</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mov&nbsp;&nbsp;&nbsp;&nbsp;{Address},%eax</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; lea&nbsp;&nbsp;&nbsp;&nbsp;{Offset}(%eax),%esp</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; xor&nbsp;&nbsp;&nbsp; %ebp,%ebp</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mov&nbsp;&nbsp;&nbsp;&nbsp;{Address},%esi</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mov&nbsp;&nbsp;&nbsp; %esi,{Offset}(%eax)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pushl&nbsp;{Address}</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; call&nbsp;&nbsp; <init386></init386></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; add&nbsp;&nbsp;&nbsp;&nbsp;{Number},%esp</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; call&nbsp;&nbsp; <mi_startup></mi_startup></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; add&nbsp;&nbsp;&nbsp;&nbsp;{Number},%esp</p>
+<p>和刚才一样。左边来自 FreeBSD 5.3 的代码，右边来自 Kylin 2.0 的代码 (但是为了举例，函数前后顺序稍作调整)。在两段代码实际上非常相似，但是由于代码前后的顺序不同，导致只有一个代码块 sigcode() 可以匹配的上，相似度仅为 47.6%。</p>
+<p>针对这类情况，我的解决办法是将代码块按照标号 / 函数名进行排序。经过排序，上述代码段比对将变为：</p>
+<p>begin(): &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; begin():</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mov&nbsp;&nbsp;&nbsp;&nbsp;{Address},%eax &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mov&nbsp;&nbsp;&nbsp;&nbsp;{Address},%eax</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; lea&nbsp;&nbsp;&nbsp;&nbsp;{Offset}(%eax),%esp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; lea&nbsp;&nbsp;&nbsp;&nbsp;{Offset}(%eax),%esp</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; xor&nbsp;&nbsp;&nbsp; %ebp,%ebp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; xor&nbsp;&nbsp;&nbsp; %ebp,%ebp</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mov&nbsp;&nbsp;&nbsp;&nbsp;{Address},%esi&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mov&nbsp;&nbsp;&nbsp;&nbsp;{Address},%esi</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mov&nbsp;&nbsp;&nbsp; %esi,{Offset}(%eax)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mov&nbsp;&nbsp;&nbsp; %esi,{Offset}(%eax)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pushl&nbsp;{Address}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pushl&nbsp;{Address}</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; call&nbsp;&nbsp; <init386>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; call&nbsp;&nbsp; <init386></init386></init386></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; add&nbsp;&nbsp;&nbsp;&nbsp;{Number},%esp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;add&nbsp;&nbsp;&nbsp;&nbsp;{Number},%esp</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; call&nbsp;&nbsp; <mi_startup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; call&nbsp;&nbsp; <mi_startup></mi_startup></mi_startup></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; add&nbsp;&nbsp;&nbsp;&nbsp;{Number},%esp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; add&nbsp;&nbsp;&nbsp;&nbsp;{Number},%esp</p>
+<p>sigcode():&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sigcode():</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; call&nbsp;&nbsp; *{Offset}(%esp)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; call&nbsp;&nbsp; *{Offset}(%esp)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; lea&nbsp;&nbsp;&nbsp;&nbsp;{Offset}(%esp),%eax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; lea&nbsp;&nbsp;&nbsp;&nbsp;{Offset}(%esp),%eax</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; push&nbsp;&nbsp; %eax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; push&nbsp;&nbsp; %eax</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; testl&nbsp;{Number},{Offset}(%eax)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; testl&nbsp;{Number},{Offset}(%eax)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; jne&nbsp;&nbsp; &lt;sigcode+{Offset}&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; jne&nbsp;&nbsp; &lt;sigcode+{Offset}&gt;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; movl&nbsp;&nbsp;&nbsp;{Offset}(%eax),%gs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; movw&nbsp;&nbsp;&nbsp;{Offset}(%eax),%gs</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mov&nbsp;&nbsp;&nbsp;&nbsp;{Number},%eax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mov&nbsp;&nbsp;&nbsp;&nbsp;{Number},%eax</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; push &nbsp;&nbsp;%eax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; push&nbsp;&nbsp; %eax</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int&nbsp;&nbsp;&nbsp;&nbsp;{Number}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int&nbsp;&nbsp;&nbsp;&nbsp;{Number}</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; jmp&nbsp;&nbsp; &lt;sigcode+{Offset}&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; jmp&nbsp;&nbsp; &lt;sigcode+{Offset}&gt;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; nop&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; nop</p>
+<p>现在，这两段代码只有一行不同，相似度也就变为了 95.2%。</p>
+<p>但是这种依赖于标号 / 函数名排序的做法有效的程度实际上是有局限的。首先，并不是所有函数名都会保存于可执行代码中，至少 inline 函数就会在编译时扩展到调用的语句位置，还有一些函数在编译器优化时被优化掉。所以，不同的编译器，或者不同的编译参数都有可能导致某些函数名在执行体中消失，从而导致排序失败。另外，不是所有的可执行体都会保留函数名，对于 Windows 的 PE 文件来说，如果不用 debug 模式编译的话，除了导出函数外，其他的函数名一般不会保存在执行文件中，</p>
+<p>在我用同样的方法分析 Windows 文件内核的时候出现了比较严重的问题，即使血亲关系很近的两个版本的 Windows 内核，无论排序或者不排序，相似度都非常的低，对于这类 PE 文件根本无法反映出相似度。所以，在最终的分析中，我剔出了原本列在比较目标中的 XP 内核。</p>
+<p>因为 ELF 的这个特点，这次我的分析将只对使用 ELF 的文件格式的内核进行分析。</p>
+<p>2.1.4 比较</p>
+<p>在原本的计划中，我曾考虑采用常用于字符串相似度比较的编辑距离 (Levenshtein Distance) 算法 [5]。这个算法的含义，是计算两字符串之间的距离有多远。编辑距离是指，从原字符串变化到目的字符串最少需要进行多少次包括添加、修改、删除在内的操作。举例而言：</p>
+<p>如果计算 kitten 和 sitting 之间的编辑距离，我们最少需要进行 3 次操作，</p>
+<p>1、&nbsp;&nbsp;kitten -&gt;&nbsp;sitten (修改 s-&gt;k)</p>
+<p>2、&nbsp;&nbsp;sitten -&gt; sittin (修改 i-&gt;e)</p>
+<p>3、&nbsp;&nbsp;sittin -&gt; sitting&nbsp;(增加 g)</p>
+<p>因此，kitten 和 sitting 之间的编辑距离是 3。这个算法是俄国的科学家 Vladimir Levenshtein 在 1965 年提出的。这个算法主要是应用在 DNA 分析、拼字检查、语音辨识和抄袭侦测上。[6]</p>
+<p>但是这个算法的计算复杂度太高，是 O(nm) 的复杂度。对于平均大小在 100 万行的操作系统内核源代码来说，就是万亿次级别的比对。对于普通的计算机，平均每两个内核的比对就要花去数小时。而此次参与比对的内核将有 20 个左右，完成一个比较完整的比对过程将会出现几百次比对，那么就要花数个月的时间，不太现实。</p>
+<p>因此，这次我采用的是简化的比对办法。通过 diff 命令来比较两个内核源文件的差异。Diff 使用的是一种更聪明的计算方法，虽然最坏情况差不太多，但是大多数情况下具有较高的性能 [7]。</p>
+<p>通过 diff 给出的结果可以得知第一个文件增改多少行代码后，就可以变为第二个文件。diff 的算法和其实对于修改我们并不介意，我们只关心增加多少行代码就可以变为第二个文件。</p>
+<p>假设内核 A 的代码有 a 行，内核 B 的代码有 b 行。而从内核 A 变化到内核 B 需要添加 c 行，由内核 B 变化到内核 A 需要 d 行。由此，我们可以得知，在内核 A 中，存在有 b-c 行代码和内核 B 是相同的。因此，我们将内核 A 中所存在的内核 B 的代码行数除以内核 A 自身的代码行数定义为两个内核的相似度，即</p>
+<p>由公式可知，A-&gt;B 和 B-&gt;A 的计算结果将有可能不同。因为我们判断相似度的原因不单纯是看二者的差异，更重要的是看他们之间的血亲关系的远近，因此我们取双向转换中的最大值，作为 A&lt;-&gt;B 之间的相似度。</p>
+<p>A-B 间的相似度 = max((b-c) / a, (a-d) / b )</p>
+<p>2.1.5 小结</p>
+<p>分析方法还有待完善，可以看出，二进制可执行文件的分析依旧还有很大的难度，很容易受到各种外围环境的变化而导致相似度大幅下降，而无法反映真实的相似度。因此对于那些刻意隐瞒相关性的二进制可执行文件来说还是比较容易的逃过这种分析方法的检测。</p>
+<p>但是，分析方法的缺陷却只会导致相似度的下降，而不会导致差异很大的代码产生很高的相似度。因此，我这次采用这次分析方法主要就是确定麒麟操作系统内核与其他操作系统之间的相似度的下限，并从数据中试图分析出他们的血亲关系。</p>
+<p>2.2 多种操作系统内核相似度比较</p>
+<p>为了比对尽量客观，这次参加比对的操作系统内核包括，FreeBSD, NetBSD, OpenBSD, Linux, Solaris 和银河麒麟操作系统，共 6 个操作系统，22 个内核。</p>
+<p>原计划中，要将 Mac OS X 中的 Darwin 8.0.1, 7.0.1 拿来比对，可是由于其文件格式是 Mach-O 的，而我又没有支持 Mach-O 的 objdump，所以暂时无法参与比对。另外，原计划曾打算拿相关性更差的 Windows NT 系列的系统内核来进行比对，可是由于之前所说的 PE 格式问题而导致的相似度没有参考价值，所以，这次也没有将其列入最终的比对。</p>
+<p>为了确认比对的有效性，我们将先对 FreeBSD, NetBSD 和 OpenBSD 之间的比对来审视其比对效果。</p>
+<p>2.2.1 FreeBSD 间不同版本内核相似度分析</p>
+<p>FreeBSD 是一种 Unix 衍生操作系统，由 BSD, 386BSD 和 4.4BSD 发展而来的 Unix 的一个重要分支。而 BSD 的全称是 “伯克利软件发布”，是美国加州大学伯克利分校计算机系统研究组所制作的一套包括内核在内完整的操作系统，起源于 AT&amp;T 的 Unix V6，但是后来由于与 AT&amp;T 的版权纠纷问题，彻底的删除了 AT&amp;T 在 BSD 内核中的代码，大约占 10% 左右。也正是这场官司，而给了 Linux 得以飞速发展的机遇。在版权问题解决后，BSD 借助其高质量的代码，在开放源代码的世界里有了飞速的发展，分别产生了 3 个重要的分支，FreeBSD, OpenBSD, NetBSD。FreeBSD 发展至今，已经成为公认的相当可靠和健壮的操作系统。[9,10]</p>
+<p>因为焦点集中在 FreeBSD 身上，而且特别是 5.x 和 6.x 的系统上，因此这回参与比较的 FreeBSD 的内核版本较多，分别有 FreeBSD 5.0, 5.1, 5.2, 5.2.1, 5.3, 5.4, 5.5 beta 4 和 6.0。</p>
+<table><tbody><tr><td nowrap="nowrap"><p><strong>原始内核 \ 目标内核</strong></p></td><td nowrap="nowrap"><p><strong>汇编行数</strong></p></td><td nowrap="nowrap"><p><strong>freebsd_5.0</strong></p></td><td nowrap="nowrap"><p><strong>freebsd_5.1</strong></p></td><td nowrap="nowrap"><p><strong>freebsd_5.2</strong></p></td><td nowrap="nowrap"><p><strong>freebsd_5.2.1</strong></p></td><td nowrap="nowrap"><p><strong>freebsd_5.3</strong></p></td><td nowrap="nowrap"><p><strong>freebsd_5.4</strong></p></td><td nowrap="nowrap"><p><strong>freebsd_5.5.b4</strong></p></td><td nowrap="nowrap"><p><strong>freebsd_6.0</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_5.0</strong></p></td><td nowrap="nowrap"><p><strong>913,353</strong></p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>697423</strong></p></td><td nowrap="nowrap"><p><strong>712361</strong></p></td><td nowrap="nowrap"><p>714811</p></td><td nowrap="nowrap"><p><strong>969174</strong></p></td><td nowrap="nowrap"><p><strong>1001579</strong></p></td><td nowrap="nowrap"><p><strong>1016967</strong></p></td><td nowrap="nowrap"><p><strong>1146371</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_5.1</strong></p></td><td nowrap="nowrap"><p><strong>958,699</strong></p></td><td nowrap="nowrap"><p>652223</p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>682433</strong></p></td><td nowrap="nowrap"><p><strong>681769</strong></p></td><td nowrap="nowrap"><p>1029692</p></td><td nowrap="nowrap"><p><strong>1002484</strong></p></td><td nowrap="nowrap"><p><strong>1034263</strong></p></td><td nowrap="nowrap"><p><strong>1112613</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_5.2</strong></p></td><td nowrap="nowrap"><p><strong>1,048,418</strong></p></td><td nowrap="nowrap"><p>572280</p></td><td nowrap="nowrap"><p>604662</p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>3252</strong></p></td><td nowrap="nowrap"><p><strong>817759</strong></p></td><td nowrap="nowrap"><p><strong>865407</strong></p></td><td nowrap="nowrap"><p><strong>850969</strong></p></td><td nowrap="nowrap"><p><strong>1124929</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_5.2.1</strong></p></td><td nowrap="nowrap"><p><strong>1,049,592</strong></p></td><td nowrap="nowrap"><p><strong>493098</strong></p></td><td nowrap="nowrap"><p>607199</p></td><td nowrap="nowrap"><p>2078</p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>816434</strong></p></td><td nowrap="nowrap"><p><strong>870479</strong></p></td><td nowrap="nowrap"><p><strong>881654</strong></p></td><td nowrap="nowrap"><p><strong>1124304</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_5.3</strong></p></td><td nowrap="nowrap"><p><strong>1,161,593</strong></p></td><td nowrap="nowrap"><p>742327</p></td><td nowrap="nowrap"><p><strong>762747</strong></p></td><td nowrap="nowrap"><p>705826</p></td><td nowrap="nowrap"><p>724190</p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>35581</strong></p></td><td nowrap="nowrap"><p><strong>78219</strong></p></td><td nowrap="nowrap"><p>977778</p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_5.4</strong></p></td><td nowrap="nowrap"><p><strong>1,174,287</strong></p></td><td nowrap="nowrap"><p>744511</p></td><td nowrap="nowrap"><p>811979</p></td><td nowrap="nowrap"><p>732332</p></td><td nowrap="nowrap"><p>733290</p></td><td nowrap="nowrap"><p>22906</p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>25985</strong></p></td><td nowrap="nowrap"><p>901307</p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_5.5.b4</strong></p></td><td nowrap="nowrap"><p><strong>1,187,447</strong></p></td><td nowrap="nowrap"><p>741616</p></td><td nowrap="nowrap"><p>783626</p></td><td nowrap="nowrap"><p>735617</p></td><td nowrap="nowrap"><p>734211</p></td><td nowrap="nowrap"><p>40295</p></td><td nowrap="nowrap"><p>12975</p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>358820</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_6.0</strong></p></td><td nowrap="nowrap"><p><strong>1,271,723</strong></p></td><td nowrap="nowrap"><p>791490</p></td><td nowrap="nowrap"><p>805184</p></td><td nowrap="nowrap"><p>905427</p></td><td nowrap="nowrap"><p>907359</p></td><td nowrap="nowrap"><p><strong>753022</strong></p></td><td nowrap="nowrap"><p><strong>766311</strong></p></td><td nowrap="nowrap"><p>622653</p></td><td nowrap="nowrap"><p>–</p></td></tr></tbody></table>
+
+<p>上表中所列出的是 FreeBSD 的各个版本之间的差异行数，即前面所说到的 c。左边列出的是原始内核，顶端列出的是目的内核。左边给出了原始内核的行数。</p>
+<p>差异行数和相似度具有相同的含义，毕竟相似度也是通过差异行数计算出来的，因此在以后的叙述中，我们将只列出相似度对比的表格。</p>
+<p>下面就是 FreeBSD 各个版本之间的内核相似度比较。</p>
+<table><tbody><tr><td nowrap="nowrap"><p><strong>原始内核</strong><strong> \</strong><strong> 目的内核</strong></p></td><td nowrap="nowrap"><p><strong>汇编行数</strong></p></td><td nowrap="nowrap"><p><strong>freebsd_5.0</strong></p></td><td nowrap="nowrap"><p><strong>freebsd_5.1</strong></p></td><td nowrap="nowrap"><p><strong>freebsd_5.2</strong></p></td><td nowrap="nowrap"><p><strong>freebsd_5.2.1</strong></p></td><td nowrap="nowrap"><p><strong>freebsd_5.3</strong></p></td><td nowrap="nowrap"><p><strong>freebsd_5.4</strong></p></td><td nowrap="nowrap"><p><strong>freebsd_5.5.b4</strong></p></td><td nowrap="nowrap"><p><strong>freebsd_6.0</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_5.0</strong></p></td><td nowrap="nowrap"><p><strong>913,353</strong></p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>28.61%</strong></p></td><td nowrap="nowrap"><p><strong>36.79%</strong></p></td><td nowrap="nowrap"><p>36.65%</p></td><td nowrap="nowrap"><p><strong>21.07%</strong></p></td><td nowrap="nowrap"><p><strong>18.91%</strong></p></td><td nowrap="nowrap"><p><strong>18.67%</strong></p></td><td nowrap="nowrap"><p><strong>13.72%</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_5.1</strong></p></td><td nowrap="nowrap"><p><strong>958,699</strong></p></td><td nowrap="nowrap"><p>27.24%</p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>38.18%</strong></p></td><td nowrap="nowrap"><p><strong>38.37%</strong></p></td><td nowrap="nowrap"><p>13.76%</p></td><td nowrap="nowrap"><p><strong>17.92%</strong></p></td><td nowrap="nowrap"><p><strong>15.98%</strong></p></td><td nowrap="nowrap"><p><strong>16.60%</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_5.2</strong></p></td><td nowrap="nowrap"><p><strong>1,048,418</strong></p></td><td nowrap="nowrap"><p>32.53%</p></td><td nowrap="nowrap"><p>33.77%</p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>99.80%</strong></p></td><td nowrap="nowrap"><p><strong>32.80%</strong></p></td><td nowrap="nowrap"><p><strong>29.46%</strong></p></td><td nowrap="nowrap"><p><strong>32.09%</strong></p></td><td nowrap="nowrap"><p><strong>14.00%</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_5.2.1</strong></p></td><td nowrap="nowrap"><p><strong>1,049,592</strong></p></td><td nowrap="nowrap"><p><strong>40.04%</strong></p></td><td nowrap="nowrap"><p>33.49%</p></td><td nowrap="nowrap"><p>99.69%</p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>32.89%</strong></p></td><td nowrap="nowrap"><p><strong>28.95%</strong></p></td><td nowrap="nowrap"><p><strong>29.13%</strong></p></td><td nowrap="nowrap"><p><strong>14.05%</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_5.3</strong></p></td><td nowrap="nowrap"><p><strong>1,161,593</strong></p></td><td nowrap="nowrap"><p>14.72%</p></td><td nowrap="nowrap"><p><strong>16.87%</strong></p></td><td nowrap="nowrap"><p>29.49%</p></td><td nowrap="nowrap"><p>28.01%</p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>98.03%</strong></p></td><td nowrap="nowrap"><p><strong>95.49%</strong></p></td><td nowrap="nowrap"><p>25.31%</p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_5.4</strong></p></td><td nowrap="nowrap"><p><strong>1,174,287</strong></p></td><td nowrap="nowrap"><p>14.38%</p></td><td nowrap="nowrap"><p>12.49%</p></td><td nowrap="nowrap"><p>26.92%</p></td><td nowrap="nowrap"><p>26.94%</p></td><td nowrap="nowrap"><p>96.97%</p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>98.91%</strong></p></td><td nowrap="nowrap"><p>31.54%</p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_5.5.b4</strong></p></td><td nowrap="nowrap"><p><strong>1,187,447</strong></p></td><td nowrap="nowrap"><p>14.46%</p></td><td nowrap="nowrap"><p>14.74%</p></td><td nowrap="nowrap"><p>26.34%</p></td><td nowrap="nowrap"><p>26.56%</p></td><td nowrap="nowrap"><p>94.43%</p></td><td nowrap="nowrap"><p>97.80%</p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>76.88%</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_6.0</strong></p></td><td nowrap="nowrap"><p><strong>1,271,723</strong></p></td><td nowrap="nowrap"><p>9.58%</p></td><td nowrap="nowrap"><p>12.07%</p></td><td nowrap="nowrap"><p>11.24%</p></td><td nowrap="nowrap"><p>11.18%</p></td><td nowrap="nowrap"><p><strong>32.13%</strong></p></td><td nowrap="nowrap"><p><strong>32.08%</strong></p></td><td nowrap="nowrap"><p>44.41%</p></td><td nowrap="nowrap"><p>–</p></td></tr></tbody></table>
+
+<p>由于操作系统是逐步发展而来的，因此从 5.0-5.5 beta 4 都是在前者的基础上，修补前者中出现的 bug，并增添新的特性而产生的。我们可以从这个 FreeBSD 的相似度表中看到这种传承关系。我们可以看出，基本上是越靠近当前版本相似度越高，而离当前版本越远相似度就越低。其中有一些特例的情况，5.1 和 5.2 似乎比较特殊，可能是由于某种原因在 5.1 中策略有所调整，而在 5.2.1 或者 5.3 中又逐渐的恢复回来。</p>
+<p>5.2.1 和 5.2 的相似度达到了 99.80%，这是正常的，由于在 5.2 之后，有一系列关键服务，如 wu-ftp, OpenSSH 和 XFree86 等的缓冲区溢出的漏洞被揭露出来，致使 FreeBSD 出于安全考虑而在 5.2 发布后仅一个月多的时间就立即发布了新的版本，因此 5.2.1 和 5.2 的内核上的差异实际上很低，主要是在外围程序上修补了很多安全漏洞 [15]。但是出乎我意料的，我没想到在很容易被干扰而降低相似度的情况下，竟然可以达到这么高的相似度，说明这种分析方法对于代码相似度分析在一般情况下是有效的。究其原因，应该是因为 FreeBSD 的前后传承关系，所以不同的版本虽然代码有不少变动，但是默认的内核配置文件变动不大，因此才有可能出现这种比较高的相似度。另外我们也可以看出，FreeBSD 在 5.3 以后，包括 5.4 和 5.5 的内核变动量都不大，由此可以感觉到 5.x 的系统可能已经基本成熟。</p>
+<p>FreeBSD 6.0 与 5.3 以前版本的相似度都不太高，主要是因为 6.0 已经是和 5.x 属于不同的代码分支，相对于 5.x 来说代码有了较大的变化。而另一方面，6.0 的分支是在 5.4 版本发布后建立的，因此，6.0 的内核与之前内核的相似度偏低，却和 FreeBSD 5.3, 5.4, 5.5 beta 4 的相似度较高。</p>
+<p>总体上，基本符合版本相近，代码相近的客观事实，分析方法是成功的。</p>
+<p>2.2.2 FreeBSD、NetBSD 和 OpenBSD 的内核相似度分析</p>
+<p>NetBSD 和 FreeBSD 一样，也是从美国加州伯克利大学的 4.3BSD 和 386BSD 衍生出来的 Unix 操作系统。它以设计简洁、代码规范和高可移植性的特点而著称。从服务器到嵌入式设备都有它的身影 [10]。而 OpenBSD 则是从 NetBSD 1.0 衍生而来的 [11]。因此 OpenBSD 和 NetBSD 相对 FreeBSD 而言具有更近的血亲关系。</p>
+<table><tbody><tr><td nowrap="nowrap"><p><strong>原始内核</strong><strong> \</strong><strong> 目标内核</strong></p></td><td nowrap="nowrap"><p><strong>汇编行数</strong></p></td><td nowrap="nowrap"><p><strong>freebsd_5.3</strong></p></td><td nowrap="nowrap"><p><strong>freebsd_6.0</strong></p></td><td nowrap="nowrap"><p><strong>netbsd_2.1</strong></p></td><td nowrap="nowrap"><p><strong>netbsd_3.0</strong></p></td><td nowrap="nowrap"><p><strong>openbsd_3.7</strong></p></td><td nowrap="nowrap"><p><strong>openbsd_3.8</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_5.3</strong></p></td><td nowrap="nowrap"><p><strong>1,161,593</strong></p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p>25.31%</p></td><td nowrap="nowrap"><p><strong>16.55%</strong></p></td><td nowrap="nowrap"><p><strong>16.61%</strong></p></td><td nowrap="nowrap"><p><strong>16.78%</strong></p></td><td nowrap="nowrap"><p><strong>16.74%</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_6.0</strong></p></td><td nowrap="nowrap"><p><strong>1,271,723</strong></p></td><td nowrap="nowrap"><p><strong>32.13%</strong></p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>16.65%</strong></p></td><td nowrap="nowrap"><p><strong>16.22%</strong></p></td><td nowrap="nowrap"><p>15.89%</p></td><td nowrap="nowrap"><p>16.24%</p></td></tr><tr><td nowrap="nowrap"><p><strong>netbsd_2.1</strong></p></td><td nowrap="nowrap"><p><strong>1,503,585</strong></p></td><td nowrap="nowrap"><p>13.08%</p></td><td nowrap="nowrap"><p>13.68%</p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>53.35%</strong></p></td><td nowrap="nowrap"><p>17.53%</p></td><td nowrap="nowrap"><p>16.72%</p></td></tr><tr><td nowrap="nowrap"><p><strong>netbsd_3.0</strong></p></td><td nowrap="nowrap"><p><strong>1,616,659</strong></p></td><td nowrap="nowrap"><p>11.76%</p></td><td nowrap="nowrap"><p>12.65%</p></td><td nowrap="nowrap"><p>24.40%</p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p>13.96%</p></td><td nowrap="nowrap"><p>14.61%</p></td></tr><tr><td nowrap="nowrap"><p><strong>openbsd_3.7</strong></p></td><td nowrap="nowrap"><p><strong>1,228,137</strong></p></td><td nowrap="nowrap"><p>15.60%</p></td><td nowrap="nowrap"><p><strong>16.54%</strong></p></td><td nowrap="nowrap"><p><strong>20.77%</strong></p></td><td nowrap="nowrap"><p><strong>18.44%</strong></p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>88.89%</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>openbsd_3.8</strong></p></td><td nowrap="nowrap"><p><strong>1,260,707</strong></p></td><td nowrap="nowrap"><p>15.26%</p></td><td nowrap="nowrap"><p><strong>16.52%</strong></p></td><td nowrap="nowrap"><p><strong>20.65%</strong></p></td><td nowrap="nowrap"><p><strong>18.47%</strong></p></td><td nowrap="nowrap"><p>84.56%</p></td><td nowrap="nowrap"><p>–</p></td></tr></tbody></table>
+
+<p>从这个数据表中，我们可以看出计算出来的数据可以反映这种已知的血亲关系。FreeBSD 与 NetBSD 和 OpenBSD 的相似度基本在 16.5% 左右，而 NetBSD 与 OpenBSD 的相似度则相对较高。NetBSD 2.1 和 OpenBSD 的相似度为 20.65% ~ 20.77%，NetBSD 3.0 和 OpenBSD 的相似度也有 18.44%，都高于 FreeBSD 与 NetBSD 和 OpenBSD 的相似度。虽然数值差别并不大，但是具有规律性，基本上也是客观地反映了真实的情况的。</p>
+<p>2.2.3 Kylin 与 FreeBSD, OpenBSD, NetBSD, Linux, Solaris 的内核相似度分析</p>
+<p>现在我们开始对银河麒麟操作系统进行相似度比对。参与比对的开放源代码操作系统内核有 FreeBSD 5.0, FreeBSD 5.2, FreeBSD 6.0, NetBSD 2.1, NetBSD 3.0, OpenBSD 3.7, OpenBSD 3.8, Linux 2.6.16, OpenSolaris 5.11，共 9 个内核。</p>
+<p>除了刚才介绍过的 FreeBSD, NetBSD 和 OpenBSD 外，还增加了 Linux 和 Solaris。Linux 是 Linus 基本上从零起步写出来的操作系统，虽然参考了 Minix 和 Unix 的实现，但是基本上没有大量的使用任何其它 Unix 发布的代码 [12]。因此，虽然 Linux 也是一个类 Unix 系统，然而由于是独立开发的，所以它和前面所列出的 BSD 衍生操作系统和后面将要提到的 Solaris 的血亲关系比较远。</p>
+<p>从历史的角度来讲，Solaris 和 BSD 很有渊源。在 80 年代，Sun 基于 BSD Unix 发布了自己版本的 UNIX，SunOS。而在 90 年代初，由于受到 AT&amp;T 与 BSD 的官司影响，Sun 将其 SunOS 4 替换为与 AT&amp;T 共同开发的 UNIX System V Release 4 的一个版本，并更名为 Solaris 2[13]。在 2004 年早期，Sun 开始了一项计划，名为 OpenSolaris，将 Solaris 逐步的放到开放源代码社区中。并在 2005 年的 6 月中旬开放了大部分的 Solaris 源代码 [14]。现在已经有一些基于 OpenSolaris 源代码的操作系统，这次采用的就是一个名为 Belenix 的 Live CD 发布版本 0.4.2 种的内核，uname 显示的是 SunOS 5.11。</p>
+<p>此次引入 Solaris 来进行比对，也是从一方面希望能够从分析数据中客观地反映出 Solaris，相比 Linux 而言，和 BSD 有更近的血亲关系。</p>
+<p>关于参与比对的麒麟操作系统内核，我们将从发布版本中获得的四个版本的内核拿来进行比对，Kylin 2.0.0, Kylin 2.0.14, Kylin 2.0.21, Kylin 2.0.21 lsb。需要说明的是，官方网站上发布了 2.0.14 和 2.0.18。其中 Kylin 2.0.0 是来自于麒麟系统安装盘的引导部分，通过 uname –a 显示出的版本是 2.0.0。Kylin 2.0.21 虽然是官方网站给出的光盘镜像的版本号，可是启动后，通过 uname –a 得到的版本号却是 2.0.18，这点可能是麒麟开发组在版本管理上的混乱所导致的。</p>
+<p>下面就是分析后得到的数据表；</p>
+<table><tbody><tr><td nowrap="nowrap"><p><strong>原始内核</strong><strong> \</strong><strong> 目标内核</strong></p></td><td nowrap="nowrap"><p><strong>汇编行数</strong></p></td><td nowrap="nowrap"><p><strong>fb 5.0</strong></p></td><td nowrap="nowrap"><p><strong>fb 5.2</strong></p></td><td nowrap="nowrap"><p><strong>fb 6.0</strong></p></td><td nowrap="nowrap"><p><strong>k 2-0</strong></p></td><td nowrap="nowrap"><p><strong>k 2-14</strong></p></td><td nowrap="nowrap"><p><strong>k 2-21</strong></p></td><td nowrap="nowrap"><p><strong>k 2-21 lsb</strong></p></td><td nowrap="nowrap"><p><strong>l 2.6.16</strong></p></td><td nowrap="nowrap"><p><strong>nb 2.1</strong></p></td><td nowrap="nowrap"><p><strong>nb 3.0</strong></p></td><td nowrap="nowrap"><p><strong>ob 3.7</strong></p></td><td nowrap="nowrap"><p><strong>ob 3.8</strong></p></td><td nowrap="nowrap"><p><strong>os 5.11</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_5.0</strong></p></td><td nowrap="nowrap"><p><strong>913,353</strong></p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>36.79%</strong></p></td><td nowrap="nowrap"><p><strong>13.72%</strong></p></td><td nowrap="nowrap"><p><strong>40.53%</strong></p></td><td nowrap="nowrap"><p><strong>30.43%</strong></p></td><td nowrap="nowrap"><p><strong>30.43%</strong></p></td><td nowrap="nowrap"><p><strong>40.53%</strong></p></td><td nowrap="nowrap"><p>6.46%</p></td><td nowrap="nowrap"><p><strong>11.24%</strong></p></td><td nowrap="nowrap"><p><strong>11.37%</strong></p></td><td nowrap="nowrap"><p><strong>10.91%</strong></p></td><td nowrap="nowrap"><p><strong>10.87%</strong></p></td><td nowrap="nowrap"><p>5.02%</p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_5.2</strong></p></td><td nowrap="nowrap"><p><strong>1,048,418</strong></p></td><td nowrap="nowrap"><p>32.53%</p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>14.00%</strong></p></td><td nowrap="nowrap"><p><strong>48.18%</strong></p></td><td nowrap="nowrap"><p><strong>34.02%</strong></p></td><td nowrap="nowrap"><p><strong>34.02%</strong></p></td><td nowrap="nowrap"><p><strong>48.18%</strong></p></td><td nowrap="nowrap"><p>5.75%</p></td><td nowrap="nowrap"><p><strong>11.02%</strong></p></td><td nowrap="nowrap"><p><strong>10.91%</strong></p></td><td nowrap="nowrap"><p><strong>10.95%</strong></p></td><td nowrap="nowrap"><p><strong>10.94%</strong></p></td><td nowrap="nowrap"><p>4.55%</p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_6.0</strong></p></td><td nowrap="nowrap"><p><strong>1,271,723</strong></p></td><td nowrap="nowrap"><p>9.58%</p></td><td nowrap="nowrap"><p>11.24%</p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p>12.63%</p></td><td nowrap="nowrap"><p>13.19%</p></td><td nowrap="nowrap"><p>13.14%</p></td><td nowrap="nowrap"><p>12.63%</p></td><td nowrap="nowrap"><p>6.61%</p></td><td nowrap="nowrap"><p><strong>16.65%</strong></p></td><td nowrap="nowrap"><p><strong>16.22%</strong></p></td><td nowrap="nowrap"><p>15.89%</p></td><td nowrap="nowrap"><p>16.24%</p></td><td nowrap="nowrap"><p>5.21%</p></td></tr><tr><td nowrap="nowrap"><p><strong>kylin_2.0.0</strong></p></td><td nowrap="nowrap"><p><strong>1,120,079</strong></p></td><td nowrap="nowrap"><p>31.92%</p></td><td nowrap="nowrap"><p>41.94%</p></td><td nowrap="nowrap"><p><strong>14.55%</strong></p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>91.06%</strong></p></td><td nowrap="nowrap"><p><strong>91.06%</strong></p></td><td nowrap="nowrap"><p><strong>100.00%</strong></p></td><td nowrap="nowrap"><p><strong>5.38%</strong></p></td><td nowrap="nowrap"><p><strong>10.83%</strong></p></td><td nowrap="nowrap"><p><strong>10.31%</strong></p></td><td nowrap="nowrap"><p><strong>10.20%</strong></p></td><td nowrap="nowrap"><p><strong>10.35%</strong></p></td><td nowrap="nowrap"><p>4.35%</p></td></tr><tr><td nowrap="nowrap"><p><strong>kylin_2.0.14</strong></p></td><td nowrap="nowrap"><p><strong>1,190,443</strong></p></td><td nowrap="nowrap"><p>23.55%</p></td><td nowrap="nowrap"><p>29.98%</p></td><td nowrap="nowrap"><p><strong>24.61%</strong></p></td><td nowrap="nowrap"><p>85.60%</p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>100.00%</strong></p></td><td nowrap="nowrap"><p>85.60%</p></td><td nowrap="nowrap"><p>5.04%</p></td><td nowrap="nowrap"><p><strong>10.63%</strong></p></td><td nowrap="nowrap"><p><strong>10.64%</strong></p></td><td nowrap="nowrap"><p><strong>10.30%</strong></p></td><td nowrap="nowrap"><p><strong>10.44%</strong></p></td><td nowrap="nowrap"><p>4.06%</p></td></tr><tr><td nowrap="nowrap"><p><strong>kylin_2.0.21</strong></p></td><td nowrap="nowrap"><p><strong>1,190,562</strong></p></td><td nowrap="nowrap"><p>23.52%</p></td><td nowrap="nowrap"><p>29.95%</p></td><td nowrap="nowrap"><p><strong>21.04%</strong></p></td><td nowrap="nowrap"><p>85.57%</p></td><td nowrap="nowrap"><p>99.99%</p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p>85.57%</p></td><td nowrap="nowrap"><p>5.03%</p></td><td nowrap="nowrap"><p><strong>10.72%</strong></p></td><td nowrap="nowrap"><p><strong>10.63%</strong></p></td><td nowrap="nowrap"><p><strong>10.29%</strong></p></td><td nowrap="nowrap"><p><strong>10.44%</strong></p></td><td nowrap="nowrap"><p>4.06%</p></td></tr><tr><td nowrap="nowrap"><p><strong>kylin_2.0.21_lsb</strong></p></td><td nowrap="nowrap"><p><strong>1,120,079</strong></p></td><td nowrap="nowrap"><p>31.92%</p></td><td nowrap="nowrap"><p>41.94%</p></td><td nowrap="nowrap"><p><strong>14.55%</strong></p></td><td nowrap="nowrap"><p>100.00%</p></td><td nowrap="nowrap"><p><strong>91.06%</strong></p></td><td nowrap="nowrap"><p><strong>91.06%</strong></p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>5.38%</strong></p></td><td nowrap="nowrap"><p><strong>10.83%</strong></p></td><td nowrap="nowrap"><p><strong>10.31%</strong></p></td><td nowrap="nowrap"><p><strong>10.20%</strong></p></td><td nowrap="nowrap"><p><strong>10.35%</strong></p></td><td nowrap="nowrap"><p>4.35%</p></td></tr><tr><td nowrap="nowrap"><p><strong>linux_2.6.16</strong></p></td><td nowrap="nowrap"><p><strong>666,204</strong></p></td><td nowrap="nowrap"><p><strong>9.47%</strong></p></td><td nowrap="nowrap"><p><strong>9.71%</strong></p></td><td nowrap="nowrap"><p><strong>13.13%</strong></p></td><td nowrap="nowrap"><p>5.38%</p></td><td nowrap="nowrap"><p><strong>5.38%</strong></p></td><td nowrap="nowrap"><p><strong>5.39%</strong></p></td><td nowrap="nowrap"><p>5.38%</p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>11.89%</strong></p></td><td nowrap="nowrap"><p><strong>12.09%</strong></p></td><td nowrap="nowrap"><p><strong>12.21%</strong></p></td><td nowrap="nowrap"><p><strong>12.07%</strong></p></td><td nowrap="nowrap"><p>6.30%</p></td></tr><tr><td nowrap="nowrap"><p><strong>netbsd_2.1</strong></p></td><td nowrap="nowrap"><p><strong>1,503,585</strong></p></td><td nowrap="nowrap"><p>6.49%</p></td><td nowrap="nowrap"><p>7.42%</p></td><td nowrap="nowrap"><p>13.68%</p></td><td nowrap="nowrap"><p>8.06%</p></td><td nowrap="nowrap"><p>8.18%</p></td><td nowrap="nowrap"><p>7.97%</p></td><td nowrap="nowrap"><p>8.06%</p></td><td nowrap="nowrap"><p>5.20%</p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>53.35%</strong></p></td><td nowrap="nowrap"><p>17.53%</p></td><td nowrap="nowrap"><p>16.72%</p></td><td nowrap="nowrap"><p>4.10%</p></td></tr><tr><td nowrap="nowrap"><p><strong>netbsd_3.0</strong></p></td><td nowrap="nowrap"><p><strong>1,616,659</strong></p></td><td nowrap="nowrap"><p>6.19%</p></td><td nowrap="nowrap"><p>7.11%</p></td><td nowrap="nowrap"><p>12.65%</p></td><td nowrap="nowrap"><p>7.54%</p></td><td nowrap="nowrap"><p>7.90%</p></td><td nowrap="nowrap"><p>7.89%</p></td><td nowrap="nowrap"><p>7.54%</p></td><td nowrap="nowrap"><p>4.98%</p></td><td nowrap="nowrap"><p>24.40%</p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p>13.96%</p></td><td nowrap="nowrap"><p>14.61%</p></td><td nowrap="nowrap"><p>3.73%</p></td></tr><tr><td nowrap="nowrap"><p><strong>openbsd_3.7</strong></p></td><td nowrap="nowrap"><p><strong>1,228,137</strong></p></td><td nowrap="nowrap"><p>7.95%</p></td><td nowrap="nowrap"><p>9.58%</p></td><td nowrap="nowrap"><p><strong>16.54%</strong></p></td><td nowrap="nowrap"><p>9.27%</p></td><td nowrap="nowrap"><p>9.97%</p></td><td nowrap="nowrap"><p>9.71%</p></td><td nowrap="nowrap"><p>9.27%</p></td><td nowrap="nowrap"><p>6.43%</p></td><td nowrap="nowrap"><p><strong>20.77%</strong></p></td><td nowrap="nowrap"><p><strong>18.44%</strong></p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>88.89%</strong></p></td><td nowrap="nowrap"><p>5.20%</p></td></tr><tr><td nowrap="nowrap"><p><strong>openbsd_3.8</strong></p></td><td nowrap="nowrap"><p><strong>1,260,707</strong></p></td><td nowrap="nowrap"><p>7.72%</p></td><td nowrap="nowrap"><p>8.84%</p></td><td nowrap="nowrap"><p><strong>16.52%</strong></p></td><td nowrap="nowrap"><p>8.88%</p></td><td nowrap="nowrap"><p>9.53%</p></td><td nowrap="nowrap"><p>9.52%</p></td><td nowrap="nowrap"><p>8.88%</p></td><td nowrap="nowrap"><p>6.29%</p></td><td nowrap="nowrap"><p><strong>20.65%</strong></p></td><td nowrap="nowrap"><p><strong>18.47%</strong></p></td><td nowrap="nowrap"><p>84.56%</p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p>5.00%</p></td></tr><tr><td nowrap="nowrap"><p><strong>OpenSolaris_5.11</strong></p></td><td nowrap="nowrap"><p><strong>396,534</strong></p></td><td nowrap="nowrap"><p>11.87%</p></td><td nowrap="nowrap"><p><strong>12.00%</strong></p></td><td nowrap="nowrap"><p><strong>16.84%</strong></p></td><td nowrap="nowrap"><p><strong>12.50%</strong></p></td><td nowrap="nowrap"><p><strong>12.46%</strong></p></td><td nowrap="nowrap"><p><strong>12.46%</strong></p></td><td nowrap="nowrap"><p><strong>12.50%</strong></p></td><td nowrap="nowrap"><p><strong>13.37%</strong></p></td><td nowrap="nowrap"><p><strong>15.90%</strong></p></td><td nowrap="nowrap"><p><strong>15.82%</strong></p></td><td nowrap="nowrap"><p><strong>16.66%</strong></p></td><td nowrap="nowrap"><p><strong>16.49%</strong></p></td><td nowrap="nowrap"><p>–</p></td></tr></tbody></table>
+
+<p>从数据表中反映出来的血亲关系来看，Kylin 2.0 的内核和 FreeBSD 5.x 的血亲关系最近，在 30.43%-48.18% 之间，和 FreeBSD 6.0 的关系稍远，在 14.55%-24.61% 之间。而和其他的操作系统关系都比较疏远。和 NetBSD、OpenBSD 的相似度在 10% 左右，而同 Linux 的相似度只有 5.38%，</p>
+<p>与 OpenSolaris 的相似度虽然比 NetBSD 和 OpenBSD 还高，达到了 12.50%，但是这个绝对数值不应该视为 OpenSolaris 与麒麟的关系更接近。因为，OpenSolaris 的代码行数仅有 396,534 行，仅相当于 NetBSD 的 1/4。在相似度计算公式中，分母较小，容易致使结果的相似度较大，因此不应该说麒麟内核和 Solaris 更相似，应该说麒麟内核同 Solaris，NetBSD 和 OpenBSD 的相似度相当。</p>
+<p>另外，我们可以注意到 OpenSolaris 和 FreeBSD 6, NetBSD, OpenBSD 的相似度略高于其他系统内核，但是都比较低。我们从这个不大的差异中可以感觉到 Solaris 同 BSD 的或近或远的关系。其实虽然 Solaris 代码已经不是基于 BSD 构建的 Unix 了，但是由于 SVR4 中也吸收了 BSD 的部分代码，因此 Solaris 在相似度上，还是客观的体现了和 BSD 偏近的关系。</p>
+<p>从数据中我们还可以看到麒麟的这几个内核的相似度很高。Kylin 2.0.0 和 Kylin 2.0.21 lsb 的相似度是 100%，Kylin 2.0.14 和 2.0.21 的相似度也是接近 100.00%。其中的具体差异行数如下：</p>
+<table><tbody><tr><td nowrap="nowrap"><p><strong>原始内核</strong><strong> \</strong><strong> 目标内核</strong></p></td><td nowrap="nowrap"><p><strong>汇编行数</strong></p></td><td nowrap="nowrap"><p><strong>kylin_2.0.0</strong></p></td><td nowrap="nowrap"><p><strong>kylin_2.0.14</strong></p></td><td nowrap="nowrap"><p><strong>kylin_2.0.21</strong></p></td><td nowrap="nowrap"><p><strong>kylin_2.0.21_lsb</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>kylin_2.0.0</strong></p></td><td nowrap="nowrap"><p><strong>1,120,079</strong></p></td><td nowrap="nowrap"><p><strong>&nbsp;–</strong></p></td><td nowrap="nowrap"><p><strong>170,553</strong></p></td><td nowrap="nowrap"><p><strong>170,641</strong></p></td><td nowrap="nowrap"><p><strong>0</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>kylin_2.0.14</strong></p></td><td nowrap="nowrap"><p><strong>1,190,443</strong></p></td><td nowrap="nowrap"><p><strong>101,029</strong></p></td><td nowrap="nowrap"><p><strong>&nbsp;–</strong></p></td><td nowrap="nowrap"><p><strong>145</strong></p></td><td nowrap="nowrap"><p><strong>101,029</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>kylin_2.0.21</strong></p></td><td nowrap="nowrap"><p><strong>1,190,562</strong></p></td><td nowrap="nowrap"><p><strong>101,328</strong></p></td><td nowrap="nowrap"><p><strong>26</strong></p></td><td nowrap="nowrap"><p><strong>&nbsp;–</strong></p></td><td nowrap="nowrap"><p><strong>101,328</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>kylin_2.0.21_lsb</strong></p></td><td nowrap="nowrap"><p><strong>1,120,079</strong></p></td><td nowrap="nowrap"><p><strong>0</strong></p></td><td nowrap="nowrap"><p><strong>170,553</strong></p></td><td nowrap="nowrap"><p><strong>170,641</strong></p></td><td nowrap="nowrap"><p><strong>&nbsp;–</strong></p></td></tr></tbody></table>
+
+<p>我们可以看出其实光盘引导用的内核同安装后的 / boot/kernel_lsb/ 目录下的内核是相同的。而 Kylin 2.0.21 和 2.0.14 相比仅仅修改了几十行代码而已，变动很小，从数值上看，变动主要是增加了一些代码。而从 2.0.0 到 2.0.14 变动稍大一些。</p>
+<p>在后面的分析中，我们没必要对很相似的内核一起进行重复分析，因此，将基于 Kylin 2.0.0 和 Kylin 2.0.21 这两个麒麟内核进行分析。</p>
+<p>从现在的结果我们已经可以看出麒麟和 FreeBSD 的 5.x 版本有很近的血亲关系，最高达到了与 FreeBSD 5.2 的 48.18% 的相似度，这种相似性甚至已经明显超过了和 FreeBSD 具有很近的同源关系的 NetBSD, OpenBSD。即使是最初基于 NetBSD 的代码而建立的 OpenBSD，在与其渊源极深的 NetBSD 比较时，最高也不过 20.77% 的相似度。</p>
+<p>至此，我们基本上可以确定麒麟操作系统内核中有大量的 FreeBSD 5.x 的源代码。为了进一步确定麒麟操作系统和 FreeBSD 的相似性到底有多少，我们接下来将针对 Kylin 内核和 FreeBSD 的内核作比较。</p>
+<p>2.2.4 Kylin 与 FreeBSD 各个版本间的内核相似度分析</p>
+<p>这次我们针对 Kylin 和 FreeBSD 这两个操作系统的内核进行相似度的比对。参与比对的将包括 Kylin 的 2 个典型内核和 FreeBSD 5.x 全系列内核，具体是 Kylin 2.0.0, Kylin 2.0.21, FreeBSD 5.0, FreeBSD 5.1, FreeBSD 5.2, FreeBSD 5.2.1, FreeBSD 5.3, FreeBSD 5.4, FreeBSD 5.5 beta4。</p>
+<table><tbody><tr><td nowrap="nowrap"><p><strong>原始内核</strong><strong> \</strong><strong> 目标内核</strong></p></td><td nowrap="nowrap"><p><strong>汇编行数</strong></p></td><td nowrap="nowrap"><p><strong>fb 5.0</strong></p></td><td nowrap="nowrap"><p><strong>fb 5.1</strong></p></td><td nowrap="nowrap"><p><strong>fb 5.2</strong></p></td><td nowrap="nowrap"><p><strong>fb 5.2.1</strong></p></td><td nowrap="nowrap"><p><strong>fb 5.3</strong></p></td><td nowrap="nowrap"><p><strong>fb 5.4</strong></p></td><td nowrap="nowrap"><p><strong>fb 5.5.b4</strong></p></td><td nowrap="nowrap"><p><strong>kylin_2.0.0</strong></p></td><td nowrap="nowrap"><p><strong>kylin_2.0.21</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_5.0</strong></p></td><td nowrap="nowrap"><p><strong>913,353</strong></p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>28.61%</strong></p></td><td nowrap="nowrap"><p><strong>36.79%</strong></p></td><td nowrap="nowrap"><p>36.65%</p></td><td nowrap="nowrap"><p><strong>21.07%</strong></p></td><td nowrap="nowrap"><p><strong>18.91%</strong></p></td><td nowrap="nowrap"><p><strong>18.67%</strong></p></td><td nowrap="nowrap"><p><strong>40.53%</strong></p></td><td nowrap="nowrap"><p><strong>30.43%</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_5.1</strong></p></td><td nowrap="nowrap"><p><strong>958,699</strong></p></td><td nowrap="nowrap"><p>27.24%</p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>38.18%</strong></p></td><td nowrap="nowrap"><p><strong>38.37%</strong></p></td><td nowrap="nowrap"><p>13.76%</p></td><td nowrap="nowrap"><p><strong>17.92%</strong></p></td><td nowrap="nowrap"><p><strong>15.98%</strong></p></td><td nowrap="nowrap"><p><strong>28.94%</strong></p></td><td nowrap="nowrap"><p><strong>26.11%</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_5.2</strong></p></td><td nowrap="nowrap"><p><strong>1,048,418</strong></p></td><td nowrap="nowrap"><p>32.53%</p></td><td nowrap="nowrap"><p>33.77%</p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>99.80%</strong></p></td><td nowrap="nowrap"><p><strong>32.80%</strong></p></td><td nowrap="nowrap"><p><strong>29.46%</strong></p></td><td nowrap="nowrap"><p><strong>32.09%</strong></p></td><td nowrap="nowrap"><p><strong>48.18%</strong></p></td><td nowrap="nowrap"><p><strong>34.02%</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_5.2.1</strong></p></td><td nowrap="nowrap"><p><strong>1,049,592</strong></p></td><td nowrap="nowrap"><p><strong>40.04%</strong></p></td><td nowrap="nowrap"><p>33.49%</p></td><td nowrap="nowrap"><p>99.69%</p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>32.89%</strong></p></td><td nowrap="nowrap"><p><strong>28.95%</strong></p></td><td nowrap="nowrap"><p><strong>29.13%</strong></p></td><td nowrap="nowrap"><p><strong>48.15%</strong></p></td><td nowrap="nowrap"><p><strong>34.47%</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_5.3</strong></p></td><td nowrap="nowrap"><p><strong>1,161,593</strong></p></td><td nowrap="nowrap"><p>14.72%</p></td><td nowrap="nowrap"><p><strong>16.87%</strong></p></td><td nowrap="nowrap"><p>29.49%</p></td><td nowrap="nowrap"><p>28.01%</p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>98.03%</strong></p></td><td nowrap="nowrap"><p><strong>95.49%</strong></p></td><td nowrap="nowrap"><p>57.94%</p></td><td nowrap="nowrap"><p>50.48%</p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_5.4</strong></p></td><td nowrap="nowrap"><p><strong>1,174,287</strong></p></td><td nowrap="nowrap"><p>14.38%</p></td><td nowrap="nowrap"><p>12.49%</p></td><td nowrap="nowrap"><p>26.92%</p></td><td nowrap="nowrap"><p>26.94%</p></td><td nowrap="nowrap"><p>96.97%</p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>98.91%</strong></p></td><td nowrap="nowrap"><p>56.24%</p></td><td nowrap="nowrap"><p><strong>51.88%</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_5.5.b4</strong></p></td><td nowrap="nowrap"><p><strong>1,187,447</strong></p></td><td nowrap="nowrap"><p>14.46%</p></td><td nowrap="nowrap"><p>14.74%</p></td><td nowrap="nowrap"><p>26.34%</p></td><td nowrap="nowrap"><p>26.56%</p></td><td nowrap="nowrap"><p>94.43%</p></td><td nowrap="nowrap"><p>97.80%</p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p>39.47%</p></td><td nowrap="nowrap"><p>50.16%</p></td></tr><tr><td nowrap="nowrap"><p><strong>kylin_2.0.0</strong></p></td><td nowrap="nowrap"><p><strong>1,120,079</strong></p></td><td nowrap="nowrap"><p>31.92%</p></td><td nowrap="nowrap"><p>20.99%</p></td><td nowrap="nowrap"><p>41.94%</p></td><td nowrap="nowrap"><p>41.97%</p></td><td nowrap="nowrap"><p><strong>60.26%</strong></p></td><td nowrap="nowrap"><p><strong>59.04%</strong></p></td><td nowrap="nowrap"><p><strong>42.59%</strong></p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>91.06%</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>kylin_2.0.21</strong></p></td><td nowrap="nowrap"><p><strong>1,190,562</strong></p></td><td nowrap="nowrap"><p>23.52%</p></td><td nowrap="nowrap"><p>16.68%</p></td><td nowrap="nowrap"><p>29.95%</p></td><td nowrap="nowrap"><p>29.93%</p></td><td nowrap="nowrap"><p><strong>52.04%</strong></p></td><td nowrap="nowrap"><p>50.87%</p></td><td nowrap="nowrap"><p><strong>50.35%</strong></p></td><td nowrap="nowrap"><p>85.57%</p></td><td nowrap="nowrap"><p>–</p></td></tr></tbody></table>
+
+<p>Kylin 2.0.0 和 FreeBSD 5.3 的相似度达到了 60.26%，与 FreeBSD 也达到了 59.04% 的相似度。我们可以注意到，即使是 FreeBSD 的 5.0 – 5.3 版本之间的相似度也没有超过 40.04%。5.3、5.4 和 5.5 的高相似度前面已经解释了，应该是 5.x 系列的内核趋于稳定了，因此修补较多增添新的特性较少所致。</p>
+<p>按照麒麟开发人员的解释，麒麟操作系统内核服务层使用的是 FreeBSD 5.0 的代码。可是，从我们的分析数据可以明显看出，Kylin 2.0.0 和 FreeBSD 5.0 的相似度有 40.53%，而与 FreeBSD 5.3 的相似度达到了 60.26%，因此我们有理由相信麒麟使用的是 FreeBSD 5.3 或者 5.4 的代码。</p>
+<p>当然，我们可以理解为这是开发人员的声明 [3] 中的一个笔误，他想说 FreeBSD 5.x，而不是 FreeBSD 5.0。但是，另一方面，如果说仅仅是外围服务层使用的是 FreeBSD 的话，那么麒麟与 FreeBSD 5.3 的相似度不应该高过 FreeBSD 自家不同版本之间的相似度。既然麒麟 2.0.0 内核与 FreeBSD 5.3 达到了 60.26% 的相似度，那么我们可以肯定地说，麒麟操作系统内核源代码至少有一半以上使用的是 FreeBSD 5.3 的源代码。</p>
+<p>2.2.5 Kylin 与 FreeBSD 5.3, 5.4 不同编译配置下的内核相似度分析</p>
+<p>为了能够进一步了解麒麟操作系统内核同 FreeBSD 内核的相似度，接下来，我们将对 FreeBSD 5.3 和 5.4 在不变动任何源代码的情况下，重新进行编译，增加一些在 Kylin 2.0 中出现的模块。这样做的是希望在不修改 FreeBSD 代码的前提下，看看不同的编译配置是否能够使得 FreeBSD 与麒麟操作系统内核的相似度更高。</p>
+<p>这次，我们在 FreeBSD 的内核编译配置文件 GENERIC 中增加如下三个选项：</p>
+<p>options COMPAT_LINUX</p>
+<p>options LINPROCFS</p>
+<p>device&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sound</p>
+<p>因为麒麟内核的一个亮点就是可以做到和 Linux 的二进制兼容，所以这主要是增加 FreeBSD 的 Linux 兼容性。其实事实上 FreeBSD 已经可以很好的兼容 Linux 二进制代码了，按照 FreeBSD 的内核设计，它完全可以同时支持多种 ABI(应用程序二进制接口)，并支持同时运行不同系统可执行文件。通过加载 COMPAT_LINUX 模块，FreeBSD 就已经做到了和 Linux 可执行文件间的二进制兼容，可以执行大部分 Linux 程序 [17]。</p>
+<p>而 LINPROCFS 模块则是模拟了 Linux 的进程文件系统，也就是我们在 Linux 下见到的 / proc 目录，很多 Linux 的程序需要用到这个系统，因此加载这个模块后，可以让 Linux 更好的在 FreeBSD 上运行 [18]。</p>
+<p>最后增加了 sound 设备，因为我们通过分析，发现 Kylin 内核里面加载了各种声卡驱动。需要提及的是，麒麟系统启动比较慢，有可能也是因为编译了过多的不必要的模块进内核所导致的。</p>
+<table><tbody><tr><td nowrap="nowrap"><p><strong>原始内核</strong><strong> \</strong><strong> 目标内核</strong></p></td><td nowrap="nowrap"><p><strong>汇编行数</strong></p></td><td nowrap="nowrap"><p><strong>freebsd_5.3</strong></p></td><td nowrap="nowrap"><p><strong>freebsd_5.3_1</strong></p></td><td nowrap="nowrap"><p><strong>freebsd_5.4</strong></p></td><td nowrap="nowrap"><p><strong>freebsd_5.4_1</strong></p></td><td nowrap="nowrap"><p><strong>kylin_2.0.0</strong></p></td><td nowrap="nowrap"><p><strong>kylin_2.0.21</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_5.3</strong></p></td><td nowrap="nowrap"><p><strong>1,161,593</strong></p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>97.47%</strong></p></td><td nowrap="nowrap"><p><strong>98.03%</strong></p></td><td nowrap="nowrap"><p>73.12%</p></td><td nowrap="nowrap"><p>57.94%</p></td><td nowrap="nowrap"><p>50.48%</p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_5.3_1</strong></p></td><td nowrap="nowrap"><p><strong>1,198,401</strong></p></td><td nowrap="nowrap"><p>93.78%</p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p>80.82%</p></td><td nowrap="nowrap"><p><strong>98.07%</strong></p></td><td nowrap="nowrap"><p>56.49%</p></td><td nowrap="nowrap"><p>56.64%</p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_5.4</strong></p></td><td nowrap="nowrap"><p><strong>1,174,287</strong></p></td><td nowrap="nowrap"><p>96.97%</p></td><td nowrap="nowrap"><p><strong>94.55%</strong></p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>96.58%</strong></p></td><td nowrap="nowrap"><p>56.24%</p></td><td nowrap="nowrap"><p><strong>51.88%</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_5.4_1</strong></p></td><td nowrap="nowrap"><p><strong>1,210,928</strong></p></td><td nowrap="nowrap"><p><strong>91.68%</strong></p></td><td nowrap="nowrap"><p>97.05%</p></td><td nowrap="nowrap"><p>94.56%</p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p>55.66%</p></td><td nowrap="nowrap"><p><strong>55.29%</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>kylin_2.0.0</strong></p></td><td nowrap="nowrap"><p><strong>1,120,079</strong></p></td><td nowrap="nowrap"><p><strong>60.26%</strong></p></td><td nowrap="nowrap"><p><strong>61.19%</strong></p></td><td nowrap="nowrap"><p><strong>59.04%</strong></p></td><td nowrap="nowrap"><p><strong>60.17%</strong></p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>91.06%</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>kylin_2.0.21</strong></p></td><td nowrap="nowrap"><p><strong>1,190,562</strong></p></td><td nowrap="nowrap"><p><strong>52.04%</strong></p></td><td nowrap="nowrap"><p><strong>57.02%</strong></p></td><td nowrap="nowrap"><p>50.87%</p></td><td nowrap="nowrap"><p>54.38%</p></td><td nowrap="nowrap"><p>85.57%</p></td><td nowrap="nowrap"><p>–</p></td></tr></tbody></table>
+
+<p>通过比对，我们可以看到，随着增加了 Linux 兼容性和声卡驱动模块后，Kylin 2.0 与 FreeBSD 的 5.3、5.4 的相似度均有小幅提高。其中 Kylin 2.0.0 内核和 FreeBSD 5.3 的相似度为 61.19%。我们有理由相信，随着更多合适的内核模块的加入，Kylin 2.0 和 FreeBSD 的内核相似度有可能会进一步提高。</p>
+<p>实际上，经过内核模块的比对，我们也发现了 Kylin 内核中出现了很多疑似是 FreeBSD 的其他模块，但是由于每次编译和比对要花费大量的时间，因此，我没有能够一一的加以测试。如果有兴趣的朋友可以进一步测试麒麟系统内核与不同的内核配置文件之间的相似度。</p>
+<p>2.2.6 同一份 FreeBSD 5.3 代码，不同编译配置下的内核相似度分析</p>
+<p>接下来，我们将在不修改任何 FreeBSD 5.3 内核源代码的前提下，尝试用不同的内核编译配置文件对 FreeBSD 5.3 内核进行编译。希望能够通过这样的尝试看出，同一份源代码，在不同配置文件下能够产生最低多低的相似度，换句话说，就是使相似度下降多少百分比。</p>
+<p>在测试中，由于编译和比对的时间太慢，所以，我只用 3 个不同的内核配置文件编译内核，这相对于可能出现的内核数量是一个很小的比例。因此，我不能够得出最低使相似度下降的百分比，但是我能够得出至少可以使相似度下降多少百分比。换句话说，我能够测试出一个相似度可能被降低的范围，但是实际能够降低的范围比这个还要大。</p>
+<table><tbody><tr><td nowrap="nowrap"><p><strong>原始内核</strong><strong> \</strong><strong> 目标内核</strong></p></td><td nowrap="nowrap"><p><strong>汇编行数</strong></p></td><td nowrap="nowrap"><p><strong>freebsd_5.3</strong></p></td><td nowrap="nowrap"><p><strong>freebsd_5.3_1</strong></p></td><td nowrap="nowrap"><p><strong>freebsd_5.3_2</strong></p></td><td nowrap="nowrap"><p><strong>freebsd_5.3_3</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_5.3</strong></p></td><td nowrap="nowrap"><p><strong>1,161,593</strong></p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>97.47%</strong></p></td><td nowrap="nowrap"><p><strong>72.01%</strong></p></td><td nowrap="nowrap"><p><strong>71.62%</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_5.3_1</strong></p></td><td nowrap="nowrap"><p><strong>1,198,401</strong></p></td><td nowrap="nowrap"><p>93.78%</p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>96.95%</strong></p></td><td nowrap="nowrap"><p><strong>94.32%</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_5.3_2</strong></p></td><td nowrap="nowrap"><p><strong>1,256,264</strong></p></td><td nowrap="nowrap"><p>66.54%</p></td><td nowrap="nowrap"><p>45.25%</p></td><td nowrap="nowrap"><p>–</p></td><td nowrap="nowrap"><p><strong>98.11%</strong></p></td></tr><tr><td nowrap="nowrap"><p><strong>freebsd_5.3_3</strong></p></td><td nowrap="nowrap"><p><strong>1,271,301</strong></p></td><td nowrap="nowrap"><p>67.10%</p></td><td nowrap="nowrap"><p>89.43%</p></td><td nowrap="nowrap"><p>96.95%</p></td><td nowrap="nowrap"><p>–</p></td></tr></tbody></table>
+
+<p>我只是很少的修改了几个内核编译选项，我尽量使生成的内核大小不要差异太大。最后选定了 3 个比较合适的内核配置文件，它们与 FreeBSD 5.3 默认配置的内核差异从 71.62% 到 97.47%。我们可以看到仅仅将内核配置文件稍加改动，就可以使同一份源代码编译出来的内核文件降低将近 30% 的相似度。可以预知的趋势是，随着改动的增大，将能够降低更多的相似度。</p>
+<p>既然在不变动源代码的情况下，就可以将相似度降低到 70% 左右，那么仅仅是服务层采用 FreeBSD 5.3 代码的麒麟系统内核本应该有相当低的相似度，但是分析数据却得到了 61.19% 高相似度，因此麒麟操作系统内核的自主代码的比例确实是一个比较值得关注的问题。</p>
+<p>2.3 结论</p>
+<p>经过这次分析，我们比较了麒麟操作系统内核同 FreeBSD, NetBSD, OpenBSD, Linux 和 Solaris 内核的相似度。在发现麒麟内核与 FreeBSD 5.x 有 30.43%-48.18% 的相似度后，将麒麟内核与 FreeBSD 5.x 各个版本进行了比对。通过比对看到麒麟系统与 FreeBSD 5.3 默认内核达到了 60.26% 的相似度，在经过微小调整内核配置文件后，相似度又得到了进一步的提高，达到了 61.19%。在继续调整内核配置文件之后，这个相似度还有进一步提升的空间。</p>
+<p>随后，我们在不修改 FreeBSD 5.3 源代码的情况下，仅仅通过配置文件的变动，就使内核相似度降低到了 71.62%，而且还有可能降的更低。</p>
+<p>经过分析，我们可以看出麒麟操作系统与 FreeBSD 5.3 具有血亲关系，而且麒麟系统相对于 FreeBSD 5.3 的改动，还没有 FreeBSD 5.3 相对于 FreeBSD 5.2.1 改动大。从 61.19% 的相似度，我们可以认定，麒麟操作系统中至少有 60% 的代码是来自于 FreeBSD 5.3 的源代码。</p>
+<p>由于简单的修改配置文件就可以使相同代码相似度降低到 71.62%，而我们最终所得到的 61.19% 又是仅仅是麒麟内核同 FreeBSD 5.3 内核相似度的最小值，因此，实际的麒麟操作系统与 FreeBSD 5.3 在源代码上的相似度很有可能会达到甚至超过 90%。</p>
+<p>我们可以推测 (但不确定) 麒麟操作系统内核可能是通过以下几个步骤产生的。</p>
+<p>首先是在 FreeBSD 5.3 内核源代码的基础上进行了部分的修改，可能是为了增强与 LSB 的兼容性。</p>
+<p>然后，开发了 Keta 内核模块，来实现 Kernel-based 静态页面 web 加速器。</p>
+<p>最后，以 FreeBSD 的默认内核配置文件 GENERIC 为基础，编译了更多的可选模块进内核。这么做的目的可能是为了让内核更具有通用性。</p>
+<p>如果确实如此，那么生成的麒麟操作系统内核与其说是一个新的操作系统内核，不如说是被麒麟开发者打了内核补丁的 FreeBSD 5.3 更为恰当。</p>
+<h2 id="三、尾声"><a href="#三、尾声" class="headerlink" title="三、尾声"></a>三、尾声</h2><p>我们很难推测麒麟在内核创新的百分比，从已知的数据我们只能说，创新可能只有 10% 到 20% 之间。</p>
+<p>首先，麒麟的官方说明中提到 “主要是由具有 Mach 风格的基本内核层、具有 BSD 风格的系统服务层和具有 Windows 界面风格的桌面环境组成，前两层在核态运行。” 采用 Mach 微内核层 + FreeBSD 内核服务层的做法是其一个亮点。微内核构架加上一个成熟操作系统的服务层，是目前比较流行的一个做法，Mac OS X 就是这样。在对 Mac OS X 的 xnu 内核源代码分析过程中，就可以看到其中的两层内核结构，很清晰。不过在我们反汇编麒麟操作系统内核的分析过程中，竟然连一个与 Mach 相关的内核函数都没有看到，许多关键的模块也基本上和 FreeBSD 相同而看不到 Mach 的身影，因此我们对于麒麟操作系统内核是否真如官方说明所宣称的那样，“具有 Mach 风格的基本内核层”，还是抱有很大疑问的。</p>
+<p>其次，从其对外宣称的一些麒麟的特性上看，绝大多数都是 FreeBSD 已经成熟的特性。比如，对 Linux 达到二进制兼容，事实上，FreeBSD 很早以前就已经做到了和 Linux 二进制兼容了，麒麟直接采用了 FreeBSD 的内核源代码，也自然而然的支持了这个特性，无非是在于 LSB 兼容上进一步的做了一些工作。麒麟系统的所宣称的安全性应该也是继承于 FreeBSD 长期积累下来的健壮和稳定性上。</p>
+<p>至于内核级的 Web 服务器 Keta，确实是来自国防科技大学的原创，可以从 <a target="_blank" rel="noopener" href="http://openketa.sourceforge.net/">http://openketa.sourceforge.net/</a>&nbsp;取得源代码。不过恰恰是这个内核级的 Web 服务器 Keta，降低了麒麟所宣称的安全性，而且也暴露了国防科技大学在安全性上认知的不足。</p>
+<p>内核级代码确实可以大幅提高性能，Linux 在 2.4 的时候也曾经采用一个叫做 TUX 的内核级的 Web 加速器来进行静态页面的加速处理。不过这个一直是争论的焦点，相当多的安全人士不推荐 Linux 这样设计，因为内核级代码虽然较快，但是，一旦发生溢出等安全攻击，那么攻击者就可以直接将自己的代码注入内核空间执行，具有系统最高权限，而不受约束。这将给系统安全性带来极大的隐患。另外，内核级的 Web 加速器也有其自身弱点，由于功能受限，而不能够用动态页面，只能够支持静态页面，所有的动态页面只有转交给另一个真实的 Web 服务器，比如 Apache Web Server，才能够处理。所以对于动态页面，内核的 Web 加速器并没有什么明显效果。随着 Linux 2.6 的 NPTL 引入，用户模式下的多任务性能得到了大幅提高，TUX 就很快被移出标准内核了。而 FreeBSD 的多任务模型和 Linux 很不同，特别是在 FreeBSD 5.x 后多任务模型有很大的改进，FreeBSD 的用户模式的多任务性能并不是很差，为了这个不大的性能提高，而严重的降低系统安全性，实在是一个不明智的举动。在这种情况下，还宣称自己是高安全性，显得很不伦不类。</p>
+<p>而且，从编译进麒麟内核的模块看，我们可以感到很多桌面系统的模块被加到了默认内核中，但是对外却宣称是服务器操作系统。我们都知道，安全的原则是最小化服务原则。多一个服务，多一个驱动，就多引入了一份不稳定和不安全。可是麒麟内核却加载了很多类似于屏幕保护模块、声卡模块、显卡图形驱动模块、ACPI 电源管理的内核模块，这些模块对于一个服务器来说，并不是必须的，而且其中很多代码会给系统带来很大的安全隐患。这绝不单单是引导速度变慢的问题，麒麟宣称自己是服务器操作系统，但是在这点的选择上也是很不明智的。</p>
+<p>最后需要提及的是，麒麟所安装的软件大部分是 GNU 的开放源代码软件，这些软件遵循 GPL。它要求如果对任何代码进行了修改，必须开放修改过的源代码。但不幸的是，麒麟操作系统虽然修改了部分的代码，却没有开放出修改后的源代码。从这种意义上说，麒麟操作系统对这些 GNU 的开源软件有侵权嫌疑。</p>
+<h2 id="附录-A-进一步分析"><a href="#附录-A-进一步分析" class="headerlink" title="附录 A&nbsp;&nbsp;&nbsp;&nbsp;进一步分析"></a>附录 A&nbsp;&nbsp;&nbsp;&nbsp;进一步分析</h2><p>如果想进一步的分析麒麟与其他操作系统的相似性，也可以从 objdump 导出的函数名称的相似度来比较。我曾经分析过 FreeBSD 5.3 内核和麒麟内核 objdump 出的函数名的差异。FreeBSD 5.3 有 14101 个函数，Kylin 2.0 有 14399 个函数，其中有 4 个函数出现在了 FreeBSD 5.3 而没有出现在 Kylin 2.0 中；有 302 个函数出现在了 Kylin 2.0 objdump 的文件里，而没有出现在 FreeBSD 5.3 的 objdump 文件里。经过分析，这 302 个函数中有 223 都可以在 FreeBSD 5.3 的源代码里找到，没有被 objdump 出来有可能是因为编译环境不同。还剩下 79 个函数可能是麒麟新增的函数，他们是：</p>
+<p>如果单从函数名比对的统计上看的话，14399 个函数，只有 79 个函数可能是原创的。与 FreeBSD 5.3 在函数名上的相似度有 99.45%。这个相似程度十分惊人，但是仅凭函数名相似不足以说明逻辑上相似，因此，在分析报告中，这个分析数据只作为参考数据放到附录中。感兴趣的朋友可以进一步的分析。</p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">LoaderLand</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://loaderland.github.io/post/fc9a3f71.html">https://loaderland.github.io/post/fc9a3f71.html</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">LoaderLand</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E9%BA%92%E9%BA%9F%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
+                                    <span class="chip bg-color">麒麟操作系统</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+    <div class="livere-card card" data-aos="fade-up">
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" class="card-content" data-id="city" data-uid="MTAyMC81OTMyMy8zNTc4NQ">
+        <script type="text/javascript">
+            (function (d, s) {
+                let j, e = d.getElementsByTagName(s)[0];
+                if (typeof LivereTower === 'function') {
+                    return;
+                }
+
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript>为正常使用来必力评论功能请激活JavaScript。</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+</div>
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/post/16447623.html">
+                    <div class="card-image">
+                        
+                        <img src="https://oss.luhuhu.cn/202406171137694.jpeg" class="responsive-img" alt="一次游戏开荒经历">
+                        
+                        <span class="card-title">一次游戏开荒经历</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-06-17
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%9D%82%E6%96%87/" class="post-category">
+                                    杂文
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%89%8B%E8%AE%B0/">
+                        <span class="chip bg-color">手记</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/post/b2acf578.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/medias/featureimages/14.jpg" class="responsive-img" alt="BlackGoat">
+                        
+                        <span class="card-title">BlackGoat</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-06-05
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%9D%82%E6%96%87/" class="post-category">
+                                    杂文
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%91%98%E8%AE%B0/">
+                        <span class="chip bg-color">摘记</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="12103553"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='list'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2023-2024</span>
+            
+            <span id="year">2023</span>
+            <a href="/about" target="_blank">LoaderLand</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+            <span id="icp"><img src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/medias/icp.png" style="vertical-align: text-bottom;" />
+                <a href="http://beian.miit.gov.cn/" target="_blank">浙ICP备2023053681号-1</a>
+            </span>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/loaderland" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:669194168@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=669194168" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 669194168" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+    <a href="https://weibo.com/loaderland" class="tooltipped" target="_blank" data-tooltip="关注我的微博: https://weibo.com/loaderland" data-position="top" data-delay="50">
+        <i class="fab fa-weibo"></i>
+    </a>
+
+
+
+    <a href="https://www.zhihu.com/people/LoaderLand" class="tooltipped" target="_blank" data-tooltip="关注我的知乎: https://www.zhihu.com/people/LoaderLand" data-position="top" data-delay="50">
+        <i class="fab fa-zhihu1">知</i>
+    </a>
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/materialize/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/aos/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
