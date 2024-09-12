@@ -29,9 +29,9 @@
 
     <script src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 7.0.0">
+<meta name="generator" content="Hexo 7.0.0"><link rel="alternate" href="/atom.xml" title="LoaderLand" type="application/atom+xml">
+
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
-<link rel="alternate" href="/atom.xml" title="LoaderLand" type="application/atom+xml">
 <link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
@@ -394,14 +394,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-06-17
+                    2024-09-05
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4.8k
+                    4.9k
                 </div>
                 
 
@@ -914,8 +914,13 @@ systemctl disable firewalld
 
 <span class="token comment" spellcheck="true"># 白名单及端口开放</span>
 firewall-cmd --permanent --add-port<span class="token operator">=</span>3306/tcp
-firewall-cmd --permanent --add-rich-rule<span class="token operator">=</span><span class="token string">"rule family="</span>ipv4<span class="token string">" source address="</span>10.59.88.2<span class="token string">" port protocol="</span>tcp<span class="token string">" port="</span>3306<span class="token string">" accept"</span>
+firewall-cmd --permanent --add-rich-rule<span class="token operator">=</span><span class="token string">"rule family="</span>ipv4<span class="token string">" source address="</span>10.59.88.6<span class="token string">" port protocol="</span>tcp<span class="token string">" port="</span>3306<span class="token string">" accept"</span>
 firewall-cmd --permanent --remove-rich-rule<span class="token operator">=</span><span class="token string">"rule family="</span>ipv4<span class="token string">" source address="</span>10.42.136.247<span class="token string">" port protocol="</span>tcp<span class="token string">" port="</span>3306<span class="token string">" accept"</span>
+
+<span class="token comment" spellcheck="true"># 默认开启了22端口的public权限，关闭public权限</span>
+<span class="token function">sudo</span> firewall-cmd --list-services
+<span class="token function">sudo</span> firewall-cmd --permanent --zone<span class="token operator">=</span>public --remove-service<span class="token operator">=</span>ssh
+<span class="token function">sudo</span> firewall-cmd --reload
 <span class="token comment" spellcheck="true"># 防火墙清单</span>
 firewall-cmd --list-all
 

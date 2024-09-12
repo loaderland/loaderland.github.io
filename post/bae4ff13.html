@@ -29,9 +29,9 @@
 
     <script src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 7.0.0">
+<meta name="generator" content="Hexo 7.0.0"><link rel="alternate" href="/atom.xml" title="LoaderLand" type="application/atom+xml">
+
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
-<link rel="alternate" href="/atom.xml" title="LoaderLand" type="application/atom+xml">
 <link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
@@ -394,14 +394,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-06-17
+                    2024-07-29
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4
+                    249
                 </div>
                 
 
@@ -418,7 +418,36 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><p>–TO BE CONTINUE</p>
+                <h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><h2 id="主从及集群"><a href="#主从及集群" class="headerlink" title="主从及集群"></a>主从及集群</h2><ul>
+<li>主从架构<ul>
+<li>全量同步</li>
+<li>增量同步</li>
+</ul>
+</li>
+<li>集群分片</li>
+</ul>
+<h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><ul>
+<li>缓存<ul>
+<li>redis是基于内存的，读写速度比磁盘要快很多，并且贵很多。<strong>缓存在什么时候会更新，什么是缓存穿透</strong><br><img src="https://oss.luhuhu.cn/202407291040520.png" alt="redis缓存"></li>
+</ul>
+</li>
+<li>分布式锁<ul>
+<li>在微服务框架中，本地锁已经不能满足我们的需求，redis的高效可以很好的实现分布式锁功能（配合redission）。<strong>在redis集群中如何保障锁状态的一致性？单节点多服务器中的一致性问题？</strong><br><img src="https://oss.luhuhu.cn/202407291046913.png" alt="分布式锁"></li>
+</ul>
+</li>
+<li>计数器<ul>
+<li>Redis由于单线程执行命令的特性，实现计数器不会有锁的竞争</li>
+</ul>
+</li>
+<li>消息队列<ul>
+<li>在 简单场景中可以利用Redis实现消息队列功能，但是功能和性能都比不上正常的消息中间件Rocket MQ、Kafka等，不推荐实现</li>
+</ul>
+</li>
+<li>实时系统<ul>
+<li>高性能特性可与被用来构建实时系统，如抽奖、秒杀、排行榜等</li>
+</ul>
+</li>
+</ul>
 
                 
             </div>

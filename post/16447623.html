@@ -29,9 +29,9 @@
 
     <script src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 7.0.0">
+<meta name="generator" content="Hexo 7.0.0"><link rel="alternate" href="/atom.xml" title="LoaderLand" type="application/atom+xml">
+
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
-<link rel="alternate" href="/atom.xml" title="LoaderLand" type="application/atom+xml">
 <link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
@@ -394,14 +394,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-06-17
+                    2024-07-12
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.7k
+                    3.1k
                 </div>
                 
 
@@ -420,10 +420,9 @@
             <div id="articleContent">
                 <h1 id="一次游戏开荒经历"><a href="#一次游戏开荒经历" class="headerlink" title="一次游戏开荒经历"></a>一次游戏开荒经历</h1><p><img src="https://oss.luhuhu.cn/202406171137694.jpeg" alt="DNF"></p>
 <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><ul>
-<li><p>游戏：<code>毒奶粉</code>一款老的鹅厂端游的手游版本，几年前就有过造势发布，但是被版号摁住没发出来</p>
-</li>
-<li><p>伙伴：两个大学时玩的很好的同学和一个玩的很好的同事</p>
-</li>
+<li>游戏：<code>毒奶粉</code>一款老的鹅厂端游的手游版本，几年前就有过造势发布，但是被版号摁住没发出来</li>
+<li>伙伴：两个大学时玩的很好的同学和一个玩的很好的同事</li>
+<li>时间：2024-06-17</li>
 </ul>
 <h2 id="经历"><a href="#经历" class="headerlink" title="经历"></a>经历</h2><p>我个人开始对它（玩这个游戏）的预期便没有多长久，所以也没有花多少精力钻研，日常的工作与学习几乎占据了空余的我。</p>
 <p>开服之后，服务器一如预期地炸了，仿佛新游戏开服不炸一下就缺乏生命力，开始关服、修复、给玩家一些蚊子腿补偿。换以前，我一定会说这些大厂的技术不堪大用，现在有了不一样的角度——一件事情如果走的过于顺利就容易显得便宜，相比蠢，我跟愿意相信他们是聪明且”坏”。</p>
@@ -475,11 +474,14 @@
 <li><p>白嫖</p>
 <p>白嫖或者微氪玩家，占据了玩家90%及以上的份额，是最广大玩家群众，他们的利益被重氪和中氪玩家所代表，很不幸我是其中之一，很幸运我意识到这点。</p>
 <p>他们被教育吃苦（搬砖）就可以阶级跃迁，但是他们大多不知道实现跃迁的大多是通过吃人，你不吃人，上面的人也不放心把你放上去，单维度的聪明大多时候只会陷入困顿，即聪明是不够的，还需要坏。</p>
-<p><strong>——TO BE CONTINUE(may Gu)</strong></p>
 </li>
 </ul>
 </li>
 </ul>
+<hr>
+<h2 id="2024年7月9日续"><a href="#2024年7月9日续" class="headerlink" title="2024年7月9日续"></a>2024年7月9日续</h2><p>前文已大致阐述了个人的一些看法（关于市场），总的概括来说是倾向于开放。至于所谓通过不同视角对事物所作的分析，是个体情绪、感受的味道多于客观描述，我想过删掉这篇文章，但是最后还是没有删掉，因为我觉得情绪化的表达并不一定完全没有价值，狗屁文章自有它狗屁的作用。</p>
+<h2 id="2024年7月12日"><a href="#2024年7月12日" class="headerlink" title="2024年7月12日"></a>2024年7月12日</h2><p>游戏出“大事”了，国服版本在移植韩服的时候连带着bug也一同带了过来（是真的一点都不改么？就改了个文本 国际化？）。</p>
+<p>游戏的拍卖行系统在玩家上架道具的时候，设备开启离线模式会提示上架失败，然后邮件退回道具，但是本地原先的道具并没有被消耗掉，看了视频我简单猜测下实现：<br>正常情况下，当客户端发起道具上架请求，在服务器收到上架请求后，上架道具，服务器扣除玩家道具，返回客户端上架成功通知，同步客户端道具数量，完成上架；<br>视频的情况是，当客户端发起道具上架请求的瞬间，客户端断网，即上架请求发出被中断回滚退回道具到邮箱，同时因为上架流程未走完所以客户端也不会更新道具数量，而回滚退回道具的步骤显然是在客户端侧处理并不是在服务器端处理（好像也没办法从服务器端处理，因为断网了服务器感知不到请求），从而实现了复制道具的效果。</p>
 
                 
             </div>
@@ -737,17 +739,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/post/16447623.html">
+                <a href="/post/8b5c58d3.html">
                     <div class="card-image">
                         
-                        <img src="https://oss.luhuhu.cn/202406171137694.jpeg" class="responsive-img" alt="一次游戏开荒经历">
                         
-                        <span class="card-title">一次游戏开荒经历</span>
+                        <img src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/medias/featureimages/9.jpg" class="responsive-img" alt="WowAddons&amp;Cnf">
+                        
+                        <span class="card-title">WowAddons&amp;Cnf</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -757,27 +759,30 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-06-17
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-08-08
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%9D%82%E6%96%87/" class="post-category">
-                                    杂文
+                            <a href="/categories/WOW/" class="post-category">
+                                    WOW
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%89%8B%E8%AE%B0/">
-                        <span class="chip bg-color">手记</span>
+                    <a href="/tags/Addons/">
+                        <span class="chip bg-color">Addons</span>
+                    </a>
+                    
+                    <a href="/tags/Cnf/">
+                        <span class="chip bg-color">Cnf</span>
                     </a>
                     
                 </div>
