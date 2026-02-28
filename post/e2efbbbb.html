@@ -29,9 +29,9 @@
 
     <script src="https://cdn.jsdelivr.net/gh/loaderland/loaderland.github.io/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 7.0.0"><link rel="alternate" href="/atom.xml" title="LoaderLand" type="application/atom+xml">
-
+<meta name="generator" content="Hexo 7.0.0">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="LoaderLand" type="application/atom+xml">
 <link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
@@ -394,14 +394,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-07-01
+                    2026-02-28
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.5k
+                    3.1k
                 </div>
                 
 
@@ -418,473 +418,353 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="MySQL-base"><a href="#MySQL-base" class="headerlink" title="MySQL-base"></a>MySQL-base</h1><h2 id="Linux安装mysql"><a href="#Linux安装mysql" class="headerlink" title="Linux安装mysql"></a>Linux安装mysql</h2><h3 id="屏蔽防火墙"><a href="#屏蔽防火墙" class="headerlink" title="屏蔽防火墙"></a>屏蔽防火墙</h3><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 确认服务器防火墙等安全配置关闭</span>
-<span class="token comment" spellcheck="true"># 防火墙关闭</span>
-<span class="token punctuation">[</span>root@localhost mysql<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># firewall-cmd --state</span>
-not running
-<span class="token comment" spellcheck="true"># iptables 无策略</span>
-<span class="token punctuation">[</span>root@localhost mysql<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># iptables -L</span>
-Chain INPUT <span class="token punctuation">(</span>policy ACCEPT<span class="token punctuation">)</span>
-target     prot opt <span class="token function">source</span>               destination
-
-Chain FORWARD <span class="token punctuation">(</span>policy ACCEPT<span class="token punctuation">)</span>
-target     prot opt <span class="token function">source</span>               destination
-
-Chain OUTPUT <span class="token punctuation">(</span>policy ACCEPT<span class="token punctuation">)</span>
-target     prot opt <span class="token function">source</span>               destination
-<span class="token comment" spellcheck="true"># SELinux安全组件关闭</span>
-<span class="token punctuation">[</span>root@localhost mysql<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># sestatus</span>
-SELinux status:                 disabled
-<span class="token comment" spellcheck="true"># 在正常安装完成之后，再开启安全相关的组件及添加相关的安全配置</span>
-<span class="token comment" spellcheck="true"># Linux安全组件相关移步Linux相关内容学习</span>
-</code></pre>
-<h3 id="rpm安装mysql"><a href="#rpm安装mysql" class="headerlink" title="rpm安装mysql"></a>rpm安装mysql</h3><ol>
-<li><p>查看MySQL用户组和用户信息</p>
-<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 查看是否存在mysql相关的用户组和用户信息</span>
-<span class="token function">groups</span> mysql
-<span class="token comment" spellcheck="true"># 创建mysql用户组和用户</span>
-<span class="token function">groupadd</span> mysql <span class="token operator">&amp;&amp;</span> <span class="token function">useradd</span> -r -g mysql mysql
-<span class="token comment" spellcheck="true"># 数据目录授权</span>
-<span class="token function">chown</span> mysql:mysql -R /data/mysql
-</code></pre>
-</li>
-<li><p>删除已存在的MySQL、mariadb</p>
-<pre class=" language-bash"><code class="language-bash">rpm -qa<span class="token operator">|</span><span class="token function">grep</span> mysql
-rpm -qa<span class="token operator">|</span><span class="token function">grep</span> mariadb
-rpm -e --nodeps mysql-libs-5.1.73-1.el6.x86_64
-rpm -e --nodeps mariadb-libs-5.5.56-2.el7.x86_64
-</code></pre>
-</li>
-<li><p>提升/tmp权限</p>
-<p>因为默认安装会在tmp下面创建sock</p>
-<pre class=" language-bash"><code class="language-bash"><span class="token function">chmod</span> -R 777 /tmp
-</code></pre>
-</li>
-<li><p>检查依赖</p>
-<pre class=" language-bash"><code class="language-bash">rpm -qa<span class="token operator">|</span><span class="token function">grep</span> libaio
-rpm -qa<span class="token operator">|</span><span class="token function">grep</span> net-tools
-yum -y <span class="token function">install</span> libaio net-tools
-</code></pre>
-</li>
-<li><p>准备安装包</p>
-<p>官网下载对应的rpm，以下rpm是必要的</p>
-<blockquote>
-<p>mysql-community-common-5.7.16-1.el6.x86_64.rpm<br>mysql-community-libs-5.7.16-1.el6.x86_64.rpm<br>mysql-community-client-5.7.16-1.el6.x86_64.rpm<br>mysql-community-server-5.7.16-1.el6.x86_64.rpm</p>
-</blockquote>
-</li>
-<li><p>依次执行安装</p>
-<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 卸载</span>
-rpm -e mysql-community-server-xxx.rpm 
-<span class="token comment" spellcheck="true"># 安装</span>
-rpm -ivh mysql-community-common-5.7.16-1.el7.x86_64.rpm 
-rpm -ivh mysql-community-libs-5.7.16-1.el7.x86_64.rpm
-rpm -ivh mysql-community-client-5.7.16-1.el7.x86_64.rpm 
-rpm -ivh mysql-community-server-5.7.16-1.el7.x86_64.rpm
-</code></pre>
-</li>
-</ol>
-<h3 id="单实例"><a href="#单实例" class="headerlink" title="单实例"></a>单实例</h3><p>默认cnf配置</p>
-<pre class=" language-bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost mysql<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># cat /etc/my.cnf</span>
-<span class="token comment" spellcheck="true"># mysql 默认cnf 配置</span>
-<span class="token comment" spellcheck="true"># For advice on how to change settings please see</span>
-<span class="token comment" spellcheck="true"># http://dev.mysql.com/doc/refman/5.7/en/server-configuration-defaults.html</span>
-
-<span class="token punctuation">[</span>mysqld<span class="token punctuation">]</span>
-<span class="token comment" spellcheck="true">#</span>
-<span class="token comment" spellcheck="true"># Remove leading # and set to the amount of RAM for the most important data</span>
-<span class="token comment" spellcheck="true"># cache in MySQL. Start at 70% of total RAM for dedicated server, else 10%.</span>
-<span class="token comment" spellcheck="true"># innodb_buffer_pool_size = 128M</span>
-<span class="token comment" spellcheck="true">#</span>
-<span class="token comment" spellcheck="true"># Remove leading # to turn on a very important data integrity option: logging</span>
-<span class="token comment" spellcheck="true"># changes to the binary log between backups.</span>
-<span class="token comment" spellcheck="true"># log_bin</span>
-<span class="token comment" spellcheck="true">#</span>
-<span class="token comment" spellcheck="true"># Remove leading # to set options mainly useful for reporting servers.</span>
-<span class="token comment" spellcheck="true"># The server defaults are faster for transactions and fast SELECTs.</span>
-<span class="token comment" spellcheck="true"># Adjust sizes as needed, experiment to find the optimal values.</span>
-<span class="token comment" spellcheck="true"># join_buffer_size = 128M</span>
-<span class="token comment" spellcheck="true"># sort_buffer_size = 2M</span>
-<span class="token comment" spellcheck="true"># read_rnd_buffer_size = 2M</span>
-datadir<span class="token operator">=</span>/var/lib/mysql
-socket<span class="token operator">=</span>/var/lib/mysql/mysql.sock
-
-<span class="token comment" spellcheck="true"># Disabling symbolic-links is recommended to prevent assorted security risks</span>
-symbolic-links<span class="token operator">=</span>0
-
-log-error<span class="token operator">=</span>/var/log/mysqld.log
-pid-file<span class="token operator">=</span>/var/run/mysqld/mysqld.pid
-</code></pre>
-<ol>
-<li><p>初始化MySQL</p>
-<pre class=" language-bash"><code class="language-bash">mysqld --initialize --user<span class="token operator">=</span>mysql
-<span class="token comment" spellcheck="true"># 获取初始密码</span>
-<span class="token function">cat</span> /var/log/mysqld.log <span class="token operator">|</span> <span class="token function">tail</span> -n 10
-</code></pre>
-</li>
-<li><p>启动MySQL服务</p>
-<pre class=" language-bash"><code class="language-bash">systemctl start mysqld.service
-systemctl status mysqld
-<span class="token comment" spellcheck="true"># 设置开机自启</span>
-systemctl <span class="token function">enable</span> mysqld.sercice
-</code></pre>
-</li>
-<li><p>初始化（首次登陆）</p>
-<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 通过sock登陆</span>
-mysql -u root -p --
-socket<span class="token operator">=</span>/data/mysql/mysql_3306/tmp/mysql3306.sock
-<span class="token comment" spellcheck="true"># 初次登陆要求修改密码</span>
-ALTER USER <span class="token string">'root'</span>@<span class="token string">'localhost'</span> IDENTIFIED BY <span class="token string">'root123'</span><span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true"># 授权所有Host可登陆</span>
-UPDATE mysql.user SET Host <span class="token operator">=</span> <span class="token string">'%'</span> WHERE User <span class="token operator">=</span> <span class="token string">'root'</span><span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true"># 授权登陆 注意还有Linux的防火墙端口监听、白名单设置，参见Linux相关内容</span>
-GRANT ALL PRIVILEGES ON *.* TO <span class="token string">'root'</span>@<span class="token string">'%'</span><span class="token punctuation">;</span>
-FLUSH PRIVILEGES<span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true"># 修改字符集</span>
-show variables like <span class="token string">'character%'</span><span class="token punctuation">;</span>
-<span class="token function">vi</span> /etc/my.cnf
-    <span class="token comment" spellcheck="true"># 增加以下配置</span>
-    character_set_server<span class="token operator">=</span>utf8
-    init_connect<span class="token operator">=</span>’SET NAMES utf8’
-systemctl restart mysqld
-</code></pre>
-</li>
-</ol>
-<h3 id="多实例"><a href="#多实例" class="headerlink" title="多实例"></a>多实例</h3><h4 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h4><ol>
-<li>my.cnf</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># cat /etc/my.cnf.d/mysql-3306.cnf</span>
-<span class="token punctuation">[</span>mysqld<span class="token punctuation">]</span>
-port<span class="token operator">=</span>3306
-datadir<span class="token operator">=</span>/data/mysql/mysql_3306
-socket<span class="token operator">=</span>/data/mysql/mysql_3306/tmp/mysql3306.sock
-symbolic-links<span class="token operator">=</span>0
-
-<span class="token punctuation">[</span>mysqld_safe<span class="token punctuation">]</span>
-log-error<span class="token operator">=</span>/data/mysql/mysql_3306/log/3306.log
-pid-file<span class="token operator">=</span>/data/mysql/mysql_3306/3306.pid
-
-<span class="token punctuation">[</span>client<span class="token punctuation">]</span>
-port<span class="token operator">=</span>3306
-socket<span class="token operator">=</span>/data/mysql/mysql_3306/tmp/mysql3306.sock
-</code></pre>
-<ol start="2">
-<li>mysql.service</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># cat /etc/systemd/system/mysqld-3306.service</span>
-<span class="token punctuation">[</span>Unit<span class="token punctuation">]</span>
-Description<span class="token operator">=</span>MySQL Server
-After<span class="token operator">=</span>network.target
-
-<span class="token punctuation">[</span>Service<span class="token punctuation">]</span>
-Type<span class="token operator">=</span>simple
-User<span class="token operator">=</span>mysql
-Group<span class="token operator">=</span>mysql
-ExecStart<span class="token operator">=</span>/usr/sbin/mysqld --defaults-file<span class="token operator">=</span>/etc/my.cnf.d/mysql-3306.cnf
-Restart<span class="token operator">=</span>always
-
-<span class="token punctuation">[</span>Install<span class="token punctuation">]</span>
-WantedBy<span class="token operator">=</span>multi-user.target
-</code></pre>
-<ol start="3">
-<li>文件目录，cnf配置中依赖的文件路径都需要手动创建，实例化数据库不会 自动创建</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost mysql<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># tree /data/mysql/ -d</span>
-/data/mysql/
-├── mysql_3306
-│<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span><span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span> ├── log
-│<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span><span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span> ├── mysql
-│<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span><span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span> ├── performance_schema
-│<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span><span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span> ├── sys
-│<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span><span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span> └── tmp
-├── mysql_3307
-│<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span><span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span> ├── log
-│<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span><span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span> ├── mysql
-│<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span><span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span> ├── performance_schema
-│<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span><span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span> ├── sys
-│<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span><span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span> └── tmp
-└── mysql_3308
-    ├── log
-    ├── mysql
-    ├── performance_schema
-    ├── sys
-    └── tmp
-</code></pre>
-<h4 id="实例化"><a href="#实例化" class="headerlink" title="实例化"></a>实例化</h4><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 实例化MySQL</span>
-/usr/sbin/mysqld --defaults-file<span class="token operator">=</span>/etc/my.cnf.d/mysql-3306.cnf --initialize --user<span class="token operator">=</span>mysql
-<span class="token comment" spellcheck="true"># 启动服务 </span>
-systemctl start mysql-3306.service
-<span class="token comment" spellcheck="true"># 查看当前mysql相关的服务</span>
-<span class="token punctuation">[</span>root@localhost mysql<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># systemctl list-units --type=service | grep mysql</span>
-mysqld-3306.service                loaded active running MySQL Server
-mysqld-3307.service                loaded active running MySQL Server
-mysqld-3308.service                loaded active running MySQL Server
-</code></pre>
-<h2 id="mysql语法基础"><a href="#mysql语法基础" class="headerlink" title="mysql语法基础"></a>mysql语法基础</h2><h3 id="SQL分类"><a href="#SQL分类" class="headerlink" title="SQL分类"></a>SQL分类</h3><h4 id="DDL数据定义语言"><a href="#DDL数据定义语言" class="headerlink" title="DDL数据定义语言"></a>DDL数据定义语言</h4><p>定义数据库对象，核心指令<strong>CREATE、ALTER、DROP</strong></p>
-<h4 id="DML数据库操纵语言"><a href="#DML数据库操纵语言" class="headerlink" title="DML数据库操纵语言"></a>DML数据库操纵语言</h4><p>访问数据CRUD（CREATE，READ，UPDATE，DELETE），即增删改查</p>
-<h4 id="TCL事务控制语言"><a href="#TCL事务控制语言" class="headerlink" title="TCL事务控制语言"></a>TCL事务控制语言</h4><p>管理数据库中的事务，核心指令COMMIT、ROLLBAK</p>
-<h4 id="DCL数据控制语言"><a href="#DCL数据控制语言" class="headerlink" title="DCL数据控制语言"></a>DCL数据控制语言</h4><p>对数据访问权控制，核心指令GRANT,REVOKE</p>
-<p>可以控制的权限有：CONNECT,SELECT,INSERT,UPDATE,DELETE,EXECUTE,USAGE,REFERENCES</p>
-<h3 id="连接和组合"><a href="#连接和组合" class="headerlink" title="连接和组合"></a>连接和组合</h3><h4 id="JOIN"><a href="#JOIN" class="headerlink" title="JOIN"></a>JOIN</h4><p>连接可以代替子查询，效率一般比子查询高。</p>
-<p><img src="https://oss.luhuhu.cn/202402080934962.png" alt="join"></p>
-<h4 id="组合"><a href="#组合" class="headerlink" title="组合"></a>组合</h4><p>UNION会去除相同行，UNION ALL 会保留相同行。</p>
-<p>JOIN vs UNION：</p>
+                <p>[TOC]</p>
+<h1 id="MySQL知识点整理"><a href="#MySQL知识点整理" class="headerlink" title="MySQL知识点整理"></a>MySQL知识点整理</h1><h2 id="引擎"><a href="#引擎" class="headerlink" title="引擎"></a>引擎</h2><p><strong>常用</strong></p>
 <ul>
-<li>JOIN 中连接的列可能不同，UNION中列、列顺序必须相同</li>
-<li>UNION 讲查询结果行放在一起（垂直放置）但JOIN将查询结果列放在一起（水平放置），即它构成一个笛卡尔积</li>
+<li><code>InnoDB</code>，行锁，支持事务、回滚，<strong>主流引擎</strong>；</li>
+<li><code>MyISAM</code>老版本5.5-的默认引擎，表锁，不支持事务、回滚，适合大量读取极少数写入场景</li>
 </ul>
-<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><h4 id="文本处理"><a href="#文本处理" class="headerlink" title="文本处理"></a>文本处理</h4><table>
-<thead>
-<tr>
-<th align="left">函数</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><code>LEFT()</code>、<code>RIGHT()</code></td>
-<td align="left">左边或者右边的字符</td>
-</tr>
-<tr>
-<td align="left"><code>LOWER()</code>、<code>UPPER()</code></td>
-<td align="left">转换为小写或者大写</td>
-</tr>
-<tr>
-<td align="left"><code>LTRIM()</code>、<code>RTIM()</code></td>
-<td align="left">去除左边或者右边的空格</td>
-</tr>
-<tr>
-<td align="left"><code>LENGTH()</code></td>
-<td align="left">长度</td>
-</tr>
-<tr>
-<td align="left"><code>SOUNDEX()</code></td>
-<td align="left">转换为语音值</td>
-</tr>
-</tbody></table>
-<h4 id="日期和时间处理"><a href="#日期和时间处理" class="headerlink" title="日期和时间处理"></a>日期和时间处理</h4><table>
-<thead>
-<tr>
-<th align="left">函 数</th>
-<th align="left">说 明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><code>AddDate()</code></td>
-<td align="left">增加一个日期（天、周等）</td>
-</tr>
-<tr>
-<td align="left"><code>AddTime()</code></td>
-<td align="left">增加一个时间（时、分等）</td>
-</tr>
-<tr>
-<td align="left"><code>CurDate()</code></td>
-<td align="left">返回当前日期</td>
-</tr>
-<tr>
-<td align="left"><code>CurTime()</code></td>
-<td align="left">返回当前时间</td>
-</tr>
-<tr>
-<td align="left"><code>Date()</code></td>
-<td align="left">返回日期时间的日期部分</td>
-</tr>
-<tr>
-<td align="left"><code>DateDiff()</code></td>
-<td align="left">计算两个日期之差</td>
-</tr>
-<tr>
-<td align="left"><code>Date_Add()</code></td>
-<td align="left">高度灵活的日期运算函数</td>
-</tr>
-<tr>
-<td align="left"><code>Date_Format()</code></td>
-<td align="left">返回一个格式化的日期或时间串</td>
-</tr>
-<tr>
-<td align="left"><code>Day()</code></td>
-<td align="left">返回一个日期的天数部分</td>
-</tr>
-<tr>
-<td align="left"><code>DayOfWeek()</code></td>
-<td align="left">对于一个日期，返回对应的星期几</td>
-</tr>
-<tr>
-<td align="left"><code>Hour()</code></td>
-<td align="left">返回一个时间的小时部分</td>
-</tr>
-<tr>
-<td align="left"><code>Minute()</code></td>
-<td align="left">返回一个时间的分钟部分</td>
-</tr>
-<tr>
-<td align="left"><code>Month()</code></td>
-<td align="left">返回一个日期的月份部分</td>
-</tr>
-<tr>
-<td align="left"><code>Now()</code></td>
-<td align="left">返回当前日期和时间</td>
-</tr>
-<tr>
-<td align="left"><code>Second()</code></td>
-<td align="left">返回一个时间的秒部分</td>
-</tr>
-<tr>
-<td align="left"><code>Time()</code></td>
-<td align="left">返回一个日期时间的时间部分</td>
-</tr>
-<tr>
-<td align="left"><code>Year()</code></td>
-<td align="left">返回一个日期的年份部分</td>
-</tr>
-</tbody></table>
-<h4 id="数值处理"><a href="#数值处理" class="headerlink" title="数值处理"></a>数值处理</h4><table>
-<thead>
-<tr>
-<th align="left">函数</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">SIN()</td>
-<td align="left">正弦</td>
-</tr>
-<tr>
-<td align="left">COS()</td>
-<td align="left">余弦</td>
-</tr>
-<tr>
-<td align="left">TAN()</td>
-<td align="left">正切</td>
-</tr>
-<tr>
-<td align="left">ABS()</td>
-<td align="left">绝对值</td>
-</tr>
-<tr>
-<td align="left">SQRT()</td>
-<td align="left">平方根</td>
-</tr>
-<tr>
-<td align="left">MOD()</td>
-<td align="left">余数</td>
-</tr>
-<tr>
-<td align="left">EXP()</td>
-<td align="left">指数</td>
-</tr>
-<tr>
-<td align="left">PI()</td>
-<td align="left">圆周率</td>
-</tr>
-<tr>
-<td align="left">RAND()</td>
-<td align="left">随机数</td>
-</tr>
-</tbody></table>
-<h4 id="汇总"><a href="#汇总" class="headerlink" title="汇总"></a>汇总</h4><table>
-<thead>
-<tr>
-<th align="left">函 数</th>
-<th align="left">说 明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><code>AVG()</code></td>
-<td align="left">返回某列的平均值</td>
-</tr>
-<tr>
-<td align="left"><code>COUNT()</code></td>
-<td align="left">返回某列的行数</td>
-</tr>
-<tr>
-<td align="left"><code>MAX()</code></td>
-<td align="left">返回某列的最大值</td>
-</tr>
-<tr>
-<td align="left"><code>MIN()</code></td>
-<td align="left">返回某列的最小值</td>
-</tr>
-<tr>
-<td align="left"><code>SUM()</code></td>
-<td align="left">返回某列值之和</td>
-</tr>
-</tbody></table>
-<h3 id="排序与分组"><a href="#排序与分组" class="headerlink" title="排序与分组"></a>排序与分组</h3><h4 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h4><p>ORDER BY ASC/DESC;</p>
-<blockquote>
-<p>// 指定多个列的排序方向</p>
-<p><strong>SELECT</strong> * <strong>FROM</strong> products<br><strong>ORDER</strong> <strong>BY</strong> prod_price <strong>DESC</strong>, prod_name <strong>ASC</strong>;</p>
-</blockquote>
-<h4 id="分组"><a href="#分组" class="headerlink" title="分组"></a>分组</h4><ul>
-<li>GROUP BY</li>
-<li>HAVING<ul>
-<li>HAVING 用于对汇总的GROUP BY 结果进行过滤</li>
-<li>HAVING 要求存在一个GROUP BY子句</li>
-<li>与WHERE差异：HAVING 用于汇总的组记录，WHERE 用于单个记录</li>
+<p><strong>了解</strong></p>
+<ul>
+<li><code>Archive</code>:行锁，只支持<code>INSERT/SELECT</code>操作，不支持索引，压缩率高，用于存储冷数据如日志、历史订单等，<strong>小众</strong>方案。业务场景日志一般用<a href="#ElasticSearch"><strong>Elasticsearch</strong></a><br>和<code>ES</code>比较：</li>
+<li><code>MEMORY</code>:表锁，基于内存，用于临时表、会话缓存</li>
+<li><code>NDB</code>:行锁，基于内存，支持分布式高可用，数据自动分片，适合大规模集群，<strong>小众</strong>方案。一般业务场景实现用**<a href="#MyCat">MyCat</a><strong>、</strong><a href="#ShardingSphere">ShardingSphere</a> +<a href="#ProxySQL">ProxySQL</a>**较多</li>
+</ul>
+<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><p><strong>索引的类型</strong></p>
+<ul>
+<li>数据结构分类<ul>
+<li><strong><a href="#B+%E6%A0%91">B+树</a><strong>：</strong>默认</strong>索引方式，多层平衡树，叶子节点双向链表串联存储具体数据，非叶子节点只存储索引</li>
+<li><strong>哈希</strong>：hash函数获取位置，<strong>效率高</strong>，但是不支持范围 查询、排序，<strong>内存引擎</strong>默认使用hash索引</li>
+<li>全文：TEXT类型关键字搜索用</li>
+<li>空间：基于**<a href="#R%E6%A0%91">R树</a>**，处理坐标等多维数组，支持区域查询、距离计算</li>
+</ul>
+</li>
+<li>InnoDB存储方式<ul>
+<li>聚簇索引：查询无需**<a href="#B+%E6%A0%91%E7%9A%84%E6%9C%AF%E8%AF%AD%E5%AE%9A%E4%B9%89">回表</a>**，又称为主键索引<br><a href="#%E8%81%94%E5%90%88%E4%B8%BB%E9%94%AE%E3%80%81%E5%8D%95%E4%B8%BB%E9%94%AE">联合主键、单主键</a></li>
+<li>非聚簇索引：二级索引，叶子结点存储索引值及主键值，需要回表二次查询</li>
+</ul>
+</li>
+<li>约束类型、场景<ul>
+<li>主键索引：唯一、非空，如<strong>id</strong></li>
+<li>唯一 索引：唯一，允许为空</li>
+<li>普通索引：无唯一约束，用于加速查询</li>
+<li>联合索引：多列组合形成索引，**<a href="#%E6%9C%80%E5%B7%A6%E5%89%8D%E7%BC%80%E5%8E%9F%E5%88%99">最左前缀原则</a>**</li>
+<li>全文索引：全文搜索用</li>
+<li>空间索引：GIS数据</li>
 </ul>
 </li>
 </ul>
-<h3 id="视图、索引"><a href="#视图、索引" class="headerlink" title="视图、索引"></a>视图、索引</h3><h4 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h4><ul>
-<li>基于SQL语句结果可视化的表</li>
-<li>虚拟表，不能进行索引操作</li>
-<li>主要用于简化SQL操作</li>
-<li>通过给视图访问权限保证数据安全</li>
-</ul>
-<h4 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h4><ul>
-<li>通过索引更高效地查询数据</li>
-<li>用户无法看到索引，只能用来加速查询</li>
-<li>更新一个包含索引的表需要比更新一个没有索引的表花费更多的时间，这是由于索引本身也需要更新。因此，理想的做法是仅仅在常常被搜索的列（以及表）上面创建索引。</li>
-<li>唯一索引表明此索引的每一个索引值只对应唯一的数据记录。</li>
-</ul>
-<blockquote>
-<p>// 创建索引</p>
-<p><strong>CREATE</strong> <strong>INDEX</strong> user_index<br><strong>ON</strong> <strong>user</strong> (<strong>id</strong>);</p>
-<p>//创建唯一索引</p>
-<p><strong>CREATE</strong> <strong>UNIQUE</strong> <strong>INDEX</strong> user_index<br><strong>ON</strong> <strong>user</strong> (<strong>id</strong>);</p>
-<p>//删除索引</p>
-<p><strong>ALTER</strong> <strong>TABLE</strong> <strong>user</strong><br><strong>DROP</strong> <strong>INDEX</strong> user_index;</p>
+<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><h3 id="树"><a href="#树" class="headerlink" title="树"></a>树</h3><h4 id="B-树"><a href="#B-树" class="headerlink" title="B 树"></a>B 树</h4><blockquote>
+<p>节点包含数据+子节点指针</p>
 </blockquote>
-<h3 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a>存储过程</h3><ul>
-<li>存储过程可以看成是对一系列SQL操作的批处理</li>
-<li>优点<ul>
-<li>代码封装</li>
-<li>代码复用</li>
-<li>因为是预先编译，所以性能很高</li>
-</ul>
-</li>
-<li>创建存储过程<ul>
-<li>命令行中创建存储过程需要自定义分隔符，因为命令行是以 <code>;</code> 为结束符，而存储过程中也包含了分号，因此会错误把这部分分号当成是结束符，造成语法错误。</li>
-<li>包含 in、out 和 inout 三种参数。</li>
-<li>给变量赋值都需要用 select into 语句。</li>
-<li>每次只能给一个变量赋值，不支持集合的操作。</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<p><strong>DROP</strong> <strong>PROCEDURE</strong> <strong>IF</strong> <strong>EXISTS</strong> <code>proc_adder</code>;<br>DELIMITER ;;<br><strong>CREATE</strong> DEFINER=<code>root</code>@<code>localhost</code> <strong>PROCEDURE</strong> <code>proc_adder</code>(<strong>IN</strong> a int, <strong>IN</strong> b int, <strong>OUT</strong> <strong>sum</strong> int)<br><strong>BEGIN</strong><br><strong>DECLARE</strong> c int;<br>if a is null then <strong>set</strong> a = 0;<br><strong>end</strong> <strong>if</strong>;</p>
-<p>if b is null then <strong>set</strong> b = 0;<br><strong>end</strong> <strong>if</strong>;</p>
-<p><strong>set</strong> <strong>sum</strong> = a + b;<br><strong>END</strong><br>;;<br>DELIMITER ;</p>
+<h4 id="B-树-1"><a href="#B-树-1" class="headerlink" title="B+树"></a>B+树</h4><blockquote>
+<p>B树的优化版本，非叶子结点只存储主键索引不存储数据，数据全在叶子结点，叶子结点通过双向链表相连，为范围查询提供支撑，MySQL的B+树非叶子结点也有双向链表这是MySQL实现的优化</p>
 </blockquote>
-<blockquote>
-<p><strong>set</strong> @b=5;<br><strong>call</strong> proc_adder(2,@b,@s);<br><strong>select</strong> @s <strong>as</strong> <strong>sum</strong>;</p>
+<p>B+树数据存储量的计算</p>
+<p>InnoDB默认页大小为16KB（16384B），固定开销154B，默认预留空间约1230B，真实可用的有效空间以15KB计算。</p>
+<p><strong>页物理结构</strong></p>
+<table>
+<thead>
+<tr>
+<th>部分名称</th>
+<th>固定占用空间</th>
+<th>核心作用</th>
+<th>可变</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>File Header（文件头）</td>
+<td>38B</td>
+<td>标识页的类型、归属表空间、水平指针等，是页的「身份证」</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>Page Header（页头）</td>
+<td>56B</td>
+<td>记录页的内部状态（如页中记录数、B + 树层级、空闲空间位置等）</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>Infimum + Supremum</td>
+<td>26B</td>
+<td>页内的「哨兵记录」，标记记录的最小 / 最大值，避免边界判断</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>User Records（用户记录）</td>
+<td></td>
+<td>存储真正的业务数据（聚簇索引的行数据、二级索引的 <code>关键字+主键</code>），垂直指针</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Free Space（空闲空间）</td>
+<td></td>
+<td>页内未使用的空间，用于新增记录，空闲空间耗尽会触发页分裂</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Page Directory（页目录）</td>
+<td>&gt;26B</td>
+<td>存储用户记录的「槽位指针」，加速页内记录查找</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>File Trailer（文件尾）</td>
+<td>8B</td>
+<td>校验页的完整性（防止页损坏）</td>
+<td>❌</td>
+</tr>
+</tbody></table>
+<p><strong>不同数据类型主键的占用</strong></p>
+<table>
+<thead>
+<tr>
+<th>主键类型</th>
+<th>占用字节</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TINYINT</td>
+<td>1</td>
+</tr>
+<tr>
+<td>SMALLINT</td>
+<td>2</td>
+</tr>
+<tr>
+<td>MEDIUMINT</td>
+<td>4</td>
+</tr>
+<tr>
+<td>BIGINT</td>
+<td>8</td>
+</tr>
+<tr>
+<td>CHAR(n) utf8</td>
+<td>n*3(utf8),n*4(utf8m64)</td>
+</tr>
+<tr>
+<td>VARCHAR(n)</td>
+<td>实际长度+1~2</td>
+</tr>
+<tr>
+<td>DATE</td>
+<td>3</td>
+</tr>
+<tr>
+<td>DATETIME</td>
+<td>8</td>
+</tr>
+</tbody></table>
+<p><strong>假设的存储表</strong></p>
+<pre class=" language-mysql"><code class="language-mysql">CREATE TABLE tablename (
+  id INT PRIMARY KEY,       -- 4 字节
+  name VARCHAR(10),         -- 最多 30 字节（10×3）
+  age TINYINT,              -- 1 字节
+  create_time DATETIME      -- 8 字节
+);单条数据43字节，每条记录需要固定开销27字节（事务字段6+回滚指针7+变长字段2+NULL标识位1+记录头11）合计单条数据 占用70字节
+</code></pre>
+<p><strong>计算</strong></p>
+<ol>
+<li>叶子结点可存储数据量：15KB/70B = 214条数据</li>
+<li>非叶子结点存储量，取阶数m = 15KB / （主键大小BIGINT8B + 垂直指针8B）= 937</li>
+<li>三层B+树可存储数据量约为 937^2*214 = 1.8亿的数据量</li>
+</ol>
+<h4 id="B-树-2"><a href="#B-树-2" class="headerlink" title="B*树"></a>B*树</h4><blockquote>
+<p>B+树的变形,<strong>强化了节点的空间利用率</strong>,减少分裂次数</p>
+<ol>
+<li>继承B+树的特性,飞叶子节点只存索引,叶子结点存数据+双向链表</li>
+<li>增加兄弟节点指针,非叶子结点也用链表相连,方便节点间数据转移</li>
+<li>B+树节点满了会直接分裂,B<em>树节点满了会优先向*<em>兄弟节点借空间</em></em>,借不到再分裂</li>
+<li>非叶子结点的最小结点树从m/2提升到2m/3,提高空间利用率</li>
+</ol>
 </blockquote>
-<h3 id="游标"><a href="#游标" class="headerlink" title="游标"></a>游标</h3><p>游标是一个存储在DBMS服务器上的数据库查询，不是SELECT语句，而是SELECT检索的结果集。</p>
-<p>主要用于交互式应用，用户需要对数据集重的任意行进行浏览和修改。</p>
-<blockquote>
-<p>DELIMITER $<br><strong>CREATE</strong> <strong>PROCEDURE</strong> getTotal()<br><strong>BEGIN</strong><br><strong>DECLARE</strong> total INT;<br><em>– 创建接收游标数据的变量</em><br><strong>DECLARE</strong> <strong>sid</strong> INT;<br><strong>DECLARE</strong> sname VARCHAR(10);<br><em>– 创建总数变量</em><br><strong>DECLARE</strong> sage INT;<br><em>– 创建结束标志变量</em><br><strong>DECLARE</strong> done INT <strong>DEFAULT</strong> false;<br><em>– 创建游标</em><br><strong>DECLARE</strong> cur <strong>CURSOR</strong> <strong>FOR</strong> <strong>SELECT</strong> <strong>id</strong>,<strong>name</strong>,age <strong>from</strong> cursor_table <strong>where</strong> age&gt;30;<br><em>– 指定游标循环结束时的返回值</em><br><strong>DECLARE</strong> CONTINUE <strong>HANDLER</strong> <strong>FOR</strong> <strong>NOT</strong> <strong>FOUND</strong> <strong>SET</strong> done = true;<br><strong>SET</strong> total = 0;<br>OPEN cur;<br>FETCH cur INTO sid, sname, sage;<br>WHILE(NOT done)<br><strong>DO</strong><br> <strong>SET</strong> total = total + 1;<br> FETCH cur INTO sid, sname, sage;<br><strong>END</strong> <strong>WHILE</strong>;</p>
-<p>CLOSE cur;<br><strong>SELECT</strong> total;<br><strong>END</strong> $<br>DELIMITER ;</p>
-<p><em>– 调用存储过程</em><br><strong>call</strong> getTotal();</p>
+<h4 id="R树"><a href="#R树" class="headerlink" title="R树"></a>R树</h4><blockquote>
+<p>区域树</p>
 </blockquote>
-<h3 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h3><p>触发器是一种与表操作有关的数据库对象，当表出现指定时间时，将调用该对象。</p>
-<h4 id="new-old"><a href="#new-old" class="headerlink" title="new/old"></a>new/old</h4><ul>
-<li>MySQL 中定义了 <code>NEW</code> 和 <code>OLD</code> 关键字，用来表示触发器的所在表中，触发了触发器的那一行数据。</li>
-<li>在 <code>INSERT</code> 型触发器中，<code>NEW</code> 用来表示将要（<code>BEFORE</code>）或已经（<code>AFTER</code>）插入的新数据；</li>
-<li>在 <code>UPDATE</code> 型触发器中，<code>OLD</code> 用来表示将要或已经被修改的原数据，<code>NEW</code> 用来表示将要或已经修改为的新数据；</li>
-<li>在 <code>DELETE</code> 型触发器中，<code>OLD</code> 用来表示将要或已经被删除的原数据；</li>
-<li>使用方法：<code>NEW.columnName</code> （columnName 为相应数据表某一列名）</li>
+<h2 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h2><h3 id="binlog"><a href="#binlog" class="headerlink" title="binlog"></a>binlog</h3><h3 id="redolog"><a href="#redolog" class="headerlink" title="redolog"></a>redolog</h3><h3 id="undolog"><a href="#undolog" class="headerlink" title="undolog"></a>undolog</h3><h2 id="分析、优化"><a href="#分析、优化" class="headerlink" title="分析、优化"></a>分析、优化</h2><p>MySQL性能优化步骤</p>
+<ol>
+<li><p>性能监控、诊断</p>
+<ul>
+<li><code>SHOW PROCESSLIST</code> / <code>SHOW FULL PROCESSLIST</code></li>
+<li><code>Performance Schema</code></li>
+<li><code>sys schema</code>（推荐使用）</li>
+<li><code>slow query log</code>（慢查询日志）</li>
+<li><code>EXPLAIN</code> / <code>EXPLAIN FORMAT=JSON</code></li>
+<li>监控工具：<code>pt-query-digest</code>, <code>Percona Toolkit</code>, <code>Prometheus + Grafana</code>, <code>Zabbix</code></li>
 </ul>
-<blockquote>
-<p>DELIMITER $<br><strong>CREATE</strong> <strong>TRIGGER</strong> <code>trigger_insert_user</code><br><strong>AFTER</strong> <strong>INSERT</strong> <strong>ON</strong> <code>user</code><br><strong>FOR</strong> <strong>EACH</strong> <strong>ROW</strong><br><strong>BEGIN</strong><br><strong>INSERT</strong> <strong>INTO</strong> <code>user_history</code>(user_id, operate_type, operate_time)<br><strong>VALUES</strong> (NEW.id, ‘add a user’, <strong>now</strong>());<br><strong>END</strong> $<br>DELIMITER ;</p>
-</blockquote>
+<pre class=" language-mysql"><code class="language-mysql">-- 查看当前运行的线程
+SHOW PROCESSLIST;
 
+-- 开启慢查询日志（my.cnf 中配置）
+SET GLOBAL slow_query_log = 'ON';
+SET GLOBAL long_query_time = 1; -- 超过1秒记录
+SET GLOBAL log_output = 'TABLE'; -- 或 'FILE'
+
+-- 查看慢查询日志内容（如果输出到表）
+SELECT * FROM mysql.slow_log ORDER BY start_time DESC LIMIT 10;
+</code></pre>
+</li>
+<li><p>分析慢SQL</p>
+<pre class=" language-mysql"><code class="language-mysql">EXPLAIN SELECT ...
+EXPLAIN FORMAT=JSON SELECT ...
+</code></pre>
+<ul>
+<li><code>type</code>: 访问类型（ALL 全表扫描最差，index、range、ref、eq_ref、const 更好）</li>
+<li><code>key</code>: 是否命中索引</li>
+<li><code>rows</code>: 扫描行数（越少越好）</li>
+<li><code>Extra</code>: 是否有 <code>Using filesort</code>, <code>Using temporary</code> 等危险操作</li>
+</ul>
+</li>
+<li><p>表索引策略优化、SQL 语句优化</p>
+<ul>
+<li>表索引优化，为条件字段建立合理的索引，删减无用索引</li>
+<li>避免SELECT * 查询，检查条件索引生效情况</li>
+</ul>
+</li>
+<li><p>调整MySQL配置参数</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>建议值（示例）</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>innodb_buffer_pool_size</code></td>
+<td>物理内存的 70%~80%</td>
+<td>缓存数据和索引，最重要</td>
+</tr>
+<tr>
+<td><code>innodb_log_file_size</code></td>
+<td>1G ~ 2G</td>
+<td>提高写性能，减少 checkpoint</td>
+</tr>
+<tr>
+<td><code>max_connections</code></td>
+<td>500~2000</td>
+<td>根据并发连接数调整</td>
+</tr>
+<tr>
+<td><code>tmp_table_size</code> / <code>max_heap_table_size</code></td>
+<td>64M~256M</td>
+<td>内存临时表大小</td>
+</tr>
+<tr>
+<td><code>sort_buffer_size</code></td>
+<td>2M~4M</td>
+<td>每连接排序缓存，不宜过大</td>
+</tr>
+<tr>
+<td><code>innodb_flush_log_at_trx_commit</code></td>
+<td>1（安全），2（折中），0（快但不安全）</td>
+<td>控制事务持久性</td>
+</tr>
+<tr>
+<td><code>query_cache_type</code></td>
+<td>0（关闭）</td>
+<td>MySQL 8.0 已移除，5.7 可关闭</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>表结构、存储引擎优化</p>
+</li>
+<li><p>读写分离、分库分表、前置<code>redis</code>、消息队列、本地缓存等</p>
+</li>
+</ol>
+<h3 id="事务的异常情况分析-TODO"><a href="#事务的异常情况分析-TODO" class="headerlink" title="事务的异常情况分析//TODO"></a>事务的异常情况分析//TODO</h3><h2 id="三方组件、工具"><a href="#三方组件、工具" class="headerlink" title="三方组件、工具"></a>三方组件、工具</h2><h3 id="ElasticSearch"><a href="#ElasticSearch" class="headerlink" title="ElasticSearch"></a>ElasticSearch</h3><h3 id="MyCat"><a href="#MyCat" class="headerlink" title="MyCat"></a>MyCat</h3><h3 id="ShardingSphere"><a href="#ShardingSphere" class="headerlink" title="ShardingSphere"></a>ShardingSphere</h3><h3 id="ProxySQL"><a href="#ProxySQL" class="headerlink" title="ProxySQL"></a>ProxySQL</h3><h2 id="常见问题、术语定义"><a href="#常见问题、术语定义" class="headerlink" title="常见问题、术语定义"></a>常见问题、术语定义</h2><h3 id="术语定义"><a href="#术语定义" class="headerlink" title="术语定义"></a>术语定义</h3><h4 id="B-树的术语定义"><a href="#B-树的术语定义" class="headerlink" title="B+树的术语定义"></a>B+树的术语定义</h4><p><strong>节点存储的内容</strong></p>
+<blockquote>
+<p>关键字（key）：用于排序、查找的和核心值，是索引的标识<br>主键索引：特殊关键字，对应主键字段如ID，是聚簇索引的核心关键字<br>指针：内存/磁盘地址的引用，B+树分为<code>子节点指针</code>、<code>数据指针</code></p>
+</blockquote>
+<p><strong>回表</strong></p>
+<blockquote>
+<p>回表指的是二级索引需要通过主键索引二次查询获取其他字段，因为B+树非叶子结点只存储主键和指针</p>
+</blockquote>
+<p><strong>联合主键、单主键</strong></p>
+<blockquote>
+<p>一个主键多个字段 = 联合主键；<br>单主键 = 单字段</p>
+</blockquote>
+<p><strong>阶数m</strong></p>
+<blockquote>
+<p>阶数 -1 &lt;= 可用空间 /索引关键字大小<br>叶子结点可存储数据量 = （叶大小-固定开销）/单条数据大小</p>
+</blockquote>
+<h4 id="最左前缀原则"><a href="#最左前缀原则" class="headerlink" title="最左前缀原则"></a>最左前缀原则</h4><p>查询索<strong>必须</strong>从左到右匹配，第一个条件非索引字段会直接扫全表<br>[索引失效有哪些情况](#5. 索引失效的情形有哪些？)</p>
+<h4 id="事务-TODO"><a href="#事务-TODO" class="headerlink" title="事务 //TODO"></a>事务 //TODO</h4><blockquote>
+<p><strong>事务</strong>是数据库操作的一个逻辑单元，由<strong>一组</strong>SQL语句组成，要么全部执行，要么全部回滚，保证数据的一致性和完整性</p>
+</blockquote>
+<p>事务的特性<strong>ACID</strong></p>
+<ul>
+<li>Atomicity：原子性，不可分割，要么全做要么全部做</li>
+<li>Consistency：一致性，事务执行前后数据库从一个一致状态转移到另一个一致状态</li>
+<li>Isolation：隔离性，多事务并发执行，彼此互不干扰</li>
+<li>Durability：持久性，一旦事务提交，对数据库的修改是永久性的，即便系统崩溃也不会丢失</li>
+</ul>
+<p><strong>事务的隔离级别</strong></p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>优点</th>
+<th>问题</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>读未提交</td>
+<td>极致的性能优先</td>
+<td>可靠性极差</td>
+</tr>
+<tr>
+<td><strong>读已提交</strong></td>
+<td></td>
+<td>不可重复读、幻读</td>
+</tr>
+<tr>
+<td><strong>可重复读</strong></td>
+<td></td>
+<td>幻读、间隙锁容易引发死锁增加运维成本</td>
+</tr>
+<tr>
+<td>串行读</td>
+<td>串行解决所有并发问题</td>
+<td>无并发能力</td>
+</tr>
+</tbody></table>
+<p><strong>MVCC</strong>是什么</p>
+<h4 id="锁-TODO"><a href="#锁-TODO" class="headerlink" title="锁 //TODO"></a>锁 //TODO</h4><h3 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h3><h4 id="1-MySQL为什么选择B-树作为索引结构，没有选择B-树？"><a href="#1-MySQL为什么选择B-树作为索引结构，没有选择B-树？" class="headerlink" title="1. MySQL为什么选择B+树作为索引结构，没有选择B*树？"></a>1. MySQL为什么选择B+树作为索引结构，没有选择B*树？</h4><p>B树因为节点存储数据，导致节点的存储效率低（单节点存储的关键字数量远小于只存关键字），树高会更高，磁盘IO会更多；并且B树的范围查询性能极差，节点相互独立，范围查询需要多次回溯、遍历不同分支，效率低下。B树<strong>更适合内存数据库</strong>，在内存中IO开销几乎可以忽略</p>
+<p>B+树是多叉树，树矮检索3层B+树就可以存储近2000w数据（<a href="#2.%E5%A6%82%E4%BD%95%E8%AE%A1%E7%AE%97%E4%B8%80%E6%A3%B5%E6%A0%91%E8%83%BD%E5%AD%98%E5%82%A8%E5%A4%9A%E5%B0%91%E6%95%B0%E6%8D%AE">如何计算一棵树能存储多少数据</a>）；<br>非叶子结点只存储key和指针，节省空间（点查询劣于B树，范围查询优于B树）<br>叶子结点、非叶子结点双向链表串联，方便范围查询、寻址</p>
+<p>B*树的出现是为了提高节点的<strong>空间利用率</strong>，[节点填充率](#3. B+树是节点满了之后会分裂，所谓的最小填充率1/2是什么意思？)2/3，<strong>并不是节点填充率越高越好</strong>；在节点满的时候不会直接分裂而是会<strong>先遍历兄弟节点、判断、移动数据</strong>，而这个操作的时间成本远大于B+树节点分裂的时间，在时间和空间的倾向上，B*树更倾向于空间，而B+树则在空间和时间的选择上更均衡。</p>
+<h4 id="2-如何计算一棵树能存储多少数据"><a href="#2-如何计算一棵树能存储多少数据" class="headerlink" title="2. 如何计算一棵树能存储多少数据"></a>2. 如何计算一棵树能存储多少数据</h4><p>根据不同索引不同的计算方式<br>聚簇索引：单条数据*阶层m^(树高n-1)<br>非聚簇索引：(二级索引+主键索引)*阶层m^(树高n-1)</p>
+<p>参考<a href="#B+%E6%A0%91">B+树</a></p>
+<h4 id="3-B-树是节点满了之后会分裂，所谓的最小填充率1-2是什么意思？"><a href="#3-B-树是节点满了之后会分裂，所谓的最小填充率1-2是什么意思？" class="headerlink" title="3. B+树是节点满了之后会分裂，所谓的最小填充率1/2是什么意思？"></a>3. B+树是节点满了之后会分裂，所谓的最小填充率1/2是什么意思？</h4><p>填充率是一个节点的存储红线，它存在的目的是为了<strong>防止节点过于稀疏</strong>，避免树高膨胀。如果小于这个<strong>存储阈值</strong>，就会触发节点合并。</p>
+<p>节点填充率越高，空间利用率越高，节点的合并、数据迁移 触发概率更高；<br>填充率越低，节点越松散，合并、迁移概率越低</p>
+<h4 id="4-联合主键和多主键的区别"><a href="#4-联合主键和多主键的区别" class="headerlink" title="4. 联合主键和多主键的区别"></a>4. 联合主键和多主键的区别</h4><p>在关系型数据库中<strong>多主键是不存在</strong>的，联合主键的含义是一个主键</p>
+<h4 id="5-索引失效的情形有哪些？"><a href="#5-索引失效的情形有哪些？" class="headerlink" title="5. 索引失效的情形有哪些？"></a>5. 索引失效的情形有哪些？</h4><ol>
+<li><p>函数包裹索引字段会使索引失效，隐式类型转换其实进行了<code>CAST</code>函数强制转换</p>
+</li>
+<li><p>使用!= 或 &lt;&gt; 、NOT IN 或者 NOT EXISTS、IS NOT NULL等取反操作通常无法有效利用索引</p>
+<blockquote>
+<p>B+树是<code>有序的单向区间索引</code>，优化器是<code>成本优先原则</code>，而!=是筛选出除了某个值之外的所有数据，B+树天生不擅长查<code>反向、离散</code>的全集</p>
+<p>假设强制走索引，取非值，首先要在索引查询&lt;x;再索引查询&gt;x;再合并去重；最后拿着所有id批量回表走聚簇索引。这个成本是2次完整的B+树索引+内存合并计算+回表聚簇索引，成本远高于1次磁盘舒徐IO</p>
+</blockquote>
+</li>
+<li><p>OR 连接任意两个字段都会使索引 失效</p>
+<blockquote>
+<p>两个索引用<code>or</code>相连，如果要走索引他会先走A索引的B+树，拿到主键id；再走B索引的B+树拿到主键id；两次查询的主键id去重合并；再回表走聚簇索引查业务数据。</p>
+<p>这个过程包含2次B+树查询+内存去重+批量回表，效率远低于全表扫描，MySQL的优化器会判定全表扫描更划算，放弃两个单列索引</p>
+<p>只有在<strong>两个字段是联合索引</strong>的情况下OR才会索引生效</p>
+</blockquote>
+</li>
+<li><p>模糊匹配<code>%</code>开头违背最左前缀原则，索引失效</p>
+</li>
+<li><p>数据量过小或索引选择性差</p>
+</li>
+<li><p>索引字段参与运算</p>
+</li>
+<li><p>SQL查询不规范 如SELECT * 会强制回表，当回表代价过高时索引效率降低</p>
+</li>
+</ol>
+<h4 id="6-MySQL默认的事务默认隔离级别是什么？为什么选择它"><a href="#6-MySQL默认的事务默认隔离级别是什么？为什么选择它" class="headerlink" title="6. MySQL默认的事务默认隔离级别是什么？为什么选择它"></a>6. MySQL默认的事务默认隔离级别是什么？为什么选择它</h4><h4 id="7-什么是快照读、当前读？"><a href="#7-什么是快照读、当前读？" class="headerlink" title="7. 什么是快照读、当前读？"></a>7. 什么是快照读、当前读？</h4><h4 id="8-如何解决脏读、不可重复读、幻读的情况？什么是"><a href="#8-如何解决脏读、不可重复读、幻读的情况？什么是" class="headerlink" title="8. 如何解决脏读、不可重复读、幻读的情况？什么是"></a>8. 如何解决脏读、不可重复读、幻读的情况？什么是</h4>
                 
             </div>
             <hr/>
